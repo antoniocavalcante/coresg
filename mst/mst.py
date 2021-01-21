@@ -35,7 +35,9 @@ def prim(data, core_distances, min_pts, self_edges):
         for neighbor in range(n):    
             if attached[neighbor]: continue
 
-            d = distance.euclidean(data[current_point], data[neighbor])
+            d = max(distance.euclidean(data[current_point], data[neighbor]),
+                core_distances[current_point, -1],
+                core_distances[neighbor, -1])
 
             # updates the closese point to neigbor.
             if d < nearest_distances[neighbor]:

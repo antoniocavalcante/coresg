@@ -9,8 +9,8 @@ from scipy.sparse.csgraph import minimum_spanning_tree
 
 if __name__ == "__main__":
     
-    # generates a 
-    k = 2
+    # value of k for the k-NN
+    k = 1
 
     # generates a small random dataset
     data = np.random.rand(10,2)
@@ -23,17 +23,17 @@ if __name__ == "__main__":
     mst_prim = mst.prim(data, core_distances, k, False)
     print(mst_prim)
     print(mst_prim.sum())
-    X = squareform(pdist(data, 'euclidean'))
 
     print(" ---------------------- ")
 
     # computes MST based on the scikit-learn package
+    X = squareform(pdist(data, 'euclidean'))
     mst_scip = minimum_spanning_tree(X)
     print(mst_scip)
-    print(mst_prim.sum())
+    print(mst_scip.sum())
 
     # compares the total weight of both graphs
     if mst_prim.sum() == mst_scip.sum():
-        print("Pass!")
+        print("Exactly the same weight!")
     else:
-        print("Something is wrong!")
+        print("Maybe there is something wrong!")
