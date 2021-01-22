@@ -1,7 +1,7 @@
 import numpy as np
 
 from scipy.spatial import distance
-from scipy.sparse import coo_matrix
+from scipy.sparse import csr_matrix
 
 def prim(data, core_distances, min_pts, self_edges):
 
@@ -60,4 +60,4 @@ def prim(data, core_distances, min_pts, self_edges):
         # nearest_points[n-1:] = np.arange(n)
         # nearest_distances[n-1:] = [ distance.euclidean(data[i], data[i]) for i in range(n)]
     
-    return coo_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
+    return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
