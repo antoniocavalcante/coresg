@@ -3,10 +3,15 @@ import numpy as np
 from scipy.spatial import distance
 from scipy.sparse import csr_matrix
 
+from fair_split_tree import FairSplitTree
+
 class RelativeNeighborhoodGraph:
 
     def __init__(self, data, quick = True, naive = False):
-        self.data = data            
+        self.data = data
+
+        self.quick = quick
+        self.naive = naive
 
         n = len(data)
 
@@ -15,58 +20,68 @@ class RelativeNeighborhoodGraph:
         self.w = []
 
         # Build Fair Split Tree
+        T = FairSplitTree(self.data)
 
         # Find Well-Separated Pairs and their respective SBCN
+        self.wspd(T)
 
-        return csr_matrix((self.w, (self.u, self.v)), shape=(n, n))
+        self.graph = csr_matrix((self.w, (self.u, self.v)), shape=(n, n))
+
 
     def sbcn(self, red, blue):
-
+        print(red, blue)
         # if both sets are singletons
         if len(red) == 1 and len(blue) == 1:
             self.add_edge(red[-1], blue[-1])
             return
-
-        if len(red) == 1:
-            min_distance = np.inf
-            v = -1
-            for i in blue:
-                current_distance = distance.euclidean(data[red[-1]], data[i])
-                
-                if current_distance < min_distance:
-                    v = i
-                    min_distance = current_distance
-
-            self.add_edge(red[-1], v)
-            return 
-
-        if len(blue) == 1:
-            min_distance = np.inf
-            v = -1
-            for i in blue:
-                current_distance = distance.euclidean(data[red[-1]], data[i])
-                
-                if current_distance < min_distance:
-                    v = i
-                    min_distance = current_distance
-
-            self.add_edge(red[-1], v)
-            return 
         
-        temp = []
+        candidate_edges  = []
+        candidate_points = set()
         for r in red:
             
-            nearest_p = -1
+            nearest_p = []
             nearest_d = np.inf
             
             for b in blue:
                 min_dist_rb = distance.euclidean(data[r], data[b])
 
-            temp.append(nearest_p)
+                if min_dist_rb <  nearest_d:
+                    nearest_p = []
 
+                if min_dist_rb <= nearest_d:
+                    nearest_d = min_dist_rb
+                    nearest_p.append(b)
 
-        self.add_edge()
-        
+            for b in nearest_p:
+                candidate_edges.append((r, b))
+                candidate_points.add(b)
+
+        for b in candidate_points:
+            
+            nearest_p = []
+            nearest_d = np.inf
+
+            for r in red:
+                min_dist_br = distance.euclidean(data[r], data[b])
+
+                if min_dist_br <  nearest_d:
+                    nearest_p = []
+
+                if min_dist_br <= nearest_d:
+                    nearest_d = min_dist_br
+                    nearest_p.append(r)
+
+            for r in nearest_p:
+                if (r, b) in candidate_edges:
+                    self.add_edge(r, b)
+                    candidate_edges.remove((r, b))
+
+    def add_edge(self, point_a, point_b):
+        if self.relative_neighbors(point_a, point_b):
+            self.u.append(point_a)
+            self.v.append(point_b)
+            self.w.append(distance.euclidean(self.data[point_a], self.data[point_b]))
+
 
     def wspd(self, fst):
         stack = []
@@ -76,40 +91,109 @@ class RelativeNeighborhoodGraph:
         while stack:
             node = stack.pop()
 
-            if node.l is not None:
+            if not node.l.leaf:
                 stack.append(node.l)
 
-            if node.r is not None:
+            if not node.r.leaf:
                 stack.append(node.r) 
 
             self.find_pairs(node.l, node.r)
 
-        return None
 
+    def find_pairs(self, node_a, node_b):
 
-    def find_pairs(self, fst):
+        if FairSplitTree.separated(node_a, node_b):
+            self.sbcn(node_a.points, node_b.points)
+        else:
+            if node_a.diameter <= node_b.diameter:
+                self.find_pairs(node_a, node_b.l)
+                self.find_pairs(node_a, node_b.r)
+            else:
+                self.find_pairs(node_a.l, node_b)
+                self.find_pairs(node_a.r, node_b)
+    
 
-        return None
-
-
-    def add_edge(self, p, q):
+    def relative_neighbors(self, point_a, point_b):
 
         if self.quick:
-            pass
-
+            if not self._relative_neighbors_quick(point_a, point_b):
+                return False
+            
         if self.naive:
-            pass
+            if not self._relative_neighbors_naive(point_a, point_b):
+                return False
+
+        return True
+
+
+    def _relative_neighbors_quick(self, point_a, point_b):
+        return True
+
+
+    def _relative_neighbors_naive(self, point_a, point_b):
+
+        distance_ab = distance.euclidean(self.data[point_a], self.data[point_b])
+
+        for point_c in range(len(self.data)):
+            if distance_ab > max(
+                distance.euclidean(self.data[point_a], self.data[point_c]), 
+                distance.euclidean(self.data[point_b], self.data[point_c])):
+                return False
+
+        return True
+
+
 
 
 if __name__ == "__main__":
     
     # generates a small random dataset
-    data = np.array([[2, 3, 1, 0],[4, 6, 1, 5], [7, 2, 6, 15], [7, 9, 9, 23], [3, 17, 14, 6], [4, 14, 0, 3], [0, 1, 9, 0]])
+    data = np.array([
+        [0, 2],
+        [1, 1], 
+        [1, 2], 
+        [1, 3], 
+        [2, 2], 
+        [3, 1], 
+        [4, 5],
+        [5, 4],
+        [5, 5],
+        [5, 6],
+        [6, 7],
+        [7, 1],
+        [7, 2],
+        [8, 1],
+        [8, 2]])
     
-    print(data)
+    rng = RelativeNeighborhoodGraph(data, quick=False, naive=True)
 
-    import sys
-    print(sys.getrecursionlimit())
+    n = len(data)
 
+    print(rng.graph)
 
-    fst = fair_split_tree.FairSplitTree(data)
+    print("------------------------------------")
+
+    u = []
+    v = []
+    w = []
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            dij = distance.euclidean(data[i], data[j])
+
+            rn = True
+
+            for m in range(n):
+                dim = distance.euclidean(data[i], data[m])
+                djm = distance.euclidean(data[j], data[m])
+                if (dij > max(dim, djm)):
+                    rn = False
+                    break
+            
+            if rn:
+                u.append(i)
+                v.append(j)
+                w.append(dij)
+
+    graph = csr_matrix((w, (u, v)), shape=(n, n))
+    print(graph)

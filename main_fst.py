@@ -7,7 +7,7 @@ from mst import mst
 from scipy.spatial.distance import pdist, squareform
 from scipy.sparse.csgraph import minimum_spanning_tree
 
-from rng import fair_split_tree
+from rng.fair_split_tree import FairSplitTree
 
 
 if __name__ == "__main__":
@@ -21,4 +21,4 @@ if __name__ == "__main__":
     print(sys.getrecursionlimit())
 
 
-    fst = fair_split_tree.FairSplitTree(data)
+    fst = FairSplitTree(data)

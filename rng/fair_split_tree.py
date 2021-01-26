@@ -11,6 +11,7 @@ class FairSplitTree:
 
         self.construct()
 
+
     def construct(self):
 
         # starts with the root of the tree
@@ -21,8 +22,8 @@ class FairSplitTree:
             node = stack.pop()
 
             if len(node.points) > 1:
-                maxdim = np.max(data[node.points], axis=0)
-                mindim = np.min(data[node.points], axis=0)
+                maxdim = np.max(self.data[node.points], axis=0)
+                mindim = np.min(self.data[node.points], axis=0)
 
                 # updates the diameter of the node (euclidean distance)
                 node.diameter = distance.euclidean(maxdim, mindim)
@@ -33,8 +34,8 @@ class FairSplitTree:
                 split_dim = np.argmax(maxdim - mindim)
                 split_val = (mindim[split_dim] + maxdim[split_dim]) / 2
                 
-                left  = [point for point in node.points if data[point, split_dim] <  split_val]
-                right = [point for point in node.points if data[point, split_dim] >= split_val]
+                left  = [point for point in node.points if self.data[point, split_dim] <  split_val]
+                right = [point for point in node.points if self.data[point, split_dim] >= split_val]
 
                 if (left):
                     node.l = FairSplitTree.FairSplitTreeNode(left)
@@ -43,10 +44,18 @@ class FairSplitTree:
                 if (right):
                     node.r = FairSplitTree.FairSplitTreeNode(right)
                     stack.append(node.r)
-
-                print(split_dim, split_val, left, right)
             else:
-                node.center = node.points[0]    
+                node.center = node.points[0]
+                node.leaf = True
+
+    @staticmethod
+    def separated(node_a, node_b):
+        return FairSplitTree.node_distances(node_a, node_b) > max(node_a.diameter, node_b.diameter)
+
+
+    @staticmethod
+    def node_distances(node_a, node_b):
+        return distance.euclidean(node_a.center, node_b.center) - node_a.diameter/2 - node_b.diameter/2
 
 
     class FairSplitTreeNode:
@@ -56,15 +65,9 @@ class FairSplitTree:
             self.l = left
             self.r = right
             self.diameter = 0
-            self.center
+            self.center = None
+            self.leaf = False
 
-
-def separated(node_a, node_b):
-    return node_distances(node_a, node_b) > max(node_a.diameter, node_b.diameter)
-
-
-def node_distances(node_a, node_b):
-    return distance.euclidean((node_a.center, node_b.center) - node_a.diameter/2 - node_b.diameter/2
 
 
 
@@ -72,11 +75,5 @@ if __name__ == "__main__":
     
     # generates a small random dataset
     data = np.array([[2, 3, 1, 0],[4, 6, 1, 5], [7, 2, 6, 15], [7, 9, 9, 23], [3, 17, 14, 6], [4, 14, 0, 3], [0, 1, 9, 0]])
-    
-    print(data)
-
-    import sys
-    print(sys.getrecursionlimit())
-
 
     fst = FairSplitTree(data)

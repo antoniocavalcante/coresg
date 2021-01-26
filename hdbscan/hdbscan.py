@@ -1,9 +1,13 @@
 import numpy as np
 
+from rng.rng import RelativeNeighborhoodGraph
+
+from scipy.sparse.csgraph import minimum_spanning_tree
+
 class HDBSCAN:
 
-    def __init__(self, data, distance):
-        self.data = data
+    def __init__(self, data_file, delimiter=',', distance='euclidean'):
+        self.data = np.genfromtxt(data_file, delimiter=delimiter)
         self.min_pts = min_pts
         self.distance = distance
 
@@ -19,23 +23,23 @@ class HDBSCAN:
         return None
 
 
-    def hdbscan(self, kmin = 1, kmax = 16, method='mrg'):
+    def hdbscan(self, kmin = 1, kmax = 16, method='rng'):
 
 
         if method == 'mrg':
             g = None
         elif method == 'rng':
-            g = None
+            g = RelativeNeighborhoodGraph(self.data)
         elif method == 'knn':
             g = None
 
         for i in range(kmin, kmax):
             # compute mst for mpts = i
-            mst = None
+            mst = minimum_spanning_tree(g)
 
             # compute hierarchy for mpts = i
-
-        return self
+            
+        return None
 
     def _read_data(self):
 
