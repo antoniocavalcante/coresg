@@ -1,19 +1,31 @@
+# cython: profile=True
+# cython: linetrace=True
 import numpy as np
+cimport numpy as np
+
+cimport cython
 
 from scipy.spatial import distance
 from scipy.sparse import csr_matrix
 
-from fair_split_tree import FairSplitTree
+from rng.fair_split_tree import FairSplitTree
 
-class RelativeNeighborhoodGraph:
+include '../mst/parameters.pxi'
 
-    def __init__(self, data, quick = True, naive = False):
+cdef class RelativeNeighborhoodGraph:
+
+    cdef np.ndarray data
+    cdef bint quick, naive
+
+    cdef list u, v, w
+
+    def __init__(self, np.ndarray data, bint quick = True, bint naive = False):
         self.data = data
 
         self.quick = quick
         self.naive = naive
 
-        n = len(data)
+        cdef ITYPE_t n = len(self.data)
 
         self.u = []
         self.v = []
@@ -25,11 +37,11 @@ class RelativeNeighborhoodGraph:
         # Find Well-Separated Pairs and their respective SBCN
         self.wspd(T)
 
-        self.graph = csr_matrix((self.w, (self.u, self.v)), shape=(n, n))
+        # self.graph = csr_matrix((self.w, (self.u, self.v)), shape=(n, n))
 
 
-    def sbcn(self, red, blue):
-        print(red, blue)
+    cdef sbcn(self, red, blue):
+
         # if both sets are singletons
         if len(red) == 1 and len(blue) == 1:
             self.add_edge(red[-1], blue[-1])
@@ -43,7 +55,7 @@ class RelativeNeighborhoodGraph:
             nearest_d = np.inf
             
             for b in blue:
-                min_dist_rb = distance.euclidean(data[r], data[b])
+                min_dist_rb = distance.euclidean(self.data[r], self.data[b])
 
                 if min_dist_rb <  nearest_d:
                     nearest_p = []
@@ -62,7 +74,7 @@ class RelativeNeighborhoodGraph:
             nearest_d = np.inf
 
             for r in red:
-                min_dist_br = distance.euclidean(data[r], data[b])
+                min_dist_br = distance.euclidean(self.data[r], self.data[b])
 
                 if min_dist_br <  nearest_d:
                     nearest_p = []
@@ -76,14 +88,14 @@ class RelativeNeighborhoodGraph:
                     self.add_edge(r, b)
                     candidate_edges.remove((r, b))
 
-    def add_edge(self, point_a, point_b):
+    cdef add_edge(self, point_a, point_b):
         if self.relative_neighbors(point_a, point_b):
             self.u.append(point_a)
             self.v.append(point_b)
             self.w.append(distance.euclidean(self.data[point_a], self.data[point_b]))
 
 
-    def wspd(self, fst):
+    cdef void wspd(self, fst):
         stack = []
 
         stack.append(fst.root)
@@ -100,9 +112,10 @@ class RelativeNeighborhoodGraph:
             self.find_pairs(node.l, node.r)
 
 
-    def find_pairs(self, node_a, node_b):
+    cdef find_pairs(self, node_a, node_b):
 
         if FairSplitTree.separated(node_a, node_b):
+            # pass
             self.sbcn(node_a.points, node_b.points)
         else:
             if node_a.diameter <= node_b.diameter:
@@ -113,7 +126,7 @@ class RelativeNeighborhoodGraph:
                 self.find_pairs(node_a.r, node_b)
     
 
-    def relative_neighbors(self, point_a, point_b):
+    cdef relative_neighbors(self, point_a, point_b):
 
         if self.quick:
             if not self._relative_neighbors_quick(point_a, point_b):
@@ -126,11 +139,11 @@ class RelativeNeighborhoodGraph:
         return True
 
 
-    def _relative_neighbors_quick(self, point_a, point_b):
+    cdef _relative_neighbors_quick(self, point_a, point_b):
         return True
 
 
-    def _relative_neighbors_naive(self, point_a, point_b):
+    cdef _relative_neighbors_naive(self, point_a, point_b):
 
         distance_ab = distance.euclidean(self.data[point_a], self.data[point_b])
 

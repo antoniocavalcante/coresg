@@ -1,5 +1,11 @@
-from experiments import experiments
+import sys
 
+from experiments import run
+
+# from mst import mst
 
 if __name__ == "__main__":
-    pass
+    
+    run.rng_hdbscan(sys.argv[1], kmin=2, kmax=4)
+
+    
