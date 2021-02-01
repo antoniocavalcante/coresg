@@ -23,7 +23,7 @@ if __name__ == "__main__":
     k = 4
 
     # generates a small random dataset
-    data = np.random.rand(1000,2)
+    data = np.random.rand(10,2)
     
     # computes core-distances and knn information
     nbrs = NearestNeighbors(n_neighbors=k, algorithm='ball_tree').fit(data)    
@@ -53,13 +53,20 @@ if __name__ == "__main__":
 
 
     start = time.time()
-    rng = RelativeNeighborhoodGraph(data)
+    rng = RelativeNeighborhoodGraph(data, core_distances, knn, k)
     end = time.time()
     print("[RNG] " + str(end - start))
     print(" ---------------------- ")
 
+    graph = rng.graph()
 
-    # print(mst_prim.sum(), mst_split.sum())
+    start = time.time()
+    mst_scip = minimum_spanning_tree(graph)
+    end = time.time()
+
+    # print(rng.graph())
+
+    print(mst_prim.sum(), mst_scip.sum())
     # # compares the total weight of both graphs
     # if mst_prim.sum() == mst_split.sum():
     #     print("Exactly the same weight!")

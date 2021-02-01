@@ -1,11 +1,17 @@
+import pyximport; 
+pyximport.install()
+
+import time
+
 import sys
 
 from experiments import run
 
-# from mst import mst
-
 if __name__ == "__main__":
     
-    run.rng_hdbscan(sys.argv[1], kmin=2, kmax=4)
+    print(sys.argv[1], sys.argv[2], sep=' ', end=' ')
 
-    
+    start = time.time()
+    run.g_hdbscan(datafile=sys.argv[1], kmax=int(sys.argv[2]), delimiter=sys.argv[3], method=sys.argv[4])
+    end = time.time()
+    print(str(end - start))

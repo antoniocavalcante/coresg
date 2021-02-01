@@ -6,12 +6,10 @@ from scipy.sparse import csr_matrix
 
 from hdbscan.hdbscan import HDBSCAN
 
-def rng_hdbscan(datafile, kmin = 1, kmax = 16):
-
-    print("Starting Experiments") 
+def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn'):
     
-    h = HDBSCAN(datafile, min_pts=kmax, delimiter=' ')
+    h = HDBSCAN(datafile, min_pts=kmax, delimiter=delimiter)
 
-    h.hdbscan(kmin=kmin, kmax=kmax, method='rng')
+    h.hdbscan_g(kmin=kmin, kmax=kmax, method=method)
 
     return None       

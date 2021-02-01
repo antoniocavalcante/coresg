@@ -1,104 +1,135 @@
-# cython: profile=True
-# cython: linetrace=True
 import numpy as np
 cimport numpy as np
 
 cimport cython
-
+import time
 from scipy.spatial import distance
 from scipy.sparse import csr_matrix
 
-from rng.fair_split_tree import FairSplitTree
+from rng.fair_split_tree import FairSplitTree, FairSplitTreeNode
 
 include '../mst/parameters.pxi'
 
 cdef class RelativeNeighborhoodGraph:
 
-    cdef np.ndarray data
+    cdef np.ndarray data, core_distances, knn
     cdef bint quick, naive
+
+    cdef ITYPE_t min_points
 
     cdef list u, v, w
 
-    def __init__(self, np.ndarray data, bint quick = True, bint naive = False):
+    def __init__(self, 
+        np.ndarray data, 
+        np.ndarray core_distances,
+        np.ndarray knn,
+        ITYPE_t min_points, bint quick = True, bint naive = False):
+        
         self.data = data
+
+        self.core_distances = core_distances[:, min_points - 1]
+        self.knn = knn
+
+        self.min_points = min_points
 
         self.quick = quick
         self.naive = naive
-
-        cdef ITYPE_t n = len(self.data)
 
         self.u = []
         self.v = []
         self.w = []
 
+        # start = time.time()
         # Build Fair Split Tree
-        T = FairSplitTree(self.data)
+        T = FairSplitTree(self.data, self.core_distances)
+        # end = time.time()
 
+        # print("[FST] " + str(end - start))
+
+        # start = time.time()
         # Find Well-Separated Pairs and their respective SBCN
         self.wspd(T)
+        # end = time.time()
 
-        # self.graph = csr_matrix((self.w, (self.u, self.v)), shape=(n, n))
+        # print("[WSPD] " + str(end - start))
 
 
-    cdef sbcn(self, red, blue):
+    cpdef graph(self):
+        cdef ITYPE_t n = len(self.data)
+        
+        return csr_matrix((self.w, (self.u, self.v)), shape=(n, n))
+
+
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    @cython.initializedcheck(False)
+    cdef void sbcn(self, ITYPE_t[:] red, ITYPE_t[:] blue):
+
+        cdef ITYPE_t r, b, r_size, b_size
+
+        r_size = red.size
+        b_size = blue.size
 
         # if both sets are singletons
-        if len(red) == 1 and len(blue) == 1:
-            self.add_edge(red[-1], blue[-1])
+        if r_size == 1 and b_size == 1:
+            self.add_edge(
+                red[0],
+                blue[0],
+                distance.euclidean(self.data[red[0]], self.data[blue[0]]))
             return
         
-        candidate_edges  = []
-        candidate_points = set()
-        for r in red:
+        cdef DTYPE_t min_dist
+
+        cdef DTYPE_t[:] distances
+
+        cdef DTYPE_t[:] min_distances_rb = np.full(red.size,  np.inf, dtype=DTYPE)
+        cdef DTYPE_t[:] min_distances_br = np.full(blue.size, np.inf, dtype=DTYPE)
+
+        cdef ITYPE_t[:] min_distances_points_rb = np.zeros(red.size,  dtype=ITYPE)
+        cdef ITYPE_t[:] min_distances_points_br = np.zeros(blue.size, dtype=ITYPE)
+
+        for r in range(r_size):
             
-            nearest_p = []
-            nearest_d = np.inf
+            distances = distance.cdist([self.data[red[r]]], self.data[blue])[0]
             
-            for b in blue:
-                min_dist_rb = distance.euclidean(self.data[r], self.data[b])
-
-                if min_dist_rb <  nearest_d:
-                    nearest_p = []
-
-                if min_dist_rb <= nearest_d:
-                    nearest_d = min_dist_rb
-                    nearest_p.append(b)
-
-            for b in nearest_p:
-                candidate_edges.append((r, b))
-                candidate_points.add(b)
-
-        for b in candidate_points:
+            for i in range(b_size):
+                
+                d_rb = max(distances[i], self.core_distances[red[r]], self.core_distances[blue[i]])
+                
+                if d_rb < min_distances_rb[r]:
+                    min_distances_rb[r] = d_rb
+                    min_distances_points_rb[r] = i
             
-            nearest_p = []
-            nearest_d = np.inf
+            b = min_distances_points_rb[r]
 
-            for r in red:
-                min_dist_br = distance.euclidean(self.data[r], self.data[b])
+            if min_distances_rb[r] < min_distances_br[b]:
+                min_distances_br[b] = min_distances_rb[r]
+                min_distances_points_br[b] = r
+        
+        for r in range(r_size):
+            b = min_distances_points_rb[r]
+            if min_distances_points_br[b] == r:
+                self.add_edge(red[r], blue[b], 1)
 
-                if min_dist_br <  nearest_d:
-                    nearest_p = []
 
-                if min_dist_br <= nearest_d:
-                    nearest_d = min_dist_br
-                    nearest_p.append(r)
-
-            for r in nearest_p:
-                if (r, b) in candidate_edges:
-                    self.add_edge(r, b)
-                    candidate_edges.remove((r, b))
-
-    cdef add_edge(self, point_a, point_b):
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    @cython.initializedcheck(False)
+    cdef void add_edge(self, ITYPE_t point_a, ITYPE_t point_b, DTYPE_t weight):
         if self.relative_neighbors(point_a, point_b):
             self.u.append(point_a)
             self.v.append(point_b)
-            self.w.append(distance.euclidean(self.data[point_a], self.data[point_b]))
+            self.w.append(1)
 
 
-    cdef void wspd(self, fst):
-        stack = []
-
-        stack.append(fst.root)
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    @cython.initializedcheck(False)
+    def wspd(self, fst):
+        stack = [fst.root]
 
         while stack:
             node = stack.pop()
@@ -112,10 +143,13 @@ cdef class RelativeNeighborhoodGraph:
             self.find_pairs(node.l, node.r)
 
 
-    cdef find_pairs(self, node_a, node_b):
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    @cython.initializedcheck(False)
+    cdef void find_pairs(self, node_a, node_b):
 
         if FairSplitTree.separated(node_a, node_b):
-            # pass
             self.sbcn(node_a.points, node_b.points)
         else:
             if node_a.diameter <= node_b.diameter:
@@ -126,7 +160,11 @@ cdef class RelativeNeighborhoodGraph:
                 self.find_pairs(node_a.r, node_b)
     
 
-    cdef relative_neighbors(self, point_a, point_b):
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    @cython.initializedcheck(False)
+    cdef bint relative_neighbors(self, ITYPE_t point_a, ITYPE_t point_b):
 
         if self.quick:
             if not self._relative_neighbors_quick(point_a, point_b):
@@ -139,11 +177,19 @@ cdef class RelativeNeighborhoodGraph:
         return True
 
 
-    cdef _relative_neighbors_quick(self, point_a, point_b):
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    @cython.initializedcheck(False)
+    cdef bint _relative_neighbors_quick(self, ITYPE_t point_a, ITYPE_t point_b):
         return True
 
 
-    cdef _relative_neighbors_naive(self, point_a, point_b):
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    @cython.initializedcheck(False)
+    cdef bint _relative_neighbors_naive(self, ITYPE_t point_a, ITYPE_t point_b):
 
         distance_ab = distance.euclidean(self.data[point_a], self.data[point_b])
 
@@ -156,6 +202,31 @@ cdef class RelativeNeighborhoodGraph:
         return True
 
 
+    # cpdef naive_constructor(self):
+
+    #     ITYPE_t i, j, n
+
+    #     n = len(data)
+
+    #     for i in range(n):
+    #         for j in range(i + 1, n):
+    #             dij = distance.euclidean(data[i], data[j])
+
+    #             rn = True
+
+    #             for m in range(n):
+    #                 dim = distance.euclidean(data[i], data[m])
+    #                 djm = distance.euclidean(data[j], data[m])
+    #                 if (dij > max(dim, djm)):
+    #                     rn = False
+    #                     break
+                
+    #             if rn:
+    #                 u.append(i)
+    #                 v.append(j)
+    #                 w.append(dij)
+
+    #     return graph = csr_matrix((w, (u, v)), shape=(n, n))
 
 
 if __name__ == "__main__":
