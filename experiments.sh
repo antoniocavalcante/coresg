@@ -47,7 +47,7 @@ smartFilter="true"
 naiveFilter="true"
 incremental="false"
 
-for i in $(seq 5)
+for i in $(seq 1)
 do
 	minpoints $smartFilter $naiveFilter $incremental $index
 	dimensions $smartFilter $naiveFilter $incremental $index

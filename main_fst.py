@@ -1,24 +1,22 @@
 import numpy as np
 
+import mst
+
+import pyximport; pyximport.install()
+
 from sklearn.neighbors import NearestNeighbors
-
-from mst import mst
-
-from scipy.spatial.distance import pdist, squareform
-from scipy.sparse.csgraph import minimum_spanning_tree
 
 from rng.fair_split_tree import FairSplitTree
 
-
 if __name__ == "__main__":
     
-    # generates a small random dataset
-    data = np.array([[2, 3, 1, 0],[4, 6, 1, 5], [7, 2, 6, 15], [7, 9, 9, 23], [3, 17, 14, 6], [4, 14, 0, 3], [0, 1, 9, 0]])
-    
-    print(data)
+    data = np.random.rand(1600,16)
 
-    import sys
-    print(sys.getrecursionlimit())
+    k = 16
 
+    nbrs = NearestNeighbors(n_neighbors=k, algorithm='ball_tree').fit(data)
 
-    fst = FairSplitTree(data)
+    # computes the core-distances and knn information
+    core_distances, knn = nbrs.kneighbors(data)
+
+    fst = FairSplitTree(data, core_distances[:, k-1])

@@ -8,7 +8,7 @@ from scipy.spatial import distance
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
 
-include 'parameters.pxi'
+include '../parameters.pxi'
 
 @cython.boundscheck(False)
 @cython.wraparound(False)

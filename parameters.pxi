@@ -1,8 +1,8 @@
 DTYPE = np.float64
 ctypedef np.float64_t DTYPE_t
 
-ITYPE = np.int32
-ctypedef np.int32_t ITYPE_t
+ITYPE = np.int64
+ctypedef np.int64_t ITYPE_t
 
 # Fused type for int32 and int64
 ctypedef fused int32_or_int64:

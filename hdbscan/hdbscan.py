@@ -26,7 +26,7 @@ class HDBSCAN:
 
         try:
             self.core_distances = np.genfromtxt(datafile + "-" + str(min_pts) + ".cd", delimiter=delimiter)
-            self.knn = np.genfromtxt(datafile + "-" + str(min_pts) + ".knn", delimiter=delimiter)            
+            self.knn = np.genfromtxt(datafile + "-" + str(min_pts) + ".knn", delimiter=delimiter, dtype=np.int64)
             self.knng = load_npz(datafile + "-" + str(self.min_pts) + ".npz")
         except:
             from sklearn.neighbors import NearestNeighbors
@@ -45,7 +45,7 @@ class HDBSCAN:
 
             # saving the computed core-distances, knn and knng on files.
             np.savetxt(datafile + "-" + str(self.min_pts) + ".cd" , self.core_distances, delimiter=delimiter)
-            np.savetxt(datafile + "-" + str(self.min_pts) + ".knn", self.knn, delimiter=delimiter)
+            np.savetxt(datafile + "-" + str(self.min_pts) + ".knn", self.knn, delimiter=delimiter, fmt='%i')
             save_npz(datafile + "-" + str(self.min_pts) + ".npz", self.knng)
 
 
@@ -58,13 +58,13 @@ class HDBSCAN:
         return None
 
 
-    def hdbscan_g(self, kmin = 1, kmax = 16, method='knn'):
+    def hdbscan_g(self, kmin = 1, kmax = 16, method='knn', quick=True):
 
         start = time.time()
 
         if method == 'rng':
             # computes the RNG with regard to min_pts = kmax
-            rng_object = RelativeNeighborhoodGraph(self.data, self.core_distances, self.knn, kmax)
+            rng_object = RelativeNeighborhoodGraph(self.data, self.core_distances, self.knn, kmax, quick=quick)
             # obtains the csr_matrix representation of the RNG
             rng = rng_object.graph()
             # makes the RNG an upper triangular matrix
@@ -80,7 +80,7 @@ class HDBSCAN:
 
             base_graph = self._graph_setup(mst_kmax)
         
-        # eliminates zeroes from the matrix that might have remained from the operations.
+        # # eliminates zeroes from the matrix that might have remained from the operations.
         base_graph.eliminate_zeros()
 
         end = time.time()

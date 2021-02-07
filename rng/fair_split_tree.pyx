@@ -1,5 +1,6 @@
 # cython: profile=True
-# cython: linetrace=True
+import math
+
 import numpy as np
 cimport numpy as np
 
@@ -7,13 +8,18 @@ cimport cython
 
 from scipy.spatial import distance
 
-include '../mst/parameters.pxi'
+from libc.math cimport sqrt
+
+include '../parameters.pxi'
 
 cdef class FairSplitTree:
 
     cdef public FairSplitTreeNode root
 
-    def __init__(self, np.ndarray[DTYPE_t, ndim=2] data, np.ndarray[DTYPE_t, ndim=1] core_distances):
+    def __init__(
+        self, 
+        np.ndarray[DTYPE_t, ndim=2] data, 
+        np.ndarray[DTYPE_t, ndim=1] core_distances):
  
         self.root = FairSplitTreeNode(np.arange(len(data), dtype=ITYPE))
 
@@ -24,7 +30,10 @@ cdef class FairSplitTree:
     @cython.wraparound(False)
     @cython.nonecheck(False)
     @cython.initializedcheck(False)
-    cdef construct(self, np.ndarray[DTYPE_t, ndim=2] data, np.ndarray[DTYPE_t, ndim=1] core_distances):
+    cdef construct(
+        self, 
+        np.ndarray[DTYPE_t, ndim=2] data, 
+        np.ndarray[DTYPE_t, ndim=1] core_distances):
 
         cdef FairSplitTreeNode node
         
@@ -41,12 +50,11 @@ cdef class FairSplitTree:
         left  = np.zeros(len(data), dtype=ITYPE)
         right = np.zeros(len(data), dtype=ITYPE)
 
-
         while stack:
             
             node = stack.pop()
 
-            n = node.points.size
+            n = len(node.points)
 
             if n > 1:
                 # finds the maximum and minimum values for each dimension
@@ -55,7 +63,7 @@ cdef class FairSplitTree:
 
                 # updates the diameter of the node (euclidean distance)
                 node.diameter = max(
-                    distance.euclidean(maxdim, mindim),
+                    euclidean(maxdim, mindim),
                     np.max(core_distances[node.points]))
 
                 # updates the geometric center of this node
@@ -92,36 +100,58 @@ cdef class FairSplitTree:
                 node.leaf = True
 
 
-    @staticmethod
-    @cython.boundscheck(False)
-    @cython.wraparound(False)
-    @cython.nonecheck(False)
-    @cython.initializedcheck(False)
-    def separated(FairSplitTreeNode node_a, FairSplitTreeNode node_b):
-        return FairSplitTree.node_distances(node_a, node_b) > max(node_a.diameter, node_b.diameter)
+# @staticmethod
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cpdef bint separated(FairSplitTreeNode node_a, FairSplitTreeNode node_b):
+    return node_distances(node_a, node_b) >= max(node_a.diameter, node_b.diameter)
 
 
-    @staticmethod
-    @cython.boundscheck(False)
-    @cython.wraparound(False)
-    @cython.nonecheck(False)
-    @cython.initializedcheck(False)
-    def node_distances(FairSplitTreeNode node_a, FairSplitTreeNode node_b):
-        return distance.euclidean(node_a.center, node_b.center) - node_a.diameter/2 - node_b.diameter/2
+# @staticmethod
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+@cython.cdivision(True)
+cdef DTYPE_t node_distances(FairSplitTreeNode node_a, FairSplitTreeNode node_b):
+    return euclidean(node_a.center, node_b.center) - node_a.diameter/2 - node_b.diameter/2
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cdef DTYPE_t euclidean(np.ndarray[np.float64_t, ndim=1] v1, np.ndarray[np.float64_t, ndim=1] v2):
+    cdef ITYPE_t i, m
+    cdef DTYPE_t d = 0.0
+    m = v1.shape[0]
+
+    for i in xrange(m):
+        d += (v1[i] - v2[i])**2
+
+    return sqrt(d)
 
 
 cdef class FairSplitTreeNode:
 
-    cdef readonly ITYPE_t[:] points
+    cdef public np.ndarray points
     cdef public FairSplitTreeNode l, r
-    cdef public DTYPE_t diameter
-    cdef public DTYPE_t[:] center
+    cdef public np.float64_t diameter
+    cdef public np.ndarray center
     cdef public bint leaf
 
-    def __init__(self, ITYPE_t[:] points, FairSplitTreeNode left = None, FairSplitTreeNode right = None, DTYPE_t[:] center = None):
+    def __init__(
+        self, 
+        np.ndarray[np.int64_t, ndim=1] points, 
+        FairSplitTreeNode left = None, 
+        FairSplitTreeNode right = None, 
+        np.ndarray[np.float64_t, ndim=1] center = None):
+        
         self.points = points
         self.l = left
         self.r = right
         self.diameter = 0
         self.center = None
-        self.leaf = False    
+        self.leaf = False
