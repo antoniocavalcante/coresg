@@ -8,6 +8,8 @@ from scipy.spatial import distance
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
 
+import heapq
+
 include '../parameters.pxi'
 
 @cython.boundscheck(False)
@@ -83,6 +85,102 @@ cdef _prim(
 		# nearest_distances[n-1:] = [ distance.euclidean(data[i], data[i]) for i in range(n)]
 	
 	return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
+
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cdef _prim_graph(
+	graph,
+	ITYPE_t[:, :] knn, 
+	DTYPE_t[:, :] core_distances, 
+	ITYPE_t min_pts, 
+	ITYPE_t self_edges):
+
+	cdef ITYPE_t n, n_edges, num_edges_attached, current_point, nearest_point, neighbor, i
+	cdef DTYPE_t nearest_distance, d
+
+	n = len(knn)
+
+	n_edges = 2*n - 1 if self_edges else n - 1
+
+	# keeps track of which points are attached to the tree.
+	cdef ITYPE_t[:] attached = np.zeros(n, dtype=ITYPE)
+
+	# arrays to keep track of the shortest connection to each point.
+	cdef ITYPE_t[:] nearest_points = np.zeros(n_edges, dtype=ITYPE)
+	cdef DTYPE_t[:] nearest_distances  = np.full(n_edges, np.inf, dtype=DTYPE)
+
+	cdef DTYPE_t[:] distances_array 
+
+	# keeps track of the number of edges added so far.
+	num_edges_attached = 0
+
+	# sets current point to the last point in the data.
+	current_point = n - 1
+
+	pq = []
+
+	# heapq.heapify(pq)
+	
+	heapq.heappush(pq, (0, current_point))
+
+	while (num_edges_attached < n - 1):
+
+		# keeps track of the closest point to the tree.
+		_, current_point = heapq.heappop(pq)
+
+		# marks current point as attached.
+		attached[current_point] = 1
+
+		# loops over the dataset to find the next point to attach.
+		for i in range(1, min_pts + 1):
+
+			neighbor = knn[current_point, i]
+			
+			if attached[neighbor]: continue
+
+			d = max(
+				core_distances[current_point, i],
+				core_distances[current_point, min_pts], 
+				core_distances[neighbor, min_pts])
+
+			# updates the closese point to neighbor.
+			if d < nearest_distances[neighbor]:
+				nearest_distances[neighbor] = d
+				nearest_points[neighbor] = current_point
+				heapq.heappush(pq, (d, neighbor))		
+				# print("[1] adding ", neighbor)
+
+		for i in range(len(graph.rows[current_point])):
+			neighbor = graph.rows[current_point][i]
+
+			if attached[neighbor]: continue
+
+			d = graph.data[current_point][i]
+
+			if d < nearest_distances[neighbor]:
+				nearest_distances[neighbor] = d
+				nearest_points[neighbor] = current_point
+				heapq.heappush(pq, (d, neighbor))
+				# print("[2] adding ", neighbor)
+
+
+		# attached nearest_point to the tree.
+		current_point = nearest_point
+		
+		# updates the number of edges added.
+		num_edges_attached += 1
+
+	# if self_edges:
+		# nearest_points[n-1:] = np.arange(n)
+		# nearest_distances[n-1:] = [ distance.euclidean(data[i], data[i]) for i in range(n)]
+	
+	return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
+
+
 
 
 #MST calculation with initial edges set by 1-knng
@@ -175,6 +273,10 @@ cdef _split_mst(data, nn_distances, knn, mpts, self_edges):
 
 cpdef prim(data, core_distances, np.int64_t min_pts, np.int64_t self_edges):
 	return _prim(data, core_distances, min_pts, self_edges)
+
+
+cpdef prim_graph(graph, knn, core_distances, np.int64_t min_pts, np.int64_t self_edges):
+	return _prim_graph(graph, knn, core_distances, min_pts, self_edges)
 
 
 cpdef split_mst(data, nn_distances, knn, mpts, self_edges):

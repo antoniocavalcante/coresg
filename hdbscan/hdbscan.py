@@ -6,11 +6,12 @@ import time
 import numpy as np
 
 from scipy.sparse.csgraph import minimum_spanning_tree
-from scipy.sparse import csr_matrix, save_npz, load_npz, triu
+from scipy.sparse import csr_matrix, save_npz, load_npz, tril
 
 from rng.rng import RelativeNeighborhoodGraph
 
 from mst.mst import prim
+from mst.mst import prim_graph
 
 class HDBSCAN:
 
@@ -31,17 +32,12 @@ class HDBSCAN:
         except:
             from sklearn.neighbors import NearestNeighbors
 
-            nbrs = NearestNeighbors(n_neighbors=min_pts, algorithm='ball_tree').fit(self.data)
-
+            nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
+            
             # computes the core-distances and knn information
             self.core_distances, self.knn = nbrs.kneighbors(self.data)
 
-            # computes the directed k-nearest neighbors graph
-            directed_knng = nbrs.kneighbors_graph(mode='distance')
-
-            # stores an upper triangular version of the k-nn graph
-            self.knng = triu(directed_knng.maximum(directed_knng.T), format='csr')
-            self.knng.eliminate_zeros()
+            self.knng = self._knng(self.min_pts)
 
             # saving the computed core-distances, knn and knng on files.
             np.savetxt(datafile + "-" + str(self.min_pts) + ".cd" , self.core_distances, delimiter=delimiter)
@@ -58,30 +54,21 @@ class HDBSCAN:
         return None
 
 
-    def hdbscan_g(self, kmin = 1, kmax = 16, method='knn', quick=True):
+    def _hdbscan_rng(self, kmin = 1, kmax = 16, quick=True):
 
         start = time.time()
 
-        if method == 'rng':
-            # computes the RNG with regard to min_pts = kmax
-            rng_object = RelativeNeighborhoodGraph(self.data, self.core_distances, self.knn, kmax, quick=quick)
-            # obtains the csr_matrix representation of the RNG
-            rng = rng_object.graph()
-            # makes the RNG an upper triangular matrix
-            rng = triu(rng.maximum(rng.T))
-
-            base_graph = self._graph_setup(rng)
-
-        elif method == 'knn':
-            # computes the MST_kmax + kmax-NN graph
-            mst_kmax = prim(self.data, self.core_distances, kmax, False)
-            # makes the mst an upper triangular matrix
-            mst_kmax = triu(mst_kmax.maximum(mst_kmax.T), format='csr')
-
-            base_graph = self._graph_setup(mst_kmax)
+        # computes the RNG with regard to min_pts = kmax
+        rng_object = RelativeNeighborhoodGraph(self.data, self.core_distances, self.knn, kmax, quick=quick)
+       
+        # obtains the csr_matrix representation of the RNG
+        rng = rng_object.graph()
         
-        # # eliminates zeroes from the matrix that might have remained from the operations.
-        base_graph.eliminate_zeros()
+        # makes the RNG an upper triangular matrix
+        rng = tril(rng.maximum(rng.T))
+        
+        # eliminates zeroes from the matrix that might have remained from the operations.
+        rng.eliminate_zeros()
 
         end = time.time()
         
@@ -89,13 +76,18 @@ class HDBSCAN:
 
         start = time.time()
 
-        # loop over the values of mpts in the input range
-        for i in range(kmin, kmax):
-            # update base_graph with mutual reachabilit
-            g = self._update_graph(base_graph, i)
+        time_msts = np.zeros((kmax - kmin + 1))
 
+        # loop over the values of mpts in the input range
+        for i in range(kmin, kmax + 1):
+            # update base_graph wpythonith mutual reachability distances
+            g = self._update_edge_weights(rng, i)
+            
+            start_mst = time.time()
             # compute mst for mpts = i
             mst = minimum_spanning_tree(g)
+
+            time_msts[i - kmin] = time.time() - start_mst
 
             # compute hierarchy for mpts = i
             #self._construct_hierarchy(mst)
@@ -104,30 +96,170 @@ class HDBSCAN:
         print(end - start, end=' ')
         print(base_graph.count_nonzero(), end=' ')
 
+        # write these results in a file
+        # print(' '.join(map(str, time_msts)), end=' ')
 
-    def _update_graph(self, graph, min_pts):
+
+    def _hdbscan_knn(self, kmin = 1, kmax = 16):
+        
+        # -----------------------------------
+        start = time.time()
+        
+        # computes the MST w.r.t kmax
+        mst = prim(self.data, self.core_distances, kmax, False)
+        # makes the mst an upper triangular matrix.
+        mst = tril(mst.maximum(mst.T), format='csr')
+        # computes the nnsg graph w.r.t. the underlying distance. 
+        nnsg = self._nnsg(mst, self.knng)
+        # eliminates zeroes from the matrix that might have remained from the operations.
+        nnsg.eliminate_zeros()
+
+        end = time.time()
+        print(end - start, end=' ')
+        # -----------------------------------
+
+        # -----------------------------------
+        start = time.time()
+
+        time_msts = np.zeros((kmax - kmin + 1))
+
+        # loop over the values of mpts in the input range [kmin, kmax].
+        for i in range(kmin, kmax):
+
+            start_mst = time.time()
+
+            nnsg = self._update_edge_weights(nnsg, i)
+
+            # compute mst for mpts = i
+            mst = minimum_spanning_tree(nnsg)
+
+            time_msts[i - kmin] = time.time() - start_mst
+
+            # compute hierarchy for mpts = i
+            #self._construct_hierarchy(mst)
+
+        end = time.time()
+        print(end - start, end=' ')
+        # -----------------------------------
+
+        print(nnsg.count_nonzero(), end=' ')
+
+        # write these results in a file
+        # print(' '.join(map(str, time_msts)), end=' ')
+
+
+    def _hdbscan_knn_incremental(self, kmin = 1, kmax = 16):
+        
+        # -----------------------------------
+        start = time.time()
+        
+        # computes the MST w.r.t kmax
+        mst = prim(self.data, self.core_distances, kmax, False)
+        # makes the mst an upper triangular matrix.
+        mst = mst.maximum(mst.T)
+        # computes the nnsg graph w.r.t. the underlying distance. 
+        nnsg = self._nnsg(mst, self.knng)
+        # eliminates zeroes from the matrix that might have remained from the operations.
+        # nnsg.eliminate_zeros()
+
+        end = time.time()
+        print(end - start, end=' ')
+        # -----------------------------------
+
+        # -----------------------------------
+        start = time.time()
+
+        time_msts = np.zeros((kmax - kmin + 1))
+
+        # loop over the values of mpts in the input range [kmin, kmax].
+        for i in range(kmax - 1, kmin, -1):
+            # print(i)
+
+            start_mst = time.time()
+
+            # compute mst for mpts = i
+            mst = prim_graph(mst.tolil(), self.knn, self.core_distances, i, False)
+
+            time_msts[i - kmin] = time.time() - start_mst
+
+            # compute hierarchy for mpts = i
+            #self._construct_hierarchy(mst)
+
+        end = time.time()
+        print(end - start, end=' ')
+        # -----------------------------------
+
+        # print(nnsg.count_nonzero(), end=' ')
+
+        # write these results in a file
+        # print(' '.join(map(str, time_msts)), end=' ')
+
+
+
+    def _update_edge_weights(self, nnsg, k):
+
         # retrieves the arrays with the indexes for rows and columns.
-        row_ind, col_ind = graph.nonzero()
+        row_ind, col_ind = nnsg.nonzero()
 
         # create matrix with core-distances corresponding to each (row, col) combination.
-        w = np.maximum(self.core_distances[row_ind, min_pts-1], self.core_distances[col_ind, min_pts-1])
+        nnsg.data = np.maximum(
+            nnsg.data,
+            self.core_distances[row_ind, k-1], 
+            self.core_distances[col_ind, k-1])
         
-        # returns a matrix of mutual reachability distances.
-        return csr_matrix((w, (row_ind, col_ind)), shape=(self.n, self.n)).maximum(graph)
+        # returns the nnsg with updated edge weights.
+        return nnsg
 
 
-    def _graph_setup(self, graph):
-        graph = graph.todok()
+    def _update_graph(self, mst, k):
 
-        # create difference graph from knn
-        row_ind, col_ind = self.knng.nonzero()
+        # compute knn graph for this value of mpts.
+        knng = self._knng(k)
 
-        # sets 
-        for row, col in zip(row_ind, col_ind):
-            graph[row, col] = 0
+        # computes the NNSG
+        nnsg = self._nnsg(mst, knng)
+        
+        # rows and columns indices of nonzero positions.
+        row_ind, col_ind = nnsg.nonzero()
 
-        # return sum of difference and mst_kmax
-        return graph.tocsr() + self.knng
+        # update graph with mutual reachability distance
+        nnsg.data = np.maximum(
+            nnsg.data,
+            self.core_distances[row_ind, k-1], 
+            self.core_distances[col_ind, k-1])
+        
+        # print(nnsg.count_nonzero())
+
+        # return maximum between knn and
+        return nnsg
+
+
+    def _knng(self, min_pts):
+        
+        knng = csr_matrix(
+            (self.core_distances[:, 1:min_pts].ravel(), 
+            self.knn[:, 1:min_pts].ravel(), 
+            np.arange(0, (self.n * (min_pts-1)) + 1, min_pts-1)), 
+            shape=(self.n, self.n))
+
+        knng = knng.maximum(knng.T)
+
+        knng.eliminate_zeros()
+
+        return knng
+
+
+    def _nnsg(self, mst, knng):
+        # converts MST to DOK format.
+        mst = mst.tolil()
+
+        # nonzero positions of knng..
+        row_ind, col_ind = knng.nonzero()
+
+        mst[row_ind, col_ind] = 0
+
+        # returns sum MST and KNNG in CSR format.
+        return mst.tocsr() + knng
 
 
     def _construct_hierarchy(self):
