@@ -10,8 +10,6 @@ def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn'):
     
     h = HDBSCAN(datafile, min_pts=kmax, delimiter=delimiter)
 
-    # h.hdbscan_g(kmin=kmin, kmax=kmax, method=method, quick=True)
-
     if method == 'knn':
         h._hdbscan_knn(kmin=kmin, kmax=kmax)
 
@@ -20,5 +18,11 @@ def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn'):
 
     if method == 'rng':
         h._hdbscan_rng(kmin=kmin, kmax=kmax, quick=True)
+
+    if method == 'single':
+        h.hdbscan(min_pts=kmax)
+
+    if method == 'single_k':
+        h.hdbscan_k(min_pts=kmax)
 
     return None       

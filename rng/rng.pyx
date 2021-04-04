@@ -155,6 +155,8 @@ cdef class RelativeNeighborhoodGraph:
         r_size = red.shape[0]
         b_size = blue.shape[0]
 
+        # print(list(red), list(blue))
+
         min_dist = float("inf")
 
         point_r = 0
@@ -193,7 +195,9 @@ cdef class RelativeNeighborhoodGraph:
         DTYPE_t[:, :] data,
         DTYPE_t[:] core_distances,
         ITYPE_t[:, :] knn):
-        
+
+        # print(point_a, point_b)
+
         if self.relative_neighbors(point_a, point_b, weight, data, core_distances, knn):
             self.u.append(point_a)
             self.v.append(point_b)

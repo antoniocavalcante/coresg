@@ -1,21 +1,26 @@
 import pyximport
 pyximport.install()
 
+import sys
 import time
 
 import numpy as np
 
 from scipy.sparse.csgraph import minimum_spanning_tree
-from scipy.sparse import csr_matrix, save_npz, load_npz, tril
+from scipy.sparse import csr_matrix, save_npz, load_npz, triu
 
 from rng.rng import RelativeNeighborhoodGraph
 
 from mst.mst import prim
 from mst.mst import prim_graph
+from mst.mst import prim_order
 
 class HDBSCAN:
 
     def __init__(self, datafile, min_pts = 16, delimiter=',', distance='euclidean'):
+
+        sys.setrecursionlimit(10**6)
+        
         try:
             self.data = np.unique(np.genfromtxt(datafile, delimiter=delimiter), axis=0)
         except:
@@ -34,6 +39,9 @@ class HDBSCAN:
 
             nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
             
+            # knng_original = nbrs.kneighbors_graph(self.data, n_neighbors=min_pts, mode='distance')
+            # print("[ORIGINAL] Number of edges: ", knng_original.count_nonzero())
+
             # computes the core-distances and knn information
             self.core_distances, self.knn = nbrs.kneighbors(self.data)
 
@@ -47,11 +55,116 @@ class HDBSCAN:
 
     def hdbscan(self, min_pts = 16):
 
-        # computes minimum spanning tree (MST)
-        
-        # computes hierarchy for min_pts
+        # ------------------------------------
+        # Time to compute the MST for kmax
+        # ------------------------------------
+        start = time.time()
+        mst, _ = prim(self.data, self.core_distances[:, min_pts-1], False)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute hierarchy from MST
+        # ------------------------------------
+        start = time.time()
+        hierarchy = self._simplified_hierarchy(mst)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute second MST
+        # ------------------------------------
+        start = time.time()
+        mst, _ = prim(self.data, self.core_distances[:, int(min_pts/2)-1], False)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute second hierarchy
+        # ------------------------------------
+        start = time.time()
+        hierarchy = self._simplified_hierarchy(mst)
+        end = time.time()
+        print(end - start, end=' ')
 
         return None
+
+
+    def hdbscan_k(self, min_pts = 16):
+
+        # ------------------------------------
+        # Time to compute the MST for kmax
+        # ------------------------------------
+        start = time.time()
+        mst, _ = prim(self.data, self.core_distances[:, min_pts-1], False)
+        mst = triu(mst.maximum(mst.T), format='csr')
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to materialize the k-NNG
+        # ------------------------------------
+        start = time.time()
+        self.knng = self._knng(self.min_pts)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to build the NNSG
+        # ------------------------------------
+        start = time.time()
+        nnsg = self._nnsg(mst, self.knng)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute first MST
+        # ------------------------------------
+        start = time.time()
+        mst = minimum_spanning_tree(nnsg)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute hierarchy from MST
+        # ------------------------------------
+        start = time.time()        
+        # extracts simplified hierarchy from MST
+        hierarchy = self._simplified_hierarchy(mst)
+        end = time.time()
+        print(end - start, end=' ')
+
+
+        # print("PPPPPPPPPPPPPPP: ", int(min_pts/2))
+
+        # ------------------------------------
+        # Time to update the edges of the NNSG
+        # ------------------------------------
+        start = time.time()
+        nnsg = self._update_edge_weights(nnsg, int(min_pts/2))
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute second MST
+        # ------------------------------------
+        start = time.time()
+        mst = minimum_spanning_tree(nnsg)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute second hierarchy
+        # ------------------------------------
+        start = time.time()        
+        # extracts simplified hierarchy from MST
+        hierarchy = self._simplified_hierarchy(mst)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # returns simplified hierarchy
+        return None
+
 
 
     def _hdbscan_rng(self, kmin = 1, kmax = 16, quick=True):
@@ -63,12 +176,6 @@ class HDBSCAN:
        
         # obtains the csr_matrix representation of the RNG
         rng = rng_object.graph()
-        
-        # makes the RNG an upper triangular matrix
-        rng = tril(rng.maximum(rng.T))
-        
-        # eliminates zeroes from the matrix that might have remained from the operations.
-        rng.eliminate_zeros()
 
         end = time.time()
         
@@ -94,7 +201,7 @@ class HDBSCAN:
 
         end = time.time()
         print(end - start, end=' ')
-        print(base_graph.count_nonzero(), end=' ')
+        print(rng.count_nonzero(), end=' ')
 
         # write these results in a file
         # print(' '.join(map(str, time_msts)), end=' ')
@@ -106,9 +213,13 @@ class HDBSCAN:
         start = time.time()
         
         # computes the MST w.r.t kmax
-        mst = prim(self.data, self.core_distances, kmax, False)
+        mst, a_knn = prim(self.data, self.core_distances[:, kmax-1], False)
         # makes the mst an upper triangular matrix.
-        mst = tril(mst.maximum(mst.T), format='csr')
+        mst = triu(mst.maximum(mst.T), format='csr')
+
+        # augments the knng with the ties.
+        self.knng.maximum(a_knn)
+
         # computes the nnsg graph w.r.t. the underlying distance. 
         nnsg = self._nnsg(mst, self.knng)
         # eliminates zeroes from the matrix that might have remained from the operations.
@@ -136,7 +247,7 @@ class HDBSCAN:
             time_msts[i - kmin] = time.time() - start_mst
 
             # compute hierarchy for mpts = i
-            #self._construct_hierarchy(mst)
+            # self._simplified_hierarchy(mst)
 
         end = time.time()
         print(end - start, end=' ')
@@ -154,13 +265,13 @@ class HDBSCAN:
         start = time.time()
         
         # computes the MST w.r.t kmax
-        mst = prim(self.data, self.core_distances, kmax, False)
+        mst, _ = prim(self.data, self.core_distances[:, kmax-1], False)
         # makes the mst an upper triangular matrix.
         mst = mst.maximum(mst.T)
         # computes the nnsg graph w.r.t. the underlying distance. 
         nnsg = self._nnsg(mst, self.knng)
         # eliminates zeroes from the matrix that might have remained from the operations.
-        # nnsg.eliminate_zeros()
+        nnsg.eliminate_zeros()
 
         end = time.time()
         print(end - start, end=' ')
@@ -178,22 +289,16 @@ class HDBSCAN:
             start_mst = time.time()
 
             # compute mst for mpts = i
-            mst = prim_graph(mst.tolil(), self.knn, self.core_distances, i, False)
+            mst = prim_graph(self.data, mst.tolil(), self.knn, self.core_distances, i, False)
 
             time_msts[i - kmin] = time.time() - start_mst
 
             # compute hierarchy for mpts = i
-            #self._construct_hierarchy(mst)
+            self._simplified_hierarchy(mst)
 
         end = time.time()
         print(end - start, end=' ')
         # -----------------------------------
-
-        # print(nnsg.count_nonzero(), end=' ')
-
-        # write these results in a file
-        # print(' '.join(map(str, time_msts)), end=' ')
-
 
 
     def _update_edge_weights(self, nnsg, k):
@@ -228,38 +333,40 @@ class HDBSCAN:
             self.core_distances[row_ind, k-1], 
             self.core_distances[col_ind, k-1])
         
-        # print(nnsg.count_nonzero())
-
         # return maximum between knn and
         return nnsg
 
 
     def _knng(self, min_pts):
-        
+        n_neighbors = min_pts - 1
+        n_nonzero = self.n * n_neighbors
+
         knng = csr_matrix(
-            (self.core_distances[:, 1:min_pts].ravel(), 
-            self.knn[:, 1:min_pts].ravel(), 
-            np.arange(0, (self.n * (min_pts-1)) + 1, min_pts-1)), 
+            (self.core_distances[:, 1:].ravel(), 
+            self.knn[:, 1:].ravel(), 
+            np.arange(0, n_nonzero + 1, n_neighbors)), 
             shape=(self.n, self.n))
 
-        knng = knng.maximum(knng.T)
+        # print("Number of edges: ", knng.count_nonzero())
 
-        knng.eliminate_zeros()
+        knng = triu(knng.maximum(knng.T))
 
         return knng
 
 
     def _nnsg(self, mst, knng):
-        # converts MST to DOK format.
+
+        # converts MST to LIL format.
         mst = mst.tolil()
 
-        # nonzero positions of knng..
+        # nonzero positions of knng.
         row_ind, col_ind = knng.nonzero()
 
+        # sets all positions to zero so we can return the sum/max of both matrices.
         mst[row_ind, col_ind] = 0
 
         # returns sum MST and KNNG in CSR format.
-        return mst.tocsr() + knng
+        return mst.tocsr().maximum(knng)
 
 
     def _construct_hierarchy(self):
@@ -277,6 +384,34 @@ class HDBSCAN:
         return None
 
 
-    def _construct_level(self):
+    def _simplified_hierarchy(self, mst):
+        
+        mst = mst.maximum(mst.T)
+
+        nodes, reachability = prim_order(mst.data, mst.indices, mst.indptr, self.n)
+
+        # hierarchy = self._get_nodes(reachability, 0, self.n)
 
         return None
+
+
+    def _get_nodes(self, reachability, start, end):
+
+        if end - start < 2:
+            return None
+
+        split = start + 1 + np.argmax(reachability[start+1:end])
+        # print("-----------------------------------")
+        # print(reachability[start+1:end])
+        # print(start+1, end, split)
+
+        d = {}
+
+        d['level'] = reachability[split]
+        d['start'] = start
+        d['end']   = end
+        
+        d['children'] = [self._get_nodes(reachability, start, split),
+        self._get_nodes(reachability, split + 1, end)]
+
+        return d

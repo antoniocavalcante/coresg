@@ -5,8 +5,10 @@ cimport cython
 
 from disjoint_set import DisjointSet
 from scipy.spatial import distance
-from scipy.sparse import csr_matrix
+from scipy.sparse import csr_matrix, dok_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
+
+from libc.math cimport sqrt
 
 import heapq
 
@@ -16,10 +18,9 @@ include '../parameters.pxi'
 @cython.wraparound(False)
 @cython.nonecheck(False)
 @cython.initializedcheck(False)
-cdef _prim(
+cpdef prim(
 	DTYPE_t[:, :] data, 
-	DTYPE_t[:, :] core_distances, 
-	ITYPE_t min_pts, 
+	DTYPE_t[:] core_distances, 
 	ITYPE_t self_edges):
 
 	cdef ITYPE_t n, n_edges, num_edges_attached, current_point, nearest_point, neighbor
@@ -37,6 +38,8 @@ cdef _prim(
 	cdef DTYPE_t[:] nearest_distances  = np.full(n_edges, np.inf, dtype=DTYPE)
 
 	cdef DTYPE_t[:] distances_array 
+
+	a_knn = dok_matrix((n, n), dtype=DTYPE)
 
 	# keeps track of the number of edges added so far.
 	num_edges_attached = 0
@@ -56,13 +59,17 @@ cdef _prim(
 		distances_array = distance.cdist([data[current_point]], data)[0]
 
 		# loops over the dataset to find the next point to attach.
-		for neighbor in range(n):    
+		for neighbor in xrange(n):    
 			if attached[neighbor]: continue
 
 			d = max(
 				distances_array[neighbor],
-				core_distances[current_point, min_pts - 1], 
-				core_distances[neighbor, min_pts - 1])
+				core_distances[current_point], 
+				core_distances[neighbor])
+
+			if d == core_distances[current_point]:
+				a_knn[current_point, neighbor] = d
+				a_knn[neighbor, current_point] = d
 
 			# updates the closese point to neigbor.
 			if d < nearest_distances[neighbor]:
@@ -84,7 +91,7 @@ cdef _prim(
 		# nearest_points[n-1:] = np.arange(n)
 		# nearest_distances[n-1:] = [ distance.euclidean(data[i], data[i]) for i in range(n)]
 	
-	return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
+	return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n)), a_knn
 
 
 
@@ -93,6 +100,7 @@ cdef _prim(
 @cython.nonecheck(False)
 @cython.initializedcheck(False)
 cdef _prim_graph(
+	DTYPE_t[:, :] data,
 	graph,
 	ITYPE_t[:, :] knn, 
 	DTYPE_t[:, :] core_distances, 
@@ -129,13 +137,13 @@ cdef _prim_graph(
 
 	while (num_edges_attached < n - 1):
 
-		# keeps track of the closest point to the tree.
+		# retrieves the closest point to the tree.
 		_, current_point = heapq.heappop(pq)
 
-		# marks current point as attached.
+		# attaches current_point and marks it as attached.
 		attached[current_point] = 1
 
-		# loops over the dataset to find the next point to attach.
+		# loops over the k-NNG.
 		for i in range(1, min_pts + 1):
 
 			neighbor = knn[current_point, i]
@@ -152,24 +160,22 @@ cdef _prim_graph(
 				nearest_distances[neighbor] = d
 				nearest_points[neighbor] = current_point
 				heapq.heappush(pq, (d, neighbor))		
-				# print("[1] adding ", neighbor)
 
+		# loops over the MST.
 		for i in range(len(graph.rows[current_point])):
 			neighbor = graph.rows[current_point][i]
 
 			if attached[neighbor]: continue
 
-			d = graph.data[current_point][i]
+			d = max(
+				euclidean_local(data[current_point], data[neighbor]),
+				core_distances[current_point, min_pts], 
+				core_distances[neighbor, min_pts])
 
 			if d < nearest_distances[neighbor]:
 				nearest_distances[neighbor] = d
 				nearest_points[neighbor] = current_point
 				heapq.heappush(pq, (d, neighbor))
-				# print("[2] adding ", neighbor)
-
-
-		# attached nearest_point to the tree.
-		current_point = nearest_point
 		
 		# updates the number of edges added.
 		num_edges_attached += 1
@@ -180,6 +186,72 @@ cdef _prim_graph(
 	
 	return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
 
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cpdef prim_order(
+	DTYPE_t[:] data,
+	int[:] indices,
+	int[:] indptr,
+	int n):
+
+	cdef ITYPE_t n_edges, num_points_attached, current_point, nearest_point, neighbor, i
+	cdef DTYPE_t nearest_distance, d, weight
+
+	n_edges = n - 1
+
+	# keeps track of which points are attached to the tree.
+	cdef ITYPE_t[:] attached = np.zeros(n, dtype=ITYPE)
+
+	# arrays to keep track of the shortest connection to each point.
+	cdef ITYPE_t[:] nearest_points = np.zeros(n_edges, dtype=ITYPE)
+	cdef DTYPE_t[:] nearest_distances  = np.full(n_edges, np.inf, dtype=DTYPE)
+
+	cdef DTYPE_t[:] distances_array 
+
+	cdef ITYPE_t[:] order_p = np.zeros(n_edges, dtype=ITYPE)
+	cdef DTYPE_t[:] order_w = np.zeros(n_edges, dtype=DTYPE)
+
+	# keeps track of the number of edges added so far.
+	num_points_attached = 0
+
+	# sets current point to the last point in the data.
+	current_point = n - 1
+
+	pq = []
+	
+	heapq.heappush(pq, (0, current_point))
+
+	while (num_points_attached < n - 1):
+
+		# retrieves the closest point to the tree.
+		weight, current_point = heapq.heappop(pq)
+
+		order_p[num_points_attached] = current_point
+		order_w[num_points_attached] = weight
+
+		# attaches current_point and marks it as attached.
+		attached[current_point] = 1
+
+		# loops over the MST.
+		for i in xrange(indptr[current_point], indptr[current_point+1]):
+			neighbor = indices[i]
+
+			if attached[neighbor]: continue
+
+			d = data[i]
+
+			if d < nearest_distances[neighbor]:
+				nearest_distances[neighbor] = d
+				nearest_points[neighbor] = current_point
+				heapq.heappush(pq, (d, neighbor))
+		
+		# updates the number of edges added.
+		num_points_attached += 1
+	
+	return order_p, order_w
 
 
 
@@ -271,13 +343,31 @@ cdef _split_mst(data, nn_distances, knn, mpts, self_edges):
 	return csr_matrix((mst_weights, (mst_edges[:,0], mst_edges[:,1])), shape=(n, n))
 
 
-cpdef prim(data, core_distances, np.int64_t min_pts, np.int64_t self_edges):
-	return _prim(data, core_distances, min_pts, self_edges)
+# cpdef prim(DTYPE_t[:, :] data, DTYPE_t[:] core_distances, np.int64_t self_edges):
+# 	return _prim(data, core_distances, self_edges)
 
 
-cpdef prim_graph(graph, knn, core_distances, np.int64_t min_pts, np.int64_t self_edges):
-	return _prim_graph(graph, knn, core_distances, min_pts, self_edges)
+cpdef prim_graph(DTYPE_t[:, :] data, graph, knn, DTYPE_t[:, :] core_distances, np.int64_t min_pts, np.int64_t self_edges):
+	return _prim_graph(data, graph, knn, core_distances, min_pts, self_edges)
 
+
+# cpdef prim_order(mst):
+# 	return _prim_order(mst)
 
 cpdef split_mst(data, nn_distances, knn, mpts, self_edges):
 	return _split_mst(data, nn_distances, knn, mpts, self_edges)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
+	cdef ITYPE_t i, m
+	cdef DTYPE_t d = 0.0
+	m = v1.shape[0]
+
+	for i in xrange(m):
+		d += (v1[i] - v2[i])**2
+
+	return sqrt(d)

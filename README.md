@@ -33,6 +33,15 @@ pip install -r requirements.txt
 
 
 
+## Troubleshooting
+
+### `fatal error: numpy/arrayobject.h: No such file or directory`
+
+Create a symbolic link from the Numpy installation in the Python version being used (e.g. 3.8) to `/usr/include/numpy`
+
+```
+sudo ln -s  /usr/local/lib/python3.8/dist-packages/numpy/core/include/numpy /usr/include/numpy
+```
 
 ## References
 <a id="1">[1]</a> 
