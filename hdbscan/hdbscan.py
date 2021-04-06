@@ -7,11 +7,12 @@ import time
 import numpy as np
 
 from scipy.sparse.csgraph import minimum_spanning_tree
-from scipy.sparse import csr_matrix, save_npz, load_npz, triu
+from scipy.sparse import csr_matrix, lil_matrix, save_npz, load_npz, triu
 
 from rng.rng import RelativeNeighborhoodGraph
 
 from mst.mst import prim
+from mst.mst import prim_plus
 from mst.mst import prim_graph
 from mst.mst import prim_order
 
@@ -39,12 +40,10 @@ class HDBSCAN:
 
             nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
             
-            # knng_original = nbrs.kneighbors_graph(self.data, n_neighbors=min_pts, mode='distance')
-            # print("[ORIGINAL] Number of edges: ", knng_original.count_nonzero())
-
             # computes the core-distances and knn information
             self.core_distances, self.knn = nbrs.kneighbors(self.data)
 
+            # compute the kNNG
             self.knng = self._knng(self.min_pts)
 
             # saving the computed core-distances, knn and knng on files.
@@ -59,7 +58,7 @@ class HDBSCAN:
         # Time to compute the MST for kmax
         # ------------------------------------
         start = time.time()
-        mst, _ = prim(self.data, self.core_distances[:, min_pts-1], False)
+        mst = prim(self.data, self.core_distances[:, min_pts-1], False)
         end = time.time()
         print(end - start, end=' ')
 
@@ -75,7 +74,7 @@ class HDBSCAN:
         # Time to compute second MST
         # ------------------------------------
         start = time.time()
-        mst, _ = prim(self.data, self.core_distances[:, int(min_pts/2)-1], False)
+        mst = prim(self.data, self.core_distances[:, int(min_pts/2)-1], False)
         end = time.time()
         print(end - start, end=' ')
 
@@ -133,9 +132,6 @@ class HDBSCAN:
         hierarchy = self._simplified_hierarchy(mst)
         end = time.time()
         print(end - start, end=' ')
-
-
-        # print("PPPPPPPPPPPPPPP: ", int(min_pts/2))
 
         # ------------------------------------
         # Time to update the edges of the NNSG
@@ -212,16 +208,18 @@ class HDBSCAN:
         # -----------------------------------
         start = time.time()
         
-        # computes the MST w.r.t kmax
-        mst, a_knn = prim(self.data, self.core_distances[:, kmax-1], False)
+        # computes the MST w.r.t kmax and returns augmented kmax-NN information.
+        mst, a_knn = prim_plus(self.data, self.core_distances[:, kmax-1], False)
+
         # makes the mst an upper triangular matrix.
         mst = triu(mst.maximum(mst.T), format='csr')
 
         # augments the knng with the ties.
         self.knng.maximum(a_knn)
 
-        # computes the nnsg graph w.r.t. the underlying distance. 
+        # computes the CORE-SG graph w.r.t. the underlying distance. 
         nnsg = self._nnsg(mst, self.knng)
+
         # eliminates zeroes from the matrix that might have remained from the operations.
         nnsg.eliminate_zeros()
 
@@ -232,19 +230,14 @@ class HDBSCAN:
         # -----------------------------------
         start = time.time()
 
-        time_msts = np.zeros((kmax - kmin + 1))
-
         # loop over the values of mpts in the input range [kmin, kmax].
         for i in range(kmin, kmax):
-
-            start_mst = time.time()
-
+            
+            # update edge weights for current value of mpts
             nnsg = self._update_edge_weights(nnsg, i)
 
             # compute mst for mpts = i
             mst = minimum_spanning_tree(nnsg)
-
-            time_msts[i - kmin] = time.time() - start_mst
 
             # compute hierarchy for mpts = i
             # self._simplified_hierarchy(mst)
@@ -255,9 +248,6 @@ class HDBSCAN:
 
         print(nnsg.count_nonzero(), end=' ')
 
-        # write these results in a file
-        # print(' '.join(map(str, time_msts)), end=' ')
-
 
     def _hdbscan_knn_incremental(self, kmin = 1, kmax = 16):
         
@@ -265,13 +255,13 @@ class HDBSCAN:
         start = time.time()
         
         # computes the MST w.r.t kmax
-        mst, _ = prim(self.data, self.core_distances[:, kmax-1], False)
-        # makes the mst an upper triangular matrix.
+        mst, a_knn = prim_plus(self.data, self.core_distances[:, kmax-1], False)
+
+        # makes the mst a symmetrix matrix.
         mst = mst.maximum(mst.T)
-        # computes the nnsg graph w.r.t. the underlying distance. 
-        nnsg = self._nnsg(mst, self.knng)
-        # eliminates zeroes from the matrix that might have remained from the operations.
-        nnsg.eliminate_zeros()
+
+        # augments the knng with the ties.
+        self.knng = self.knng.maximum(a_knn)
 
         end = time.time()
         print(end - start, end=' ')
@@ -280,21 +270,23 @@ class HDBSCAN:
         # -----------------------------------
         start = time.time()
 
-        time_msts = np.zeros((kmax - kmin + 1))
-
         # loop over the values of mpts in the input range [kmin, kmax].
         for i in range(kmax - 1, kmin, -1):
-            # print(i)
-
-            start_mst = time.time()
 
             # compute mst for mpts = i
-            mst = prim_graph(self.data, mst.tolil(), self.knn, self.core_distances, i, False)
-
-            time_msts[i - kmin] = time.time() - start_mst
+            mst = prim_graph(
+                self.data, 
+                mst.indices, 
+                mst.indptr, 
+                self.knng.indices, 
+                self.knng.indptr,
+                self.knng.data,
+                self.core_distances[:, i-1], 
+                i, 
+                False)
 
             # compute hierarchy for mpts = i
-            self._simplified_hierarchy(mst)
+            # self._simplified_hierarchy(mst)
 
         end = time.time()
         print(end - start, end=' ')
@@ -337,7 +329,7 @@ class HDBSCAN:
         return nnsg
 
 
-    def _knng(self, min_pts):
+    def _knng(self, min_pts, symmetric=False):
         n_neighbors = min_pts - 1
         n_nonzero = self.n * n_neighbors
 
@@ -347,14 +339,13 @@ class HDBSCAN:
             np.arange(0, n_nonzero + 1, n_neighbors)), 
             shape=(self.n, self.n))
 
-        # print("Number of edges: ", knng.count_nonzero())
+        # if not symmetric:
+            # return triu(knng.maximum(knng.T))
 
-        knng = triu(knng.maximum(knng.T))
-
-        return knng
+        return knng.maximum(knng.T)
 
 
-    def _nnsg(self, mst, knng):
+    def _nnsg(self, mst, knng, format='csr'):
 
         # converts MST to LIL format.
         mst = mst.tolil()
@@ -365,7 +356,11 @@ class HDBSCAN:
         # sets all positions to zero so we can return the sum/max of both matrices.
         mst[row_ind, col_ind] = 0
 
-        # returns sum MST and KNNG in CSR format.
+        # outputs resulting matrix in LIL format.
+        if format == 'lil':
+            return mst.maximum(knng.tolil())
+
+        # outputs resulting matrix in CSR format.
         return mst.tocsr().maximum(knng)
 
 
