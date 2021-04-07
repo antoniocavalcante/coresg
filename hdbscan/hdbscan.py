@@ -36,6 +36,7 @@ class HDBSCAN:
             self.knn = np.genfromtxt(datafile + "-" + str(min_pts) + ".knn", delimiter=delimiter, dtype=np.int64)
             self.knng = load_npz(datafile + "-" + str(self.min_pts) + ".npz")
         except:
+
             from sklearn.neighbors import NearestNeighbors
 
             nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
@@ -209,16 +210,20 @@ class HDBSCAN:
         start = time.time()
         
         # computes the MST w.r.t kmax and returns augmented kmax-NN information.
-        mst, a_knn = prim_plus(self.data, self.core_distances[:, kmax-1], False)
+        mst, a_knn = prim_plus(
+            self.data, 
+            np.ascontiguousarray(self.core_distances[:, kmax-1]), 
+            np.ascontiguousarray(self.knn[:, kmax-1]),
+            False)
 
         # makes the mst an upper triangular matrix.
         mst = triu(mst.maximum(mst.T), format='csr')
 
         # augments the knng with the ties.
-        self.knng.maximum(a_knn)
+        self.knng = self.knng.maximum(a_knn.maximum(a_knn.T))
 
         # computes the CORE-SG graph w.r.t. the underlying distance. 
-        nnsg = self._nnsg(mst, self.knng)
+        nnsg = self._nnsg(mst, triu(self.knng))
 
         # eliminates zeroes from the matrix that might have remained from the operations.
         nnsg.eliminate_zeros()
@@ -255,13 +260,17 @@ class HDBSCAN:
         start = time.time()
         
         # computes the MST w.r.t kmax
-        mst, a_knn = prim_plus(self.data, self.core_distances[:, kmax-1], False)
+        mst, a_knn = prim_plus(
+            self.data, 
+            np.ascontiguousarray(self.core_distances[:, kmax-1]), 
+            np.ascontiguousarray(self.knn[:, kmax-1]),
+            False)
 
         # makes the mst a symmetrix matrix.
         mst = mst.maximum(mst.T)
 
         # augments the knng with the ties.
-        self.knng = self.knng.maximum(a_knn)
+        self.knng = self.knng.maximum(a_knn.maximum(a_knn.T))
 
         end = time.time()
         print(end - start, end=' ')
@@ -279,9 +288,9 @@ class HDBSCAN:
                 mst.indices, 
                 mst.indptr, 
                 self.knng.indices, 
-                self.knng.indptr,
-                self.knng.data,
-                self.core_distances[:, i-1], 
+                self.knng.indptr, 
+                self.knng.data, 
+                np.ascontiguousarray(self.core_distances[:, i-1]), 
                 i, 
                 False)
 
@@ -329,7 +338,7 @@ class HDBSCAN:
         return nnsg
 
 
-    def _knng(self, min_pts, symmetric=False):
+    def _knng(self, min_pts):
         n_neighbors = min_pts - 1
         n_nonzero = self.n * n_neighbors
 
@@ -338,9 +347,6 @@ class HDBSCAN:
             self.knn[:, 1:].ravel(), 
             np.arange(0, n_nonzero + 1, n_neighbors)), 
             shape=(self.n, self.n))
-
-        # if not symmetric:
-            # return triu(knng.maximum(knng.T))
 
         return knng.maximum(knng.T)
 
