@@ -13,7 +13,7 @@ from rng.rng import RelativeNeighborhoodGraph
 
 from mst.mst import prim
 from mst.mst import prim_plus
-from mst.mst import prim_graph
+from mst.mst import prim_graph, prim_graph_fib
 from mst.mst import prim_order
 
 class HDBSCAN:
@@ -221,7 +221,7 @@ class HDBSCAN:
 
         # augments the knng with the ties.
         self.knng = self.knng.maximum(a_knn.maximum(a_knn.T))
-
+        
         # computes the CORE-SG graph w.r.t. the underlying distance. 
         nnsg = self._nnsg(mst, triu(self.knng))
 
@@ -236,8 +236,7 @@ class HDBSCAN:
         start = time.time()
 
         # loop over the values of mpts in the input range [kmin, kmax].
-        for i in range(kmin, kmax):
-            
+        for i in range(kmin, kmax): 
             # update edge weights for current value of mpts
             nnsg = self._update_edge_weights(nnsg, i)
 
@@ -280,10 +279,10 @@ class HDBSCAN:
         start = time.time()
 
         # loop over the values of mpts in the input range [kmin, kmax].
-        for i in range(kmax - 1, kmin, -1):
+        for i in range(kmax - 1, kmin - 1, -1):
 
             # compute mst for mpts = i
-            mst = prim_graph(
+            mst = prim_graph_fib(
                 self.data, 
                 mst.indices, 
                 mst.indptr, 
@@ -306,12 +305,12 @@ class HDBSCAN:
 
         # retrieves the arrays with the indexes for rows and columns.
         row_ind, col_ind = nnsg.nonzero()
-
+        
         # create matrix with core-distances corresponding to each (row, col) combination.
         nnsg.data = np.maximum(
-            nnsg.data,
-            self.core_distances[row_ind, k-1], 
-            self.core_distances[col_ind, k-1])
+            nnsg.data, np.maximum(
+                self.core_distances[row_ind, k-1], 
+                self.core_distances[col_ind, k-1]))
         
         # returns the nnsg with updated edge weights.
         return nnsg
