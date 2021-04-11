@@ -13,7 +13,7 @@ from rng.rng import RelativeNeighborhoodGraph
 
 from mst.mst import prim
 from mst.mst import prim_plus
-from mst.mst import prim_graph, prim_graph_fib
+from mst.mst import prim_graph
 from mst.mst import prim_order
 
 class HDBSCAN:
@@ -237,6 +237,7 @@ class HDBSCAN:
 
         # loop over the values of mpts in the input range [kmin, kmax].
         for i in range(kmin, kmax): 
+
             # update edge weights for current value of mpts
             nnsg = self._update_edge_weights(nnsg, i)
 
@@ -282,16 +283,23 @@ class HDBSCAN:
         for i in range(kmax - 1, kmin - 1, -1):
 
             # compute mst for mpts = i
-            mst = prim_graph_fib(
+            mst = prim_graph(
                 self.data, 
                 mst.indices, 
-                mst.indptr, 
+                mst.indptr,
+                mst.data,
                 self.knng.indices, 
                 self.knng.indptr, 
                 self.knng.data, 
                 np.ascontiguousarray(self.core_distances[:, i-1]), 
                 i, 
                 False)
+
+            # makes the resulting MST a symmetric graph for next iteration.
+            mst = mst.maximum(mst.T)
+
+            # eliminates the zero entries in the matrix (removing edges from the graph).
+            self.knng.eliminate_zeros()
 
             # compute hierarchy for mpts = i
             # self._simplified_hierarchy(mst)

@@ -27,7 +27,7 @@ cdef _prim(
     cdef ITYPE_t n, num_edges, num_edges_attached, current_point, nearest_point, neighbor
     cdef DTYPE_t nearest_distance, d
 
-    n = len(data)
+    n = data.shape[0]
 
     num_edges = 2*n - 1 if self_edges else n - 1
 
@@ -101,7 +101,7 @@ cpdef prim_plus(
     cdef ITYPE_t n, n_edges, num_edges_attached, current_point, nearest_point, neighbor, count_ties
     cdef DTYPE_t nearest_distance, d, core_current
 
-    n = len(data)
+    n = data.shape[0]
 
     n_edges = 2*n - 1 if self_edges else n - 1
 
@@ -113,7 +113,7 @@ cpdef prim_plus(
     cdef DTYPE_t[:] nearest_distances  = np.full(n_edges, np.inf, dtype=DTYPE)
 
     # array to keep track of the distance from a point to the remaining points in the data.
-    cdef DTYPE_t[:] distances_array 
+    cdef DTYPE_t[:] distances_array
 
     # sparse matrix to store potential ties in the k-NN.
     a_knn = dok_matrix((n, n), dtype=DTYPE)
@@ -123,8 +123,6 @@ cpdef prim_plus(
 
     # sets current point to the last point in the data.
     current_point = n - 1
-
-    # count_ties = 0
 
     while (num_edges_attached < n - 1):
 
@@ -171,10 +169,7 @@ cpdef prim_plus(
         # nearest_points[n-1:] = np.arange(n)
         # nearest_distances[n-1:] = [ distance.euclidean(data[i], data[i]) for i in range(n)]
     
-    # print("#ties: ", count_ties)
-
     return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n)), a_knn
-
 
 
 @cython.boundscheck(False)
@@ -185,6 +180,7 @@ cdef _prim_graph(
     DTYPE_t[:, :] data,
     int[:] mst_indices,
     int[:] mst_indptr,
+    DTYPE_t[:] mst_data,
     int[:] knng_indices,
     int[:] knng_indptr,
     DTYPE_t[:] knng_data,
@@ -195,107 +191,7 @@ cdef _prim_graph(
     cdef ITYPE_t n, n_edges, num_edges_attached, current_point, nearest_point, neighbor, i, n_current
     cdef DTYPE_t nearest_distance, d
 
-    n = len(data)
-
-    n_edges = 2*n - 1 if self_edges else n - 1
-
-    # keeps track of which points are attached to the tree.
-    cdef ITYPE_t[:] attached = np.zeros(n, dtype=ITYPE)
-
-    # arrays to keep track of the shortest connection to each point.
-    cdef ITYPE_t[:] nearest_points = np.zeros(n_edges, dtype=ITYPE)
-    cdef DTYPE_t[:] nearest_distances  = np.full(n_edges, np.inf, dtype=DTYPE)
-
-    cdef DTYPE_t[:] distances_array 
-
-    # keeps track of the number of edges added so far.
-    num_edges_attached = 0
-
-    # sets current point to the last point in the data.
-    current_point = n - 1
-
-    pq = []
-    
-    heapq.heappush(pq, (0, current_point))
-
-    while (num_edges_attached < n - 1):
-
-        # retrieves the closest point to the tree.
-        _, current_point = heapq.heappop(pq)
-
-        # attaches current_point and marks it as attached.
-        attached[current_point] = 1
-        
-        # loop over kNNG and removes edges that won't be needed anymore.
-        # for i in xrange(knng_indptr[current_point], knng_indptr[current_point+1]):
-            # neighbor = knng_indices[i]
-
-        for neighbor in xrange(n):
-
-            if attached[neighbor]: continue
-
-            d = max(
-                euclidean_local(data[current_point], data[neighbor]),
-                core_distances[current_point], 
-                core_distances[neighbor])
-
-            # updates the closese point to neighbor.
-            if d < nearest_distances[neighbor]:
-                nearest_distances[neighbor] = d
-                nearest_points[neighbor] = current_point
-                heapq.heappush(pq, (d, neighbor))
-
-            # removes edges that won't be needed in the future
-            # if d > core_distances[current_point]:
-                # knng_data[i] = 0
-
-        # loops over the MST.
-        for i in xrange(mst_indptr[current_point], mst_indptr[current_point+1]):
-            neighbor = mst_indices[i]
-
-            if attached[neighbor]: continue
-
-            d = max(
-                euclidean_local(data[current_point], data[neighbor]),
-                core_distances[current_point], 
-                core_distances[neighbor])
-
-            if d < nearest_distances[neighbor]:
-                nearest_distances[neighbor] = d
-                nearest_points[neighbor] = current_point
-                heapq.heappush(pq, (d, neighbor))
-        
-        # updates the number of edges added.
-        num_edges_attached += 1
-    
-    # if self_edges:
-        # nearest_points[n-1:] = np.arange(n)
-        # nearest_distances[n-1:] = [ distance.euclidean(data[i], data[i]) for i in range(n)]
-    
-    # free(nodes)
-
-    return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
-
-
-@cython.boundscheck(False)
-@cython.wraparound(False)
-@cython.nonecheck(False)
-@cython.initializedcheck(False)
-cdef _prim_graph_fib(
-    DTYPE_t[:, :] data,
-    int[:] mst_indices,
-    int[:] mst_indptr,
-    int[:] knng_indices,
-    int[:] knng_indptr,
-    DTYPE_t[:] knng_data,
-    DTYPE_t[:] core_distances, 
-    ITYPE_t min_pts, 
-    ITYPE_t self_edges):
-
-    cdef ITYPE_t n, n_edges, num_edges_attached, current_point, nearest_point, neighbor, i, n_current
-    cdef DTYPE_t nearest_distance, d
-
-    n = len(data)
+    n = data.shape[0]
 
     n_edges = 2*n - 1 if self_edges else n - 1
 
@@ -336,15 +232,14 @@ cdef _prim_graph_fib(
 
         # loop over kNNG and removes edges that won't be needed anymore.
         for i in xrange(knng_indptr[current_point], knng_indptr[current_point+1]):
-            
             current_neighbor = &nodes[knng_indices[i]]
 
-            d = max(
-                euclidean_local(data[current_point], data[current_neighbor.index]),
-                core_distances[current_point], 
-                core_distances[current_neighbor.index])
-
             if current_neighbor.state != SCANNED: 
+                
+                d = max(
+                    knng_data[i],
+                    core_distances[current_point], 
+                    core_distances[current_neighbor.index])
 
                 if current_neighbor.state == NOT_IN_HEAP:
                     current_neighbor.state = IN_HEAP
@@ -361,7 +256,7 @@ cdef _prim_graph_fib(
                     nearest_points[current_neighbor.index] = current_point
 
             # removes edges that won't be needed in the future
-            if d > core_distances[current_point]:
+            if knng_data[i] > core_distances[current_point] and knng_data[i] > core_distances[current_neighbor.index]:
                 knng_data[i] = 0
 
         # loops over the MST.
@@ -371,7 +266,7 @@ cdef _prim_graph_fib(
             if current_neighbor.state != SCANNED: 
 
                 d = max(
-                    euclidean_local(data[current_point], data[current_neighbor.index]),
+                    mst_data[i],
                     core_distances[current_point], 
                     core_distances[current_neighbor.index])
 
@@ -562,12 +457,8 @@ cpdef prim(DTYPE_t[:, :] data, DTYPE_t[:] core_distances, np.int64_t self_edges)
     return _prim(data, core_distances, self_edges)
 
 
-cpdef prim_graph(DTYPE_t[:, :] data, int[:] mst_indices, int[:] mst_indptr, int[:] knng_indices, int[:] knng_indptr, DTYPE_t[:] knng_data, DTYPE_t[:] core_distances, ITYPE_t min_pts, ITYPE_t self_edges):
-    return _prim_graph(data, mst_indices, mst_indptr, knng_indices, knng_indptr, knng_data, core_distances, min_pts, self_edges)
-
-
-cpdef prim_graph_fib(DTYPE_t[:, :] data, int[:] mst_indices, int[:] mst_indptr, int[:] knng_indices, int[:] knng_indptr, DTYPE_t[:] knng_data, DTYPE_t[:] core_distances, ITYPE_t min_pts, ITYPE_t self_edges):
-    return _prim_graph_fib(data, mst_indices, mst_indptr, knng_indices, knng_indptr, knng_data, core_distances, min_pts, self_edges)
+cpdef prim_graph(DTYPE_t[:, :] data, int[:] mst_indices, int[:] mst_indptr, DTYPE_t[:] mst_data, int[:] knng_indices, int[:] knng_indptr, DTYPE_t[:] knng_data, DTYPE_t[:] core_distances, ITYPE_t min_pts, ITYPE_t self_edges):
+    return _prim_graph(data, mst_indices, mst_indptr, mst_data, knng_indices, knng_indptr, knng_data, core_distances, min_pts, self_edges)
 
 
 cpdef split_mst(data, nn_distances, knn, mpts, self_edges):
