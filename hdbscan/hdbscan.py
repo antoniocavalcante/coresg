@@ -180,19 +180,15 @@ class HDBSCAN:
 
         start = time.time()
 
-        time_msts = np.zeros((kmax - kmin + 1))
-
         # loop over the values of mpts in the input range
         for i in range(kmin, kmax + 1):
-            # update base_graph wpythonith mutual reachability distances
+
+            # update edge weights for current value of mpts
             g = self._update_edge_weights(rng, i)
             
-            start_mst = time.time()
             # compute mst for mpts = i
             mst = minimum_spanning_tree(g)
-
-            time_msts[i - kmin] = time.time() - start_mst
-
+            print(mst.sum())
             # compute hierarchy for mpts = i
             #self._construct_hierarchy(mst)
 
@@ -243,7 +239,7 @@ class HDBSCAN:
 
             # compute mst for mpts = i
             mst = minimum_spanning_tree(nnsg)
-
+            print(mst.sum())
             # compute hierarchy for mpts = i
             # self._simplified_hierarchy(mst)
 

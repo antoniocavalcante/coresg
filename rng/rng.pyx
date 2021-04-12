@@ -1,4 +1,3 @@
-# cython: profile=True
 from __future__ import print_function
 
 import sys
@@ -9,7 +8,9 @@ cimport numpy as np
 
 cimport cython
 
+from libc.math cimport INFINITY
 from libc.math cimport sqrt
+from libc.stdlib cimport malloc, free
 
 from scipy.spatial import distance
 from scipy.sparse import csr_matrix
@@ -43,19 +44,17 @@ cdef class RelativeNeighborhoodGraph:
 
         self.n = data.shape[0]
 
-        # start = time.time()
         # Build Fair Split Tree
-        T = FairSplitTree(data, core_distances[:, min_points - 1])
-        # end = time.time()
+        T = FairSplitTree(
+            data, 
+            np.ascontiguousarray(core_distances[:, min_points - 1]))
 
-        # print("[FST]: " + str(end - start))
-
-        # start = time.time()
         # Find Well-Separated Pairs and their respective SBCN
-        self.wspd(T, data, core_distances[:, min_points - 1], knn)
-        # end = time.time()
-
-        # print("[WSPD]: " + str(end - start))
+        self.wspd(
+            T, 
+            data, 
+            np.ascontiguousarray(core_distances[:, min_points - 1]), 
+            knn)
 
 
     cpdef graph(self):
@@ -115,29 +114,6 @@ cdef class RelativeNeighborhoodGraph:
                     stack.append((current_a.r, current_b))
 
 
-    # @cython.boundscheck(False)
-    # @cython.wraparound(False)
-    # @cython.nonecheck(False)
-    # @cython.initializedcheck(False)
-    # cdef void find_pairs(
-    #     self, 
-    #     node_a,
-    #     node_b,
-    #     np.ndarray[DTYPE_t, ndim=2] data,
-    #     np.ndarray[DTYPE_t, ndim=1] core_distances,
-    #     np.ndarray[ITYPE_t, ndim=2] knn):
-
-    #     if separated(node_a, node_b):
-    #         self.sbcn(node_a.points, node_b.points, data, core_distances, knn)
-    #     else:
-    #         if node_a.diameter <= node_b.diameter:
-    #             self.find_pairs(node_a, node_b.l, data, core_distances, knn)
-    #             self.find_pairs(node_a, node_b.r, data, core_distances, knn)
-    #         else:
-    #             self.find_pairs(node_a.l, node_b, data, core_distances, knn)
-    #             self.find_pairs(node_a.r, node_b, data, core_distances, knn)
-
-
     @cython.boundscheck(False)
     @cython.wraparound(False)
     @cython.nonecheck(False)
@@ -149,38 +125,69 @@ cdef class RelativeNeighborhoodGraph:
         DTYPE_t[:] core_distances,
         ITYPE_t[:, :] knn):
 
-        cdef ITYPE_t r, b, r_size, b_size, point_r, point_b, vertex_1, vertex_2
-        cdef DTYPE_t min_dist, d_rb
+        cdef ITYPE_t r, b, r_size, b_size, point_r, point_b
+        cdef DTYPE_t min_dist, d_rb, underlying
 
         r_size = red.shape[0]
         b_size = blue.shape[0]
 
-        # print(list(red), list(blue))
+        min_dist = INFINITY
 
-        min_dist = float("inf")
+        cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
+        cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))
 
-        point_r = 0
-        point_b = 0
+        cdef DTYPE_t* closest_underlying = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
 
-        vertex_1 = -1
-        vertex_2 = -1
+        cdef ITYPE_t* closest_rb = <ITYPE_t*> malloc(r_size * sizeof(ITYPE_t))
+        cdef ITYPE_t* closest_br = <ITYPE_t*> malloc(b_size * sizeof(ITYPE_t))
+
+        for b in xrange(b_size):
+            closest_dist_br[b] = INFINITY
 
         for r in xrange(r_size):
+            closest_dist_rb[r] = INFINITY
+            closest_underlying[r] = INFINITY
+
             point_r = red[r]
 
             for b in xrange(b_size):
                 point_b = blue[b]
 
-                d_rb = _mutual_reachability_distance(point_r, point_b, data, core_distances)
+                underlying = euclidean_local(data[point_r], data[point_b])
+                d_rb = max(underlying, core_distances[point_r], core_distances[point_b])
 
-                if d_rb < min_dist:
-                    vertex_1 = point_r
-                    vertex_2 = point_b
-                    min_dist = d_rb
+                if d_rb <= closest_dist_rb[r]:
+                    if underlying < closest_underlying[r]:
+                        closest_dist_rb[r] = d_rb
+                        closest_rb[r] = b
+                        closest_underlying[r] = underlying
+
+                if d_rb < closest_dist_br[b]:
+                    closest_dist_br[b] = d_rb
+                    closest_br[b] = r
+                    
+        for r in xrange(r_size):
+
+            if closest_dist_rb[r] == closest_dist_br[closest_rb[r]]:
+                
+                # adds edge between point_r and point_b
+                self.add_edge(
+                    red[r], 
+                    blue[closest_rb[r]], 
+                    closest_underlying[r], 
+                    data, 
+                    core_distances, 
+                    knn)
 
 
-        # add edge
-        self.add_edge(vertex_1, vertex_2, min_dist, data, core_distances, knn)
+        # free up memory not needed anymore
+        free(closest_dist_rb)
+        free(closest_dist_br)
+
+        free(closest_underlying)
+
+        free(closest_rb)
+        free(closest_br)
 
 
     @cython.boundscheck(False)
@@ -195,8 +202,6 @@ cdef class RelativeNeighborhoodGraph:
         DTYPE_t[:, :] data,
         DTYPE_t[:] core_distances,
         ITYPE_t[:, :] knn):
-
-        # print(point_a, point_b)
 
         if self.relative_neighbors(point_a, point_b, weight, data, core_distances, knn):
             self.u.append(point_a)
@@ -319,6 +324,3 @@ cdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
         d += (v1[i] - v2[i])**2
 
     return sqrt(d)
-
-
-# cdef DTYPE_t euclidean_local(np.ndarray[DTYPE_t, ndim=1] v1, np.ndarray[DTYPE_t, ndim=1] v2):

@@ -12,9 +12,10 @@ dataset() {
         # args: dataset, minpoints, separator
         python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn" >> "knn-hdbscan-dataset.results"
 
+        python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dataset.results"
+
         # python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "rng" >> "rng-hdbscan-dataset.results"
 
-        python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dataset.results"
     done
 }
 
@@ -26,9 +27,10 @@ minpoints() {
         # args: dataset, minpoints, separator
         python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "knn" >> "knn-hdbscan-minpoints.results"
 
+        python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "knn_inc" >> "knn-inc-hdbscan-minpoints.results"
+
         # python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "rng" >> "rng-hdbscan-minpoints.results"
 
-        python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "knn_inc" >> "knn-inc-hdbscan-minpoints.results"
     done
 }
 
@@ -40,9 +42,10 @@ dimensions() {
         # args: dataset, minpoints, separator
         python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "knn" >> "knn-hdbscan-dimensions.results"
 
-        # python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "rng" >> "rng-hdbscan-dimensions.results"
-
         python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dimensions.results"
+
+        # python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "rng" >> "rng-hdbscan-dimensions.results"
+        
     done
 }
 
