@@ -14,7 +14,7 @@ dataset() {
 
         python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dataset.results"
 
-        # python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "rng" >> "rng-hdbscan-dataset.results"
+        python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "rng" >> "rng-hdbscan-dataset.results"
 
     done
 }
@@ -29,7 +29,7 @@ minpoints() {
 
         python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "knn_inc" >> "knn-inc-hdbscan-minpoints.results"
 
-        # python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "rng" >> "rng-hdbscan-minpoints.results"
+        python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "rng" >> "rng-hdbscan-minpoints.results"
 
     done
 }
@@ -44,8 +44,8 @@ dimensions() {
 
         python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dimensions.results"
 
-        # python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "rng" >> "rng-hdbscan-dimensions.results"
-        
+        python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "rng" >> "rng-hdbscan-dimensions.results"
+
     done
 }
 
@@ -70,7 +70,7 @@ smartFilter="true"
 naiveFilter="true"
 incremental="false"
 
-for i in $(seq 5)
+for i in $(seq 3)
 do
     # hdbscan_single
 	minpoints $smartFilter $naiveFilter $incremental $index

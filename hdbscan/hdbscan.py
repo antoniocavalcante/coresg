@@ -188,7 +188,7 @@ class HDBSCAN:
             
             # compute mst for mpts = i
             mst = minimum_spanning_tree(g)
-            print(mst.sum())
+
             # compute hierarchy for mpts = i
             #self._construct_hierarchy(mst)
 
@@ -239,7 +239,7 @@ class HDBSCAN:
 
             # compute mst for mpts = i
             mst = minimum_spanning_tree(nnsg)
-            print(mst.sum())
+
             # compute hierarchy for mpts = i
             # self._simplified_hierarchy(mst)
 
