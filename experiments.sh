@@ -6,7 +6,7 @@ DIR=$1
 
 dataset() {
 
-    for n in 256 512 #16 32 64 128 256 512 1024;
+    for n in 16 32 64 128 256 512 1024;
     do
         # KNN-HDBSCAN
         # args: dataset, minpoints, separator
@@ -70,10 +70,10 @@ smartFilter="true"
 naiveFilter="true"
 incremental="false"
 
-for i in $(seq 3)
+for i in $(seq 1)
 do
     # hdbscan_single
-	minpoints $smartFilter $naiveFilter $incremental $index
-	dimensions $smartFilter $naiveFilter $incremental $index
+	# minpoints $smartFilter $naiveFilter $incremental $index
+	# dimensions $smartFilter $naiveFilter $incremental $index
 	dataset $smartFilter $naiveFilter $incremental $index
 done

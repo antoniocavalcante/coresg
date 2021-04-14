@@ -5,7 +5,7 @@ cimport cython
 
 from disjoint_set import DisjointSet
 from scipy.spatial import distance
-from scipy.sparse import csr_matrix, dok_matrix, lil_matrix
+from scipy.sparse import csr_matrix, dok_matrix, lil_matrix, coo_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
 
 from libc.math cimport INFINITY
@@ -100,7 +100,7 @@ cpdef prim_plus(
     ITYPE_t self_edges):
 
     cdef ITYPE_t n, n_edges, num_edges_attached, current_point, nearest_point, neighbor, count_ties
-    cdef DTYPE_t nearest_distance, d, core_current, dist
+    cdef DTYPE_t nearest_distance, d, core_current, dist, dummy
 
     n = data.shape[0]
 
@@ -117,7 +117,11 @@ cpdef prim_plus(
     cdef DTYPE_t[:] distances_array
 
     # sparse matrix to store potential ties in the k-NN.
-    a_knn = dok_matrix((n, n), dtype=DTYPE)
+    # a_knn = dok_matrix((n, n), dtype=DTYPE)
+
+    cdef list u = []
+    cdef list v = []
+    cdef list w = []
 
     # keeps track of the number of edges added so far.
     num_edges_attached = 0
@@ -144,9 +148,11 @@ cpdef prim_plus(
             dist = distances_array[neighbor]
 
             # includes ties in the k-NN
-            if dist == core_distances[current_point] and neighbor != knn[current_point] or \
-               dist == core_distances[neighbor] and current_point != knn[neighbor]:
-                a_knn[current_point, neighbor] = dist
+            if (dist == core_distances[current_point] and neighbor != knn[current_point]) or \
+               (dist == core_distances[neighbor] and current_point != knn[neighbor]):
+                u.append(current_point)
+                v.append(neighbor)
+                w.append(dist)
 
             d = max(
                 dist,
@@ -173,7 +179,8 @@ cpdef prim_plus(
         # nearest_points[n-1:] = np.arange(n)
         # nearest_distances[n-1:] = [ distance.euclidean(data[i], data[i]) for i in range(n)]
     
-    return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n)), a_knn
+    return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n)), \
+           csr_matrix((w, (u, v)), shape=(n, n))
 
 
 @cython.boundscheck(False)
