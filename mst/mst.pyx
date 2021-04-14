@@ -8,6 +8,7 @@ from scipy.spatial import distance
 from scipy.sparse import csr_matrix, dok_matrix, lil_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
 
+from libc.math cimport INFINITY
 from libc.math cimport sqrt
 from libc.stdlib cimport malloc, free
 
@@ -48,7 +49,7 @@ cdef _prim(
     while (num_edges_attached < n - 1):
 
         # keeps track of the closest point to the tree.
-        nearest_distance = float("inf")
+        nearest_distance = INFINITY
         nearest_point = -1
 
         # marks current point as attached
@@ -99,7 +100,7 @@ cpdef prim_plus(
     ITYPE_t self_edges):
 
     cdef ITYPE_t n, n_edges, num_edges_attached, current_point, nearest_point, neighbor, count_ties
-    cdef DTYPE_t nearest_distance, d, core_current
+    cdef DTYPE_t nearest_distance, d, core_current, dist
 
     n = data.shape[0]
 
@@ -127,7 +128,7 @@ cpdef prim_plus(
     while (num_edges_attached < n - 1):
 
         # keeps track of the closest point to the tree.
-        nearest_distance = float("inf")
+        nearest_distance = INFINITY
         nearest_point = -1
 
         # marks current point as attached
@@ -138,14 +139,17 @@ cpdef prim_plus(
         # loops over the dataset to find the next point to attach.
         for neighbor in range(n):    
 
-            # includes ties in the k-NN
-            if distances_array[neighbor] == core_distances[current_point] and neighbor != knn[current_point]:
-                a_knn[current_point, neighbor] = distances_array[neighbor]
-
             if attached[neighbor]: continue
 
+            dist = distances_array[neighbor]
+
+            # includes ties in the k-NN
+            if dist == core_distances[current_point] and neighbor != knn[current_point] or \
+               dist == core_distances[neighbor] and current_point != knn[neighbor]:
+                a_knn[current_point, neighbor] = dist
+
             d = max(
-                distances_array[neighbor],
+                dist,
                 core_distances[current_point],
                 core_distances[neighbor])
 
@@ -176,7 +180,7 @@ cpdef prim_plus(
 @cython.wraparound(False)
 @cython.nonecheck(False)
 @cython.initializedcheck(False)
-cdef _prim_graph(
+cdef _prim_inc(
     DTYPE_t[:, :] data,
     int[:] mst_indices,
     int[:] mst_indptr,
@@ -294,6 +298,99 @@ cdef _prim_graph(
     free(nodes)
 
     return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
+
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cdef _prim_graph(
+    int[:] indices,
+    int[:] indptr,
+    DTYPE_t[:] data,
+    DTYPE_t[:] core_distances, 
+    ITYPE_t self_edges):
+
+    cdef ITYPE_t n, n_edges, num_edges_attached, current_point, nearest_point, neighbor, i, n_current
+    cdef DTYPE_t nearest_distance, d
+
+    n = core_distances.shape[0]
+
+    n_edges = 2*n - 1 if self_edges else n - 1
+
+    # keeps track of which points are attached to the tree.
+    cdef ITYPE_t[:] attached = np.zeros(n, dtype=ITYPE)
+
+    # arrays to keep track of the shortest connection to each point.
+    cdef ITYPE_t[:] nearest_points = np.zeros(n_edges, dtype=ITYPE)
+    cdef DTYPE_t[:] nearest_distances  = np.full(n_edges, np.inf, dtype=DTYPE)
+
+    cdef DTYPE_t[:] distances_array 
+
+    cdef FibonacciHeap heap
+    cdef FibonacciNode* nodes = <FibonacciNode*> malloc(n * sizeof(FibonacciNode))
+
+    for i in xrange(n):
+        initialize_node(&nodes[i], i)
+
+    cdef FibonacciNode *v
+    cdef FibonacciNode *current_neighbor
+
+    heap.min_node = NULL
+    insert_node(&heap, &nodes[n-1])
+
+    # keeps track of the number of edges added so far.
+    num_edges_attached = 0
+
+    # sets current point to the last point in the data.
+    current_point = n - 1
+
+    while (num_edges_attached < n - 1):
+
+        v = remove_min(&heap)
+        v.state = SCANNED
+
+        # retrieves the closest point to the tree.
+        current_point = v.index
+
+        # loop over kNNG and removes edges that won't be needed anymore.
+        for i in xrange(indptr[current_point], indptr[current_point+1]):
+
+            current_neighbor = &nodes[indices[i]]
+
+            if current_neighbor.state != SCANNED: 
+                
+                d = max(
+                    data[i],
+                    core_distances[current_point], 
+                    core_distances[current_neighbor.index])
+
+                if current_neighbor.state == NOT_IN_HEAP:
+                    current_neighbor.state = IN_HEAP
+                    current_neighbor.val   = d
+                    insert_node(&heap, current_neighbor)
+
+                    nearest_distances[current_neighbor.index] = d
+                    nearest_points[current_neighbor.index] = current_point
+
+                elif d < current_neighbor.val:
+                    decrease_val(&heap, current_neighbor, d)
+
+                    nearest_distances[current_neighbor.index] = d
+                    nearest_points[current_neighbor.index] = current_point
+        
+        # updates the number of edges added.
+        num_edges_attached += 1
+
+    # if self_edges:
+        # nearest_points[n-1:] = np.arange(n)
+        # nearest_distances[n-1:] = [ distance.euclidean(data[i], data[i]) for i in range(n)]
+    
+    free(nodes)
+
+    return csr_matrix((nearest_distances, (nearest_points, np.arange(n-1))), shape=(n, n))
+
 
 
 
@@ -453,14 +550,34 @@ cdef _split_mst(data, nn_distances, knn, mpts, self_edges):
     return csr_matrix((mst_weights, (mst_edges[:,0], mst_edges[:,1])), shape=(n, n))
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
 cpdef prim(DTYPE_t[:, :] data, DTYPE_t[:] core_distances, np.int64_t self_edges):
     return _prim(data, core_distances, self_edges)
 
 
-cpdef prim_graph(DTYPE_t[:, :] data, int[:] mst_indices, int[:] mst_indptr, DTYPE_t[:] mst_data, int[:] knng_indices, int[:] knng_indptr, DTYPE_t[:] knng_data, DTYPE_t[:] core_distances, ITYPE_t min_pts, ITYPE_t self_edges):
-    return _prim_graph(data, mst_indices, mst_indptr, mst_data, knng_indices, knng_indptr, knng_data, core_distances, min_pts, self_edges)
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cpdef prim_inc(DTYPE_t[:, :] data, int[:] mst_indices, int[:] mst_indptr, DTYPE_t[:] mst_data, int[:] knng_indices, int[:] knng_indptr, DTYPE_t[:] knng_data, DTYPE_t[:] core_distances, ITYPE_t min_pts, ITYPE_t self_edges):
+    return _prim_inc(data, mst_indices, mst_indptr, mst_data, knng_indices, knng_indptr, knng_data, core_distances, min_pts, self_edges)
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cpdef prim_graph(int[:] indices, int[:] indptr, DTYPE_t[:] data, DTYPE_t[:] core_distances, ITYPE_t self_edges):
+    return _prim_graph(indices, indptr, data, core_distances, self_edges)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
 cpdef split_mst(data, nn_distances, knn, mpts, self_edges):
     return _split_mst(data, nn_distances, knn, mpts, self_edges)
 

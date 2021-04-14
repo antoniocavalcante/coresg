@@ -6,7 +6,7 @@ DIR=$1
 
 dataset() {
 
-    for n in 16 32 64 128 256 512 1024;
+    for n in 256 512 #16 32 64 128 256 512 1024;
     do
         # KNN-HDBSCAN
         # args: dataset, minpoints, separator

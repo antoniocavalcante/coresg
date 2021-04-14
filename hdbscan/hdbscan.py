@@ -13,6 +13,7 @@ from rng.rng import RelativeNeighborhoodGraph
 
 from mst.mst import prim
 from mst.mst import prim_plus
+from mst.mst import prim_inc
 from mst.mst import prim_graph
 from mst.mst import prim_order
 
@@ -59,7 +60,10 @@ class HDBSCAN:
         # Time to compute the MST for kmax
         # ------------------------------------
         start = time.time()
-        mst = prim(self.data, self.core_distances[:, min_pts-1], False)
+        mst = prim(
+            self.data, 
+            np.ascontiguousarray(self.core_distances[:, min_pts-1]), 
+            False)
         end = time.time()
         print(end - start, end=' ')
 
@@ -75,7 +79,10 @@ class HDBSCAN:
         # Time to compute second MST
         # ------------------------------------
         start = time.time()
-        mst = prim(self.data, self.core_distances[:, int(min_pts/2)-1], False)
+        mst = prim(
+            self.data, 
+            np.ascontiguousarray(self.core_distances[:, int(min_pts/2)-1]), 
+            False)
         end = time.time()
         print(end - start, end=' ')
 
@@ -96,7 +103,11 @@ class HDBSCAN:
         # Time to compute the MST for kmax
         # ------------------------------------
         start = time.time()
-        mst, _ = prim(self.data, self.core_distances[:, min_pts-1], False)
+        mst, a_knn = prim_plus(
+                    self.data, 
+                    np.ascontiguousarray(self.core_distances[:, min_pts-1]), 
+                    np.ascontiguousarray(self.knn[:, min_pts-1]),
+                    False)
         mst = triu(mst.maximum(mst.T), format='csr')
         end = time.time()
         print(end - start, end=' ')
@@ -106,6 +117,7 @@ class HDBSCAN:
         # ------------------------------------
         start = time.time()
         self.knng = self._knng(self.min_pts)
+        self.knng = self.knng.maximum(a_knn.maximum(a_knn.T))
         end = time.time()
         print(end - start, end=' ')
 
@@ -113,7 +125,8 @@ class HDBSCAN:
         # Time to build the NNSG
         # ------------------------------------
         start = time.time()
-        nnsg = self._nnsg(mst, self.knng)
+        nnsg = self._nnsg(mst, triu(self.knng))
+        nnsg = nnsg.maximum(nnsg.T)
         end = time.time()
         print(end - start, end=' ')
 
@@ -121,7 +134,12 @@ class HDBSCAN:
         # Time to compute first MST
         # ------------------------------------
         start = time.time()
-        mst = minimum_spanning_tree(nnsg)
+        mst = prim_graph(
+            nnsg.indices,
+            nnsg.indptr,
+            nnsg.data,
+            np.ascontiguousarray(self.core_distances[:, min_pts-1]),
+            False)
         end = time.time()
         print(end - start, end=' ')
 
@@ -138,7 +156,7 @@ class HDBSCAN:
         # Time to update the edges of the NNSG
         # ------------------------------------
         start = time.time()
-        nnsg = self._update_edge_weights(nnsg, int(min_pts/2))
+        # nnsg = self._update_edge_weights(nnsg, int(min_pts/2))
         end = time.time()
         print(end - start, end=' ')
 
@@ -146,7 +164,12 @@ class HDBSCAN:
         # Time to compute second MST
         # ------------------------------------
         start = time.time()
-        mst = minimum_spanning_tree(nnsg)
+        mst = prim_graph(
+                nnsg.indices,
+                nnsg.indptr,
+                nnsg.data,
+                np.ascontiguousarray(self.core_distances[:, int(min_pts/2)-1]),
+                False)
         end = time.time()
         print(end - start, end=' ')
 
@@ -169,11 +192,16 @@ class HDBSCAN:
         start = time.time()
 
         # computes the RNG with regard to min_pts = kmax
-        rng_object = RelativeNeighborhoodGraph(self.data, self.core_distances, self.knn, kmax, quick=quick)
+        rng_object = RelativeNeighborhoodGraph(
+            self.data, 
+            self.core_distances, 
+            self.knn, 
+            kmax, 
+            quick=quick)
        
         # obtains the csr_matrix representation of the RNG
         rng = rng_object.graph()
-
+        rng = rng.maximum(rng.T)
         end = time.time()
         
         print(end - start, end=' ')
@@ -182,19 +210,21 @@ class HDBSCAN:
 
         # loop over the values of mpts in the input range
         for i in range(kmin, kmax + 1):
-
-            # update edge weights for current value of mpts
-            g = self._update_edge_weights(rng, i)
             
             # compute mst for mpts = i
-            mst = minimum_spanning_tree(g)
+            mst = prim_graph(
+                rng.indices,
+                rng.indptr,
+                rng.data,
+                np.ascontiguousarray(self.core_distances[:, i-1]),
+                False)
 
             # compute hierarchy for mpts = i
             #self._construct_hierarchy(mst)
 
         end = time.time()
         print(end - start, end=' ')
-        print(rng.count_nonzero(), end=' ')
+        print(int(rng.count_nonzero()/2), end=' ')
 
         # write these results in a file
         # print(' '.join(map(str, time_msts)), end=' ')
@@ -223,6 +253,8 @@ class HDBSCAN:
 
         # eliminates zeroes from the matrix that might have remained from the operations.
         nnsg.eliminate_zeros()
+        
+        nnsg = nnsg.maximum(nnsg.T)
 
         end = time.time()
         print(end - start, end=' ')
@@ -234,11 +266,13 @@ class HDBSCAN:
         # loop over the values of mpts in the input range [kmin, kmax].
         for i in range(kmin, kmax): 
 
-            # update edge weights for current value of mpts
-            nnsg = self._update_edge_weights(nnsg, i)
-
             # compute mst for mpts = i
-            mst = minimum_spanning_tree(nnsg)
+            mst = prim_graph(
+                nnsg.indices,
+                nnsg.indptr,
+                nnsg.data,
+                np.ascontiguousarray(self.core_distances[:, i-1]),
+                False)
 
             # compute hierarchy for mpts = i
             # self._simplified_hierarchy(mst)
@@ -247,7 +281,7 @@ class HDBSCAN:
         print(end - start, end=' ')
         # -----------------------------------
 
-        print(nnsg.count_nonzero(), end=' ')
+        print(int(nnsg.count_nonzero()/2), end=' ')
 
 
     def _hdbscan_knn_incremental(self, kmin = 1, kmax = 16):
@@ -279,7 +313,7 @@ class HDBSCAN:
         for i in range(kmax - 1, kmin - 1, -1):
 
             # compute mst for mpts = i
-            mst = prim_graph(
+            mst = prim_inc(
                 self.data, 
                 mst.indices, 
                 mst.indptr,
@@ -317,27 +351,6 @@ class HDBSCAN:
                 self.core_distances[col_ind, k-1]))
         
         # returns the nnsg with updated edge weights.
-        return nnsg
-
-
-    def _update_graph(self, mst, k):
-
-        # compute knn graph for this value of mpts.
-        knng = self._knng(k)
-
-        # computes the NNSG
-        nnsg = self._nnsg(mst, knng)
-        
-        # rows and columns indices of nonzero positions.
-        row_ind, col_ind = nnsg.nonzero()
-
-        # update graph with mutual reachability distance
-        nnsg.data = np.maximum(
-            nnsg.data,
-            self.core_distances[row_ind, k-1], 
-            self.core_distances[col_ind, k-1])
-        
-        # return maximum between knn and
         return nnsg
 
 
