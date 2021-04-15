@@ -6,13 +6,13 @@ DIR=$1
 
 dataset() {
 
-    for n in 16 32 64 128 256 512 1024;
+    for n in 16 32 64 128 256 512 # 1024;
     do
         # KNN-HDBSCAN
         # args: dataset, minpoints, separator
         python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn" >> "knn-hdbscan-dataset.results"
 
-        python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dataset.results"
+        # python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dataset.results"
 
         python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "rng" >> "rng-hdbscan-dataset.results"
 
@@ -70,7 +70,7 @@ smartFilter="true"
 naiveFilter="true"
 incremental="false"
 
-for i in $(seq 1)
+for i in $(seq 5)
 do
     # hdbscan_single
 	# minpoints $smartFilter $naiveFilter $incremental $index

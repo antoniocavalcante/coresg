@@ -1,3 +1,7 @@
+# cython: profile=True
+import pyximport
+pyximport.install()
+
 import numpy as np
 cimport numpy as np
 
@@ -26,7 +30,7 @@ cdef _prim(
     ITYPE_t self_edges):
 
     cdef ITYPE_t n, num_edges, num_edges_attached, current_point, nearest_point, neighbor
-    cdef DTYPE_t nearest_distance, d
+    cdef DTYPE_t nearest_distance, d 
 
     n = data.shape[0]
 
