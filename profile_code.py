@@ -14,7 +14,7 @@ from sklearn.neighbors import NearestNeighbors
 
 data = np.unique(
     np.genfromtxt(
-        "../dataset-performance/16d-16.dat", 
+        "../dataset-performance/16d-32.dat", 
         delimiter=" "), 
         axis=0)
 

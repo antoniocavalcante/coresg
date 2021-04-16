@@ -4,17 +4,22 @@ DIR=$1
 
 # rm -rf *.results
 
+DEFAULT_KMAX=64
+DEFAULT_DIM=64
+DEFAULT_DATA=256
+
+
 dataset() {
 
-    for n in 16 32 64 128 256 512 # 1024;
+    for n in 16 32 64 128 256 512;
     do
         # KNN-HDBSCAN
         # args: dataset, minpoints, separator
-        python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn" >> "knn-hdbscan-dataset.results"
+        python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}.dat" "${DEFAULT_KMAX}" " " "knn" >> "knn-hdbscan-dataset.results"
 
-        # python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dataset.results"
+        python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}.dat" "${DEFAULT_KMAX}" " " "knn_inc" >> "knn-inc-hdbscan-dataset.results"
 
-        python main_experiments.py "${DIR}/16d-${n}.dat" "16" " " "rng" >> "rng-hdbscan-dataset.results"
+        python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}.dat" "${DEFAULT_KMAX}" " " "rng" >> "rng-hdbscan-dataset.results"
 
     done
 }
@@ -25,11 +30,11 @@ minpoints() {
     do
         # KNN-HDBSCAN
         # args: dataset, minpoints, separator
-        python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "knn" >> "knn-hdbscan-minpoints.results"
+        python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}.dat" ${minpoints} " " "knn" >> "knn-hdbscan-minpoints.results"
 
-        python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "knn_inc" >> "knn-inc-hdbscan-minpoints.results"
+        python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}.dat" ${minpoints} " " "knn_inc" >> "knn-inc-hdbscan-minpoints.results"
 
-        python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "rng" >> "rng-hdbscan-minpoints.results"
+        python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}.dat" ${minpoints} " " "rng" >> "rng-hdbscan-minpoints.results"
 
     done
 }
@@ -40,11 +45,11 @@ dimensions() {
     do
         # KNN-HDBSCAN
         # args: dataset, minpoints, separator
-        python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "knn" >> "knn-hdbscan-dimensions.results"
+        python main_experiments.py "${DIR}/${d}d-${DEFAULT_DATA}.dat" "${DEFAULT_KMAX}" " " "knn" >> "knn-hdbscan-dimensions.results"
 
-        python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "knn_inc" >> "knn-inc-hdbscan-dimensions.results"
+        python main_experiments.py "${DIR}/${d}d-${DEFAULT_DATA}.dat" "${DEFAULT_KMAX}" " " "knn_inc" >> "knn-inc-hdbscan-dimensions.results"
 
-        python main_experiments.py "${DIR}/${d}d-128.dat" "16" " " "rng" >> "rng-hdbscan-dimensions.results"
+        python main_experiments.py "${DIR}/${d}d-${DEFAULT_DATA}.dat" "${DEFAULT_KMAX}" " " "rng" >> "rng-hdbscan-dimensions.results"
 
     done
 }
@@ -56,24 +61,17 @@ hdbscan_single() {
     do
         # KNN-HDBSCAN
         # args: dataset, minpoints, separator
-        python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "single" >> "hdbscan-single-minpoints.results"
+        python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}.dat" ${minpoints} " " "single" >> "hdbscan-single-minpoints.results"
 
-        python main_experiments.py "${DIR}/16d-128.dat" ${minpoints} " " "single_k" >> "knn-hdbscan-single-minpoints.results"
+        python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}.dat" ${minpoints} " " "single_k" >> "knn-hdbscan-single-minpoints.results"
     done
 }
 
 
-index="false"
-
-# SMART + NAIVE
-smartFilter="true"
-naiveFilter="true"
-incremental="false"
-
-for i in $(seq 5)
+for i in $(seq 3)
 do
     # hdbscan_single
-	# minpoints $smartFilter $naiveFilter $incremental $index
-	# dimensions $smartFilter $naiveFilter $incremental $index
-	dataset $smartFilter $naiveFilter $incremental $index
+	minpoints
+	dimensions
+	dataset
 done
