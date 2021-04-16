@@ -11,7 +11,7 @@ DEFAULT_DATA=256
 
 dataset() {
 
-    for n in 16 32 64 128 256 512;
+    for n in 8 16 32 64 128 256 512;
     do
         # KNN-HDBSCAN
         # args: dataset, minpoints, separator
