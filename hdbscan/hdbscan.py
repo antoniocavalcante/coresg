@@ -19,38 +19,57 @@ from mst.mst import prim_order
 
 class HDBSCAN:
 
-    def __init__(self, datafile, min_pts = 16, delimiter=',', distance='euclidean'):
+    def __init__(
+        self, 
+        datafile, 
+        min_pts = 16, 
+        delimiter=',', 
+        distance='euclidean', 
+        skip=1):
 
         sys.setrecursionlimit(10**6)
-        
+
+        # load data.
         try:
             self.data = np.unique(np.genfromtxt(datafile, delimiter=delimiter), axis=0)
         except:
             print("Error reading the data file, please verify that the file exists.")        
 
+        # finds the number of points in the data.
         self.n = len(self.data)
-        self.min_pts = min_pts
+        
+        # value of min_pts must be at most the number of points in the data.
+        self.min_pts = min(self.n, min_pts)        
+        
+        # determines the distance function to be used for clustering.
         self.distance = distance
+
+        # determines the interval between min_pts values in the range.
+        self.skip = skip
 
         try:
             self.core_distances = np.genfromtxt(datafile + "-" + str(min_pts) + ".cd", delimiter=delimiter)
-            self.knn = np.genfromtxt(datafile + "-" + str(min_pts) + ".knn", delimiter=delimiter, dtype=np.int64)
-            self.knng = load_npz(datafile + "-" + str(self.min_pts) + ".npz")
+            self.knn = np.genfromtxt(datafile + "-" + str(min_pts) + ".keeeeeeeee-nn", delimiter=delimiter, dtype=np.int64)
         except:
-
             from sklearn.neighbors import NearestNeighbors
-
             nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
             
             # computes the core-distances and knn information
             self.core_distances, self.knn = nbrs.kneighbors(self.data)
 
-            # compute the kNNG
-            self.knng = self._knng(self.min_pts)
+            # fixes precision
+            self.core_distances = np.around(self.core_distances, decimals=12)
 
             # saving the computed core-distances, knn and knng on files.
             np.savetxt(datafile + "-" + str(self.min_pts) + ".cd" , self.core_distances, delimiter=delimiter)
             np.savetxt(datafile + "-" + str(self.min_pts) + ".knn", self.knn, delimiter=delimiter, fmt='%i')
+
+
+        try:
+            self.knng = load_npz(datafile + "-" + str(self.min_pts) + ".npz")
+        except:
+            # computes the kNNG
+            self.knng = self._knng(self.min_pts)
             save_npz(datafile + "-" + str(self.min_pts) + ".npz", self.knng)
 
 
@@ -209,7 +228,7 @@ class HDBSCAN:
         start = time.time()
 
         # loop over the values of mpts in the input range
-        for i in range(kmin, kmax + 1):
+        for i in range(kmin, kmax + 1, self.skip):
             
             # compute mst for mpts = i
             mst = prim_graph(
@@ -225,9 +244,6 @@ class HDBSCAN:
         end = time.time()
         print(end - start, end=' ')
         print(int(rng.count_nonzero()/2), end=' ')
-
-        # write these results in a file
-        # print(' '.join(map(str, time_msts)), end=' ')
 
 
     def _hdbscan_knn(self, kmin = 1, kmax = 16):
@@ -264,7 +280,7 @@ class HDBSCAN:
         start = time.time()
 
         # loop over the values of mpts in the input range [kmin, kmax].
-        for i in range(kmin, kmax): 
+        for i in range(kmin, kmax, self.skip): 
 
             # compute mst for mpts = i
             mst = prim_graph(
@@ -310,7 +326,7 @@ class HDBSCAN:
         start = time.time()
 
         # loop over the values of mpts in the input range [kmin, kmax].
-        for i in range(kmax - 1, kmin - 1, -1):
+        for i in range(kmax - 1, kmin - 1, -self.skip):
 
             # compute mst for mpts = i
             mst = prim_inc(
@@ -337,6 +353,59 @@ class HDBSCAN:
         end = time.time()
         print(end - start, end=' ')
         # -----------------------------------
+
+
+    def test(self, kmin = 1, kmax = 16, quick = True):
+
+        #-----------------------------------------------------------------------------------
+        mst, a_knn = prim_plus(
+            self.data, 
+            np.ascontiguousarray(self.core_distances[:, kmax-1]), 
+            np.ascontiguousarray(self.knn[:, kmax-1]),
+            False)
+
+        # makes the mst an upper triangular matrix.
+        mst = triu(mst.maximum(mst.T), format='csr')
+
+        print("[2, 14] MST: " + str(mst[2, 14]))
+        print("[2, 14] KNN: " + str(self.knng[2, 14]))
+
+        # augments the knng with the ties.
+        self.knng = self.knng.maximum(a_knn.maximum(a_knn.T))
+        
+        # computes the CORE-SG graph w.r.t. the underlying distance. 
+        nnsg = self._nnsg(mst, triu(self.knng))
+
+        # eliminates zeroes from the matrix that might have remained from the operations.
+        nnsg.eliminate_zeros()
+        
+        nnsg = nnsg.maximum(nnsg.T)
+        #-----------------------------------------------------------------------------------
+
+        #-----------------------------------------------------------------------------------
+        rng_object = RelativeNeighborhoodGraph(
+            self.data, 
+            self.core_distances, 
+            self.knn, 
+            kmax, 
+            quick=quick)
+       
+        # obtains the csr_matrix representation of the RNG
+        rng = rng_object.graph()
+        rng = rng.maximum(rng.T)
+        #-----------------------------------------------------------------------------------
+
+        # print("[2]  CD: ", str(self.core_distances[2, kmax - 1]))
+        # print("[14] CD: ", str(self.core_distances[14, kmax - 1]))
+
+        print("")
+        for i in range(self.n):
+            for j in range(i, self.n):
+                if abs(nnsg[i, j] - rng[i, j]) > 0.00001:
+                    print(i, j)
+                    print(nnsg[i, j], rng[i, j])
+
+        return 
 
 
     def _update_edge_weights(self, nnsg, k):
@@ -369,21 +438,14 @@ class HDBSCAN:
 
     def _nnsg(self, mst, knng, format='csr'):
 
-        # converts MST to LIL format.
-        mst = mst.tolil()
+        for current_point in range(mst.shape[0]):
+            for i in range(mst.indptr[current_point], mst.indptr[current_point+1]):
+                neighbor = mst.indices[i]
+                if mst.data[i] == self.core_distances[current_point, self.min_pts-1] or \
+                   mst.data[i] == self.core_distances[neighbor, self.min_pts-1]:
+                   mst.data[i] = 0
 
-        # nonzero positions of knng.
-        row_ind, col_ind = knng.nonzero()
-
-        # sets all positions to zero so we can return the sum/max of both matrices.
-        mst[row_ind, col_ind] = 0
-
-        # outputs resulting matrix in LIL format.
-        if format == 'lil':
-            return mst.maximum(knng.tolil())
-
-        # outputs resulting matrix in CSR format.
-        return mst.tocsr().maximum(knng)
+        return mst.maximum(knng)
 
 
     def _construct_hierarchy(self):
@@ -432,3 +494,9 @@ class HDBSCAN:
         self._get_nodes(reachability, split + 1, end)]
 
         return d
+
+    def ss_classification(self, mst, labels):
+        
+
+
+        return labels

@@ -12,6 +12,8 @@ from libc.math cimport INFINITY
 from libc.math cimport sqrt
 from libc.stdlib cimport malloc, free
 
+from libc.math cimport abs as cabs
+
 from scipy.spatial import distance
 from scipy.sparse import csr_matrix
 
@@ -136,7 +138,7 @@ cdef class RelativeNeighborhoodGraph:
         cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
         cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))
 
-        cdef DTYPE_t* closest_underlying = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
+        cdef DTYPE_t* closest_underlying_r = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
 
         cdef ITYPE_t* closest_rb = <ITYPE_t*> malloc(r_size * sizeof(ITYPE_t))
         cdef ITYPE_t* closest_br = <ITYPE_t*> malloc(b_size * sizeof(ITYPE_t))
@@ -146,7 +148,7 @@ cdef class RelativeNeighborhoodGraph:
 
         for r in xrange(r_size):
             closest_dist_rb[r] = INFINITY
-            closest_underlying[r] = INFINITY
+            closest_underlying_r[r] = INFINITY
 
             point_r = red[r]
 
@@ -157,34 +159,41 @@ cdef class RelativeNeighborhoodGraph:
                 d_rb = max(underlying, core_distances[point_r], core_distances[point_b])
 
                 if d_rb <= closest_dist_rb[r]:
-                    if underlying < closest_underlying[r]:
+                    if d_rb < closest_dist_rb[r]:
                         closest_dist_rb[r] = d_rb
                         closest_rb[r] = b
-                        closest_underlying[r] = underlying
+                        closest_underlying_r[r] = underlying
+                    else:
+                        if underlying < closest_underlying_r[r]:
+                            closest_dist_rb[r] = d_rb
+                            closest_rb[r] = b
+                            
+                            closest_underlying_r[r] = underlying
 
                 if d_rb < closest_dist_br[b]:
                     closest_dist_br[b] = d_rb
                     closest_br[b] = r
                     
         for r in xrange(r_size):
+            for b in xrange(b_size):
 
-            if closest_dist_rb[r] == closest_dist_br[closest_rb[r]]:
-                
-                # adds edge between point_r and point_b
-                self.add_edge(
-                    red[r], 
-                    blue[closest_rb[r]], 
-                    closest_underlying[r], 
-                    data, 
-                    core_distances, 
-                    knn)
+                if closest_dist_rb[r] == closest_dist_br[b]:
+                    # adds edge between point_r and point_b
+                    self.add_edge(
+                        red[r], 
+                        blue[b], 
+                        closest_dist_rb[r],
+                        closest_underlying_r[r], 
+                        data, 
+                        core_distances, 
+                        knn)
 
 
         # free up memory not needed anymore
         free(closest_dist_rb)
         free(closest_dist_br)
 
-        free(closest_underlying)
+        free(closest_underlying_r)
 
         free(closest_rb)
         free(closest_br)
@@ -197,17 +206,18 @@ cdef class RelativeNeighborhoodGraph:
     cdef void add_edge(
         self, 
         ITYPE_t point_a, 
-        ITYPE_t point_b, 
+        ITYPE_t point_b,
+        DTYPE_t mrd, 
         DTYPE_t weight, 
         DTYPE_t[:, :] data,
         DTYPE_t[:] core_distances,
         ITYPE_t[:, :] knn):
 
-        if self.relative_neighbors(point_a, point_b, weight, data, core_distances, knn):
+        if self.relative_neighbors(point_a, point_b, mrd, data, core_distances, knn):
             self.u.append(point_a)
             self.v.append(point_b)
             self.w.append(weight)
-    
+            # print(min(point_a, point_b), max(point_a, point_b))
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
@@ -223,7 +233,7 @@ cdef class RelativeNeighborhoodGraph:
         ITYPE_t[:, :] knn):
 
         if self.quick:
-            if not self._relative_neighbors_quick(point_a, point_b, weight, data, core_distances, knn):
+            if not self._relative_neighbors_quick(point_a, point_b, weight, data, core_distances, knn):                
                 return False
             
         if self.naive:
@@ -248,7 +258,7 @@ cdef class RelativeNeighborhoodGraph:
 
         cdef ITYPE_t c, point_c
 
-        if weight == max(core_distances[point_a], core_distances[point_b]):
+        if cabs(weight - max(core_distances[point_a], core_distances[point_b])) < 0.000000001:
             return True
 
         for c in xrange(1, self.min_points):

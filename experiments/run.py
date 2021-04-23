@@ -25,4 +25,7 @@ def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn'):
     if method == 'single_k':
         h.hdbscan_k(min_pts=kmax)
 
+    if method == 'test':
+        h.test(kmin=kmin, kmax=kmax, quick=True)
+
     return None       
