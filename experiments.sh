@@ -2,8 +2,6 @@
 
 DIR=$1
 
-# rm -rf *.results
-
 DEFAULT_KMAX=100
 DEFAULT_DIM=64
 DEFAULT_DATA=256
@@ -107,7 +105,6 @@ if [[ ${2^^} == "RNG" || $2 == "ALL" ]]; then
 fi
 
 ALL=[[ $KNN && $KNN_INC && $RNG ]]
-echo $ALL
 
 SECONDS=0
 for i in $(seq 1)

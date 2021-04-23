@@ -49,7 +49,7 @@ class HDBSCAN:
 
         try:
             self.core_distances = np.genfromtxt(datafile + "-" + str(min_pts) + ".cd", delimiter=delimiter)
-            self.knn = np.genfromtxt(datafile + "-" + str(min_pts) + ".keeeeeeeee-nn", delimiter=delimiter, dtype=np.int64)
+            self.knn = np.genfromtxt(datafile + "-" + str(min_pts) + ".knn", delimiter=delimiter, dtype=np.int64)
         except:
             from sklearn.neighbors import NearestNeighbors
             nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
