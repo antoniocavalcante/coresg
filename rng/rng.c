@@ -2071,6 +2071,23 @@ static CYTHON_INLINE PyObject *__pyx_capsule_create(void *p, const char *sig);
 #define __Pyx_HAS_GCC_DIAGNOSTIC
 #endif
 
+/* TypeInfoCompare.proto */
+static int __pyx_typeinfo_cmp(__Pyx_TypeInfo *a, __Pyx_TypeInfo *b);
+
+/* MemviewSliceValidateAndInit.proto */
+static int __Pyx_ValidateAndInit_memviewslice(
+                int *axes_specs,
+                int c_or_f_flag,
+                int buf_flags,
+                int ndim,
+                __Pyx_TypeInfo *dtype,
+                __Pyx_BufFmt_StackElem stack[],
+                __Pyx_memviewslice *memviewslice,
+                PyObject *original_obj);
+
+/* ObjectToMemviewSlice.proto */
+static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_3rng_DTYPE_t(PyObject *, int writable_flag);
+
 /* RealImag.proto */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -2197,25 +2214,8 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 /* CIntFromPy.proto */
 static CYTHON_INLINE char __Pyx_PyInt_As_char(PyObject *);
 
-/* TypeInfoCompare.proto */
-static int __pyx_typeinfo_cmp(__Pyx_TypeInfo *a, __Pyx_TypeInfo *b);
-
-/* MemviewSliceValidateAndInit.proto */
-static int __Pyx_ValidateAndInit_memviewslice(
-                int *axes_specs,
-                int c_or_f_flag,
-                int buf_flags,
-                int ndim,
-                __Pyx_TypeInfo *dtype,
-                __Pyx_BufFmt_StackElem stack[],
-                __Pyx_memviewslice *memviewslice,
-                PyObject *original_obj);
-
 /* ObjectToMemviewSlice.proto */
 static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_3rng_DTYPE_t(PyObject *, int writable_flag);
-
-/* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_3rng_DTYPE_t(PyObject *, int writable_flag);
 
 /* ObjectToMemviewSlice.proto */
 static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_3rng_ITYPE_t(PyObject *, int writable_flag);
@@ -2308,7 +2308,7 @@ static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
 static __pyx_t_3rng_DTYPE_t __pyx_f_3rng__mutual_reachability_distance(__pyx_t_3rng_ITYPE_t, __pyx_t_3rng_ITYPE_t, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
-static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
+static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice, __Pyx_memviewslice, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__pyx_f_3rng___pyx_unpickle_RelativeNeighborhoodGraph__set_state(struct __pyx_obj_3rng_RelativeNeighborhoodGraph *, PyObject *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
@@ -2366,6 +2366,8 @@ static const char __pyx_k_l[] = "l";
 static const char __pyx_k_r[] = "r";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
+static const char __pyx_k_v1[] = "v1";
+static const char __pyx_k_v2[] = "v2";
 static const char __pyx_k_knn[] = "knn";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_obj[] = "obj";
@@ -2607,12 +2609,15 @@ static PyObject *__pyx_kp_s_unable_to_allocate_array_data;
 static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_n_s_unpack;
 static PyObject *__pyx_n_s_update;
+static PyObject *__pyx_n_s_v1;
+static PyObject *__pyx_n_s_v2;
 static PyObject *__pyx_n_s_xrange;
 static int __pyx_pf_3rng_25RelativeNeighborhoodGraph___init__(struct __pyx_obj_3rng_RelativeNeighborhoodGraph *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances, PyArrayObject *__pyx_v_knn, __pyx_t_3rng_ITYPE_t __pyx_v_min_points, int __pyx_v_quick, int __pyx_v_naive); /* proto */
 static PyObject *__pyx_pf_3rng_25RelativeNeighborhoodGraph_2graph(struct __pyx_obj_3rng_RelativeNeighborhoodGraph *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3rng_25RelativeNeighborhoodGraph_4__reduce_cython__(struct __pyx_obj_3rng_RelativeNeighborhoodGraph *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3rng_25RelativeNeighborhoodGraph_6__setstate_cython__(struct __pyx_obj_3rng_RelativeNeighborhoodGraph *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_3rng___pyx_unpickle_RelativeNeighborhoodGraph(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_3rng_euclidean_local(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_v1, __Pyx_memviewslice __pyx_v_v2); /* proto */
+static PyObject *__pyx_pf_3rng_2__pyx_unpickle_RelativeNeighborhoodGraph(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(struct __pyx_array_obj *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_array___pyx_pf_15View_dot_MemoryView_5array_4__dealloc__(struct __pyx_array_obj *__pyx_v_self); /* proto */
@@ -3945,27 +3950,31 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_sbcn(struct __pyx_obj_3rng_
   CYTHON_UNUSED __pyx_t_3rng_DTYPE_t __pyx_v_min_dist;
   __pyx_t_3rng_DTYPE_t __pyx_v_d_rb;
   __pyx_t_3rng_DTYPE_t __pyx_v_underlying;
-  __pyx_t_3rng_DTYPE_t *__pyx_v_closest_dist_rb;
-  __pyx_t_3rng_DTYPE_t *__pyx_v_closest_dist_br;
-  __pyx_t_3rng_DTYPE_t *__pyx_v_closest_underlying_r;
+  CYTHON_UNUSED __pyx_t_3rng_ITYPE_t __pyx_v_num_closest;
   __pyx_t_3rng_ITYPE_t *__pyx_v_closest_rb;
   __pyx_t_3rng_ITYPE_t *__pyx_v_closest_br;
+  __pyx_t_3rng_DTYPE_t *__pyx_v_closest_dist_rb;
+  __pyx_t_3rng_DTYPE_t *__pyx_v_closest_dist_br;
   __Pyx_RefNannyDeclarations
-  __pyx_t_3rng_ITYPE_t __pyx_t_1;
-  __pyx_t_3rng_ITYPE_t __pyx_t_2;
-  __pyx_t_3rng_ITYPE_t __pyx_t_3;
-  __pyx_t_3rng_ITYPE_t __pyx_t_4;
-  __pyx_t_3rng_ITYPE_t __pyx_t_5;
+  int __pyx_t_1;
+  int __pyx_t_2;
+  Py_ssize_t __pyx_t_3;
+  __Pyx_memviewslice __pyx_t_4 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_t_5 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __pyx_t_3rng_ITYPE_t __pyx_t_6;
-  __pyx_t_3rng_ITYPE_t __pyx_t_7;
-  __Pyx_memviewslice __pyx_t_8 = { 0, 0, { 0 }, { 0 }, { 0 } };
-  __Pyx_memviewslice __pyx_t_9 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __pyx_t_3rng_DTYPE_t __pyx_t_7;
+  __pyx_t_3rng_DTYPE_t __pyx_t_8;
+  __pyx_t_3rng_DTYPE_t __pyx_t_9;
   __pyx_t_3rng_DTYPE_t __pyx_t_10;
-  __pyx_t_3rng_DTYPE_t __pyx_t_11;
-  __pyx_t_3rng_DTYPE_t __pyx_t_12;
-  __pyx_t_3rng_DTYPE_t __pyx_t_13;
-  int __pyx_t_14;
+  Py_ssize_t __pyx_t_11;
+  __pyx_t_3rng_ITYPE_t __pyx_t_12;
+  __pyx_t_3rng_ITYPE_t __pyx_t_13;
+  __pyx_t_3rng_ITYPE_t __pyx_t_14;
   __pyx_t_3rng_ITYPE_t __pyx_t_15;
+  __pyx_t_3rng_ITYPE_t __pyx_t_16;
+  __pyx_t_3rng_ITYPE_t __pyx_t_17;
+  __pyx_t_3rng_ITYPE_t __pyx_t_18;
+  __pyx_t_3rng_ITYPE_t __pyx_t_19;
   __Pyx_RefNannySetupContext("sbcn", 0);
 
   /* "rng.pyx":133
@@ -3982,48 +3991,163 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_sbcn(struct __pyx_obj_3rng_
  *         r_size = red.shape[0]
  *         b_size = blue.shape[0]             # <<<<<<<<<<<<<<
  * 
- *         min_dist = INFINITY
+ *         # both sets are singletons
  */
   __pyx_v_b_size = (__pyx_v_blue.shape[0]);
 
-  /* "rng.pyx":136
- *         b_size = blue.shape[0]
+  /* "rng.pyx":137
+ * 
+ *         # both sets are singletons
+ *         if r_size == 1 and b_size == 1:             # <<<<<<<<<<<<<<
+ * 
+ *             underlying = euclidean_local(data[red[0]], data[blue[0]])
+ */
+  __pyx_t_2 = ((__pyx_v_r_size == 1) != 0);
+  if (__pyx_t_2) {
+  } else {
+    __pyx_t_1 = __pyx_t_2;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_2 = ((__pyx_v_b_size == 1) != 0);
+  __pyx_t_1 = __pyx_t_2;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_1) {
+
+    /* "rng.pyx":139
+ *         if r_size == 1 and b_size == 1:
+ * 
+ *             underlying = euclidean_local(data[red[0]], data[blue[0]])             # <<<<<<<<<<<<<<
+ *             d_rb = max(underlying, core_distances[red[0]], core_distances[blue[0]])
+ * 
+ */
+    __pyx_t_3 = 0;
+    __pyx_t_4.data = __pyx_v_data.data;
+    __pyx_t_4.memview = __pyx_v_data.memview;
+    __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
+    {
+    Py_ssize_t __pyx_tmp_idx = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_red.data + __pyx_t_3 * __pyx_v_red.strides[0]) )));
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_data.strides[0];
+        __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
+}
+
+__pyx_t_4.shape[0] = __pyx_v_data.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_data.strides[1];
+    __pyx_t_4.suboffsets[0] = -1;
+
+__pyx_t_3 = 0;
+    __pyx_t_5.data = __pyx_v_data.data;
+    __pyx_t_5.memview = __pyx_v_data.memview;
+    __PYX_INC_MEMVIEW(&__pyx_t_5, 0);
+    {
+    Py_ssize_t __pyx_tmp_idx = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_blue.data + __pyx_t_3 * __pyx_v_blue.strides[0]) )));
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_data.strides[0];
+        __pyx_t_5.data += __pyx_tmp_idx * __pyx_tmp_stride;
+}
+
+__pyx_t_5.shape[0] = __pyx_v_data.shape[1];
+__pyx_t_5.strides[0] = __pyx_v_data.strides[1];
+    __pyx_t_5.suboffsets[0] = -1;
+
+__pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_4, __pyx_t_5, 0);
+    __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
+    __pyx_t_4.memview = NULL;
+    __pyx_t_4.data = NULL;
+    __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
+    __pyx_t_5.memview = NULL;
+    __pyx_t_5.data = NULL;
+
+    /* "rng.pyx":140
+ * 
+ *             underlying = euclidean_local(data[red[0]], data[blue[0]])
+ *             d_rb = max(underlying, core_distances[red[0]], core_distances[blue[0]])             # <<<<<<<<<<<<<<
+ * 
+ *             self.add_edge(
+ */
+    __pyx_t_3 = 0;
+    __pyx_t_6 = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_red.data + __pyx_t_3 * __pyx_v_red.strides[0]) )));
+    __pyx_t_7 = (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_6 * __pyx_v_core_distances.strides[0]) )));
+    __pyx_t_3 = 0;
+    __pyx_t_6 = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_blue.data + __pyx_t_3 * __pyx_v_blue.strides[0]) )));
+    __pyx_t_8 = (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_6 * __pyx_v_core_distances.strides[0]) )));
+    __pyx_t_9 = __pyx_v_underlying;
+    if (((__pyx_t_7 > __pyx_t_9) != 0)) {
+      __pyx_t_10 = __pyx_t_7;
+    } else {
+      __pyx_t_10 = __pyx_t_9;
+    }
+    __pyx_t_9 = __pyx_t_10;
+    if (((__pyx_t_8 > __pyx_t_9) != 0)) {
+      __pyx_t_10 = __pyx_t_8;
+    } else {
+      __pyx_t_10 = __pyx_t_9;
+    }
+    __pyx_v_d_rb = __pyx_t_10;
+
+    /* "rng.pyx":143
+ * 
+ *             self.add_edge(
+ *                 red[0],             # <<<<<<<<<<<<<<
+ *                 blue[0],
+ *                 d_rb,
+ */
+    __pyx_t_3 = 0;
+
+    /* "rng.pyx":144
+ *             self.add_edge(
+ *                 red[0],
+ *                 blue[0],             # <<<<<<<<<<<<<<
+ *                 d_rb,
+ *                 underlying,
+ */
+    __pyx_t_11 = 0;
+
+    /* "rng.pyx":142
+ *             d_rb = max(underlying, core_distances[red[0]], core_distances[blue[0]])
+ * 
+ *             self.add_edge(             # <<<<<<<<<<<<<<
+ *                 red[0],
+ *                 blue[0],
+ */
+    ((struct __pyx_vtabstruct_3rng_RelativeNeighborhoodGraph *)__pyx_v_self->__pyx_vtab)->add_edge(__pyx_v_self, (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_red.data + __pyx_t_3 * __pyx_v_red.strides[0]) ))), (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_blue.data + __pyx_t_11 * __pyx_v_blue.strides[0]) ))), __pyx_v_d_rb, __pyx_v_underlying, __pyx_v_data, __pyx_v_core_distances, __pyx_v_knn);
+
+    /* "rng.pyx":151
+ *                 knn)
+ * 
+ *             return             # <<<<<<<<<<<<<<
+ * 
+ *         min_dist = INFINITY
+ */
+    goto __pyx_L0;
+
+    /* "rng.pyx":137
+ * 
+ *         # both sets are singletons
+ *         if r_size == 1 and b_size == 1:             # <<<<<<<<<<<<<<
+ * 
+ *             underlying = euclidean_local(data[red[0]], data[blue[0]])
+ */
+  }
+
+  /* "rng.pyx":153
+ *             return
  * 
  *         min_dist = INFINITY             # <<<<<<<<<<<<<<
  * 
- *         cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
+ *         cdef ITYPE_t num_closest = 0
  */
   __pyx_v_min_dist = INFINITY;
 
-  /* "rng.pyx":138
+  /* "rng.pyx":155
  *         min_dist = INFINITY
  * 
- *         cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))             # <<<<<<<<<<<<<<
- *         cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))
- * 
- */
-  __pyx_v_closest_dist_rb = ((__pyx_t_3rng_DTYPE_t *)malloc((__pyx_v_r_size * (sizeof(__pyx_t_3rng_DTYPE_t)))));
-
-  /* "rng.pyx":139
- * 
- *         cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
- *         cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))             # <<<<<<<<<<<<<<
- * 
- *         cdef DTYPE_t* closest_underlying_r = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
- */
-  __pyx_v_closest_dist_br = ((__pyx_t_3rng_DTYPE_t *)malloc((__pyx_v_b_size * (sizeof(__pyx_t_3rng_DTYPE_t)))));
-
-  /* "rng.pyx":141
- *         cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))
- * 
- *         cdef DTYPE_t* closest_underlying_r = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))             # <<<<<<<<<<<<<<
+ *         cdef ITYPE_t num_closest = 0             # <<<<<<<<<<<<<<
  * 
  *         cdef ITYPE_t* closest_rb = <ITYPE_t*> malloc(r_size * sizeof(ITYPE_t))
  */
-  __pyx_v_closest_underlying_r = ((__pyx_t_3rng_DTYPE_t *)malloc((__pyx_v_r_size * (sizeof(__pyx_t_3rng_DTYPE_t)))));
+  __pyx_v_num_closest = 0;
 
-  /* "rng.pyx":143
- *         cdef DTYPE_t* closest_underlying_r = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
+  /* "rng.pyx":157
+ *         cdef ITYPE_t num_closest = 0
  * 
  *         cdef ITYPE_t* closest_rb = <ITYPE_t*> malloc(r_size * sizeof(ITYPE_t))             # <<<<<<<<<<<<<<
  *         cdef ITYPE_t* closest_br = <ITYPE_t*> malloc(b_size * sizeof(ITYPE_t))
@@ -4031,28 +4155,46 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_sbcn(struct __pyx_obj_3rng_
  */
   __pyx_v_closest_rb = ((__pyx_t_3rng_ITYPE_t *)malloc((__pyx_v_r_size * (sizeof(__pyx_t_3rng_ITYPE_t)))));
 
-  /* "rng.pyx":144
+  /* "rng.pyx":158
  * 
  *         cdef ITYPE_t* closest_rb = <ITYPE_t*> malloc(r_size * sizeof(ITYPE_t))
  *         cdef ITYPE_t* closest_br = <ITYPE_t*> malloc(b_size * sizeof(ITYPE_t))             # <<<<<<<<<<<<<<
  * 
- *         for b in xrange(b_size):
+ *         cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
  */
   __pyx_v_closest_br = ((__pyx_t_3rng_ITYPE_t *)malloc((__pyx_v_b_size * (sizeof(__pyx_t_3rng_ITYPE_t)))));
 
-  /* "rng.pyx":146
+  /* "rng.pyx":160
  *         cdef ITYPE_t* closest_br = <ITYPE_t*> malloc(b_size * sizeof(ITYPE_t))
+ * 
+ *         cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))             # <<<<<<<<<<<<<<
+ *         cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))
+ * 
+ */
+  __pyx_v_closest_dist_rb = ((__pyx_t_3rng_DTYPE_t *)malloc((__pyx_v_r_size * (sizeof(__pyx_t_3rng_DTYPE_t)))));
+
+  /* "rng.pyx":161
+ * 
+ *         cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
+ *         cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))             # <<<<<<<<<<<<<<
+ * 
+ *         for b in xrange(b_size):
+ */
+  __pyx_v_closest_dist_br = ((__pyx_t_3rng_DTYPE_t *)malloc((__pyx_v_b_size * (sizeof(__pyx_t_3rng_DTYPE_t)))));
+
+  /* "rng.pyx":163
+ *         cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))
  * 
  *         for b in xrange(b_size):             # <<<<<<<<<<<<<<
  *             closest_dist_br[b] = INFINITY
  * 
  */
-  __pyx_t_1 = __pyx_v_b_size;
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_b = __pyx_t_3;
+  __pyx_t_6 = __pyx_v_b_size;
+  __pyx_t_12 = __pyx_t_6;
+  for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
+    __pyx_v_b = __pyx_t_13;
 
-    /* "rng.pyx":147
+    /* "rng.pyx":164
  * 
  *         for b in xrange(b_size):
  *             closest_dist_br[b] = INFINITY             # <<<<<<<<<<<<<<
@@ -4062,260 +4204,173 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_sbcn(struct __pyx_obj_3rng_
     (__pyx_v_closest_dist_br[__pyx_v_b]) = INFINITY;
   }
 
-  /* "rng.pyx":149
+  /* "rng.pyx":166
  *             closest_dist_br[b] = INFINITY
  * 
  *         for r in xrange(r_size):             # <<<<<<<<<<<<<<
  *             closest_dist_rb[r] = INFINITY
- *             closest_underlying_r[r] = INFINITY
+ * 
  */
-  __pyx_t_1 = __pyx_v_r_size;
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_r = __pyx_t_3;
+  __pyx_t_6 = __pyx_v_r_size;
+  __pyx_t_12 = __pyx_t_6;
+  for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
+    __pyx_v_r = __pyx_t_13;
 
-    /* "rng.pyx":150
+    /* "rng.pyx":167
  * 
  *         for r in xrange(r_size):
  *             closest_dist_rb[r] = INFINITY             # <<<<<<<<<<<<<<
- *             closest_underlying_r[r] = INFINITY
- * 
- */
-    (__pyx_v_closest_dist_rb[__pyx_v_r]) = INFINITY;
-
-    /* "rng.pyx":151
- *         for r in xrange(r_size):
- *             closest_dist_rb[r] = INFINITY
- *             closest_underlying_r[r] = INFINITY             # <<<<<<<<<<<<<<
  * 
  *             point_r = red[r]
  */
-    (__pyx_v_closest_underlying_r[__pyx_v_r]) = INFINITY;
+    (__pyx_v_closest_dist_rb[__pyx_v_r]) = INFINITY;
 
-    /* "rng.pyx":153
- *             closest_underlying_r[r] = INFINITY
+    /* "rng.pyx":169
+ *             closest_dist_rb[r] = INFINITY
  * 
  *             point_r = red[r]             # <<<<<<<<<<<<<<
  * 
  *             for b in xrange(b_size):
  */
-    __pyx_t_4 = __pyx_v_r;
-    __pyx_v_point_r = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_red.data + __pyx_t_4 * __pyx_v_red.strides[0]) )));
+    __pyx_t_14 = __pyx_v_r;
+    __pyx_v_point_r = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_red.data + __pyx_t_14 * __pyx_v_red.strides[0]) )));
 
-    /* "rng.pyx":155
+    /* "rng.pyx":171
  *             point_r = red[r]
  * 
  *             for b in xrange(b_size):             # <<<<<<<<<<<<<<
  *                 point_b = blue[b]
  * 
  */
-    __pyx_t_4 = __pyx_v_b_size;
-    __pyx_t_5 = __pyx_t_4;
-    for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
-      __pyx_v_b = __pyx_t_6;
+    __pyx_t_14 = __pyx_v_b_size;
+    __pyx_t_15 = __pyx_t_14;
+    for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+      __pyx_v_b = __pyx_t_16;
 
-      /* "rng.pyx":156
+      /* "rng.pyx":172
  * 
  *             for b in xrange(b_size):
  *                 point_b = blue[b]             # <<<<<<<<<<<<<<
  * 
  *                 underlying = euclidean_local(data[point_r], data[point_b])
  */
-      __pyx_t_7 = __pyx_v_b;
-      __pyx_v_point_b = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_blue.data + __pyx_t_7 * __pyx_v_blue.strides[0]) )));
+      __pyx_t_17 = __pyx_v_b;
+      __pyx_v_point_b = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_blue.data + __pyx_t_17 * __pyx_v_blue.strides[0]) )));
 
-      /* "rng.pyx":158
+      /* "rng.pyx":174
  *                 point_b = blue[b]
  * 
  *                 underlying = euclidean_local(data[point_r], data[point_b])             # <<<<<<<<<<<<<<
  *                 d_rb = max(underlying, core_distances[point_r], core_distances[point_b])
  * 
  */
-      __pyx_t_8.data = __pyx_v_data.data;
-      __pyx_t_8.memview = __pyx_v_data.memview;
-      __PYX_INC_MEMVIEW(&__pyx_t_8, 0);
+      __pyx_t_5.data = __pyx_v_data.data;
+      __pyx_t_5.memview = __pyx_v_data.memview;
+      __PYX_INC_MEMVIEW(&__pyx_t_5, 0);
       {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_point_r;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_data.strides[0];
-        __pyx_t_8.data += __pyx_tmp_idx * __pyx_tmp_stride;
+        __pyx_t_5.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_8.shape[0] = __pyx_v_data.shape[1];
-__pyx_t_8.strides[0] = __pyx_v_data.strides[1];
-    __pyx_t_8.suboffsets[0] = -1;
+__pyx_t_5.shape[0] = __pyx_v_data.shape[1];
+__pyx_t_5.strides[0] = __pyx_v_data.strides[1];
+    __pyx_t_5.suboffsets[0] = -1;
 
-__pyx_t_9.data = __pyx_v_data.data;
-      __pyx_t_9.memview = __pyx_v_data.memview;
-      __PYX_INC_MEMVIEW(&__pyx_t_9, 0);
+__pyx_t_4.data = __pyx_v_data.data;
+      __pyx_t_4.memview = __pyx_v_data.memview;
+      __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
       {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_point_b;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_data.strides[0];
-        __pyx_t_9.data += __pyx_tmp_idx * __pyx_tmp_stride;
+        __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_9.shape[0] = __pyx_v_data.shape[1];
-__pyx_t_9.strides[0] = __pyx_v_data.strides[1];
-    __pyx_t_9.suboffsets[0] = -1;
+__pyx_t_4.shape[0] = __pyx_v_data.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_data.strides[1];
+    __pyx_t_4.suboffsets[0] = -1;
 
-__pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_8, __pyx_t_9);
-      __PYX_XDEC_MEMVIEW(&__pyx_t_8, 1);
-      __pyx_t_8.memview = NULL;
-      __pyx_t_8.data = NULL;
-      __PYX_XDEC_MEMVIEW(&__pyx_t_9, 1);
-      __pyx_t_9.memview = NULL;
-      __pyx_t_9.data = NULL;
+__pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_5, __pyx_t_4, 0);
+      __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
+      __pyx_t_5.memview = NULL;
+      __pyx_t_5.data = NULL;
+      __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
+      __pyx_t_4.memview = NULL;
+      __pyx_t_4.data = NULL;
 
-      /* "rng.pyx":159
+      /* "rng.pyx":175
  * 
  *                 underlying = euclidean_local(data[point_r], data[point_b])
  *                 d_rb = max(underlying, core_distances[point_r], core_distances[point_b])             # <<<<<<<<<<<<<<
  * 
- *                 if d_rb <= closest_dist_rb[r]:
+ *                 if d_rb < closest_dist_rb[r]:
  */
-      __pyx_t_7 = __pyx_v_point_r;
-      __pyx_t_10 = (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_7 * __pyx_v_core_distances.strides[0]) )));
-      __pyx_t_7 = __pyx_v_point_b;
-      __pyx_t_11 = (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_7 * __pyx_v_core_distances.strides[0]) )));
-      __pyx_t_12 = __pyx_v_underlying;
-      if (((__pyx_t_10 > __pyx_t_12) != 0)) {
-        __pyx_t_13 = __pyx_t_10;
+      __pyx_t_17 = __pyx_v_point_r;
+      __pyx_t_10 = (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_17 * __pyx_v_core_distances.strides[0]) )));
+      __pyx_t_17 = __pyx_v_point_b;
+      __pyx_t_7 = (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_17 * __pyx_v_core_distances.strides[0]) )));
+      __pyx_t_8 = __pyx_v_underlying;
+      if (((__pyx_t_10 > __pyx_t_8) != 0)) {
+        __pyx_t_9 = __pyx_t_10;
       } else {
-        __pyx_t_13 = __pyx_t_12;
+        __pyx_t_9 = __pyx_t_8;
       }
-      __pyx_t_12 = __pyx_t_13;
-      if (((__pyx_t_11 > __pyx_t_12) != 0)) {
-        __pyx_t_13 = __pyx_t_11;
+      __pyx_t_8 = __pyx_t_9;
+      if (((__pyx_t_7 > __pyx_t_8) != 0)) {
+        __pyx_t_9 = __pyx_t_7;
       } else {
-        __pyx_t_13 = __pyx_t_12;
+        __pyx_t_9 = __pyx_t_8;
       }
-      __pyx_v_d_rb = __pyx_t_13;
+      __pyx_v_d_rb = __pyx_t_9;
 
-      /* "rng.pyx":161
+      /* "rng.pyx":177
  *                 d_rb = max(underlying, core_distances[point_r], core_distances[point_b])
  * 
- *                 if d_rb <= closest_dist_rb[r]:             # <<<<<<<<<<<<<<
- *                     if d_rb < closest_dist_rb[r]:
- *                         closest_dist_rb[r] = d_rb
+ *                 if d_rb < closest_dist_rb[r]:             # <<<<<<<<<<<<<<
+ *                     closest_dist_rb[r] = d_rb
+ *                     closest_rb[r] = b
  */
-      __pyx_t_14 = ((__pyx_v_d_rb <= (__pyx_v_closest_dist_rb[__pyx_v_r])) != 0);
-      if (__pyx_t_14) {
+      __pyx_t_1 = ((__pyx_v_d_rb < (__pyx_v_closest_dist_rb[__pyx_v_r])) != 0);
+      if (__pyx_t_1) {
 
-        /* "rng.pyx":162
+        /* "rng.pyx":178
  * 
- *                 if d_rb <= closest_dist_rb[r]:
- *                     if d_rb < closest_dist_rb[r]:             # <<<<<<<<<<<<<<
- *                         closest_dist_rb[r] = d_rb
- *                         closest_rb[r] = b
- */
-        __pyx_t_14 = ((__pyx_v_d_rb < (__pyx_v_closest_dist_rb[__pyx_v_r])) != 0);
-        if (__pyx_t_14) {
-
-          /* "rng.pyx":163
- *                 if d_rb <= closest_dist_rb[r]:
- *                     if d_rb < closest_dist_rb[r]:
- *                         closest_dist_rb[r] = d_rb             # <<<<<<<<<<<<<<
- *                         closest_rb[r] = b
- *                         closest_underlying_r[r] = underlying
- */
-          (__pyx_v_closest_dist_rb[__pyx_v_r]) = __pyx_v_d_rb;
-
-          /* "rng.pyx":164
- *                     if d_rb < closest_dist_rb[r]:
- *                         closest_dist_rb[r] = d_rb
- *                         closest_rb[r] = b             # <<<<<<<<<<<<<<
- *                         closest_underlying_r[r] = underlying
- *                     else:
- */
-          (__pyx_v_closest_rb[__pyx_v_r]) = __pyx_v_b;
-
-          /* "rng.pyx":165
- *                         closest_dist_rb[r] = d_rb
- *                         closest_rb[r] = b
- *                         closest_underlying_r[r] = underlying             # <<<<<<<<<<<<<<
- *                     else:
- *                         if underlying < closest_underlying_r[r]:
- */
-          (__pyx_v_closest_underlying_r[__pyx_v_r]) = __pyx_v_underlying;
-
-          /* "rng.pyx":162
- * 
- *                 if d_rb <= closest_dist_rb[r]:
- *                     if d_rb < closest_dist_rb[r]:             # <<<<<<<<<<<<<<
- *                         closest_dist_rb[r] = d_rb
- *                         closest_rb[r] = b
- */
-          goto __pyx_L10;
-        }
-
-        /* "rng.pyx":167
- *                         closest_underlying_r[r] = underlying
- *                     else:
- *                         if underlying < closest_underlying_r[r]:             # <<<<<<<<<<<<<<
- *                             closest_dist_rb[r] = d_rb
- *                             closest_rb[r] = b
- */
-        /*else*/ {
-          __pyx_t_14 = ((__pyx_v_underlying < (__pyx_v_closest_underlying_r[__pyx_v_r])) != 0);
-          if (__pyx_t_14) {
-
-            /* "rng.pyx":168
- *                     else:
- *                         if underlying < closest_underlying_r[r]:
- *                             closest_dist_rb[r] = d_rb             # <<<<<<<<<<<<<<
- *                             closest_rb[r] = b
+ *                 if d_rb < closest_dist_rb[r]:
+ *                     closest_dist_rb[r] = d_rb             # <<<<<<<<<<<<<<
+ *                     closest_rb[r] = b
  * 
  */
-            (__pyx_v_closest_dist_rb[__pyx_v_r]) = __pyx_v_d_rb;
+        (__pyx_v_closest_dist_rb[__pyx_v_r]) = __pyx_v_d_rb;
 
-            /* "rng.pyx":169
- *                         if underlying < closest_underlying_r[r]:
- *                             closest_dist_rb[r] = d_rb
- *                             closest_rb[r] = b             # <<<<<<<<<<<<<<
- * 
- *                             closest_underlying_r[r] = underlying
- */
-            (__pyx_v_closest_rb[__pyx_v_r]) = __pyx_v_b;
-
-            /* "rng.pyx":171
- *                             closest_rb[r] = b
- * 
- *                             closest_underlying_r[r] = underlying             # <<<<<<<<<<<<<<
+        /* "rng.pyx":179
+ *                 if d_rb < closest_dist_rb[r]:
+ *                     closest_dist_rb[r] = d_rb
+ *                     closest_rb[r] = b             # <<<<<<<<<<<<<<
  * 
  *                 if d_rb < closest_dist_br[b]:
  */
-            (__pyx_v_closest_underlying_r[__pyx_v_r]) = __pyx_v_underlying;
+        (__pyx_v_closest_rb[__pyx_v_r]) = __pyx_v_b;
 
-            /* "rng.pyx":167
- *                         closest_underlying_r[r] = underlying
- *                     else:
- *                         if underlying < closest_underlying_r[r]:             # <<<<<<<<<<<<<<
- *                             closest_dist_rb[r] = d_rb
- *                             closest_rb[r] = b
- */
-          }
-        }
-        __pyx_L10:;
-
-        /* "rng.pyx":161
+        /* "rng.pyx":177
  *                 d_rb = max(underlying, core_distances[point_r], core_distances[point_b])
  * 
- *                 if d_rb <= closest_dist_rb[r]:             # <<<<<<<<<<<<<<
- *                     if d_rb < closest_dist_rb[r]:
- *                         closest_dist_rb[r] = d_rb
+ *                 if d_rb < closest_dist_rb[r]:             # <<<<<<<<<<<<<<
+ *                     closest_dist_rb[r] = d_rb
+ *                     closest_rb[r] = b
  */
       }
 
-      /* "rng.pyx":173
- *                             closest_underlying_r[r] = underlying
+      /* "rng.pyx":181
+ *                     closest_rb[r] = b
  * 
  *                 if d_rb < closest_dist_br[b]:             # <<<<<<<<<<<<<<
  *                     closest_dist_br[b] = d_rb
  *                     closest_br[b] = r
  */
-      __pyx_t_14 = ((__pyx_v_d_rb < (__pyx_v_closest_dist_br[__pyx_v_b])) != 0);
-      if (__pyx_t_14) {
+      __pyx_t_1 = ((__pyx_v_d_rb < (__pyx_v_closest_dist_br[__pyx_v_b])) != 0);
+      if (__pyx_t_1) {
 
-        /* "rng.pyx":174
+        /* "rng.pyx":182
  * 
  *                 if d_rb < closest_dist_br[b]:
  *                     closest_dist_br[b] = d_rb             # <<<<<<<<<<<<<<
@@ -4324,7 +4379,7 @@ __pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_8, __pyx_t_9);
  */
         (__pyx_v_closest_dist_br[__pyx_v_b]) = __pyx_v_d_rb;
 
-        /* "rng.pyx":175
+        /* "rng.pyx":183
  *                 if d_rb < closest_dist_br[b]:
  *                     closest_dist_br[b] = d_rb
  *                     closest_br[b] = r             # <<<<<<<<<<<<<<
@@ -4333,8 +4388,8 @@ __pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_8, __pyx_t_9);
  */
         (__pyx_v_closest_br[__pyx_v_b]) = __pyx_v_r;
 
-        /* "rng.pyx":173
- *                             closest_underlying_r[r] = underlying
+        /* "rng.pyx":181
+ *                     closest_rb[r] = b
  * 
  *                 if d_rb < closest_dist_br[b]:             # <<<<<<<<<<<<<<
  *                     closest_dist_br[b] = d_rb
@@ -4344,68 +4399,110 @@ __pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_8, __pyx_t_9);
     }
   }
 
-  /* "rng.pyx":177
+  /* "rng.pyx":185
  *                     closest_br[b] = r
  * 
  *         for r in xrange(r_size):             # <<<<<<<<<<<<<<
  *             for b in xrange(b_size):
  * 
  */
-  __pyx_t_1 = __pyx_v_r_size;
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_r = __pyx_t_3;
+  __pyx_t_6 = __pyx_v_r_size;
+  __pyx_t_12 = __pyx_t_6;
+  for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
+    __pyx_v_r = __pyx_t_13;
 
-    /* "rng.pyx":178
+    /* "rng.pyx":186
  * 
  *         for r in xrange(r_size):
  *             for b in xrange(b_size):             # <<<<<<<<<<<<<<
  * 
  *                 if closest_dist_rb[r] == closest_dist_br[b]:
  */
-    __pyx_t_4 = __pyx_v_b_size;
-    __pyx_t_5 = __pyx_t_4;
-    for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
-      __pyx_v_b = __pyx_t_6;
+    __pyx_t_14 = __pyx_v_b_size;
+    __pyx_t_15 = __pyx_t_14;
+    for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+      __pyx_v_b = __pyx_t_16;
 
-      /* "rng.pyx":180
+      /* "rng.pyx":188
  *             for b in xrange(b_size):
  * 
  *                 if closest_dist_rb[r] == closest_dist_br[b]:             # <<<<<<<<<<<<<<
  *                     # adds edge between point_r and point_b
  *                     self.add_edge(
  */
-      __pyx_t_14 = (((__pyx_v_closest_dist_rb[__pyx_v_r]) == (__pyx_v_closest_dist_br[__pyx_v_b])) != 0);
-      if (__pyx_t_14) {
+      __pyx_t_1 = (((__pyx_v_closest_dist_rb[__pyx_v_r]) == (__pyx_v_closest_dist_br[__pyx_v_b])) != 0);
+      if (__pyx_t_1) {
 
-        /* "rng.pyx":183
+        /* "rng.pyx":191
  *                     # adds edge between point_r and point_b
  *                     self.add_edge(
  *                         red[r],             # <<<<<<<<<<<<<<
  *                         blue[b],
  *                         closest_dist_rb[r],
  */
-        __pyx_t_7 = __pyx_v_r;
+        __pyx_t_17 = __pyx_v_r;
 
-        /* "rng.pyx":184
+        /* "rng.pyx":192
  *                     self.add_edge(
  *                         red[r],
  *                         blue[b],             # <<<<<<<<<<<<<<
  *                         closest_dist_rb[r],
- *                         closest_underlying_r[r],
+ *                         euclidean_local(data[red[r]], data[blue[b]]),
  */
-        __pyx_t_15 = __pyx_v_b;
+        __pyx_t_18 = __pyx_v_b;
 
-        /* "rng.pyx":182
+        /* "rng.pyx":194
+ *                         blue[b],
+ *                         closest_dist_rb[r],
+ *                         euclidean_local(data[red[r]], data[blue[b]]),             # <<<<<<<<<<<<<<
+ *                         data,
+ *                         core_distances,
+ */
+        __pyx_t_19 = __pyx_v_r;
+        __pyx_t_4.data = __pyx_v_data.data;
+        __pyx_t_4.memview = __pyx_v_data.memview;
+        __PYX_INC_MEMVIEW(&__pyx_t_4, 0);
+        {
+    Py_ssize_t __pyx_tmp_idx = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_red.data + __pyx_t_19 * __pyx_v_red.strides[0]) )));
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_data.strides[0];
+        __pyx_t_4.data += __pyx_tmp_idx * __pyx_tmp_stride;
+}
+
+__pyx_t_4.shape[0] = __pyx_v_data.shape[1];
+__pyx_t_4.strides[0] = __pyx_v_data.strides[1];
+    __pyx_t_4.suboffsets[0] = -1;
+
+__pyx_t_19 = __pyx_v_b;
+        __pyx_t_5.data = __pyx_v_data.data;
+        __pyx_t_5.memview = __pyx_v_data.memview;
+        __PYX_INC_MEMVIEW(&__pyx_t_5, 0);
+        {
+    Py_ssize_t __pyx_tmp_idx = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_blue.data + __pyx_t_19 * __pyx_v_blue.strides[0]) )));
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_data.strides[0];
+        __pyx_t_5.data += __pyx_tmp_idx * __pyx_tmp_stride;
+}
+
+__pyx_t_5.shape[0] = __pyx_v_data.shape[1];
+__pyx_t_5.strides[0] = __pyx_v_data.strides[1];
+    __pyx_t_5.suboffsets[0] = -1;
+
+((struct __pyx_vtabstruct_3rng_RelativeNeighborhoodGraph *)__pyx_v_self->__pyx_vtab)->add_edge(__pyx_v_self, (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_red.data + __pyx_t_17 * __pyx_v_red.strides[0]) ))), (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_blue.data + __pyx_t_18 * __pyx_v_blue.strides[0]) ))), (__pyx_v_closest_dist_rb[__pyx_v_r]), __pyx_f_3rng_euclidean_local(__pyx_t_4, __pyx_t_5, 0), __pyx_v_data, __pyx_v_core_distances, __pyx_v_knn);
+
+        /* "rng.pyx":190
  *                 if closest_dist_rb[r] == closest_dist_br[b]:
  *                     # adds edge between point_r and point_b
  *                     self.add_edge(             # <<<<<<<<<<<<<<
  *                         red[r],
  *                         blue[b],
  */
-        ((struct __pyx_vtabstruct_3rng_RelativeNeighborhoodGraph *)__pyx_v_self->__pyx_vtab)->add_edge(__pyx_v_self, (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_red.data + __pyx_t_7 * __pyx_v_red.strides[0]) ))), (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=0 */ (__pyx_v_blue.data + __pyx_t_15 * __pyx_v_blue.strides[0]) ))), (__pyx_v_closest_dist_rb[__pyx_v_r]), (__pyx_v_closest_underlying_r[__pyx_v_r]), __pyx_v_data, __pyx_v_core_distances, __pyx_v_knn);
+        __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
+        __pyx_t_4.memview = NULL;
+        __pyx_t_4.data = NULL;
+        __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
+        __pyx_t_5.memview = NULL;
+        __pyx_t_5.data = NULL;
 
-        /* "rng.pyx":180
+        /* "rng.pyx":188
  *             for b in xrange(b_size):
  * 
  *                 if closest_dist_rb[r] == closest_dist_br[b]:             # <<<<<<<<<<<<<<
@@ -4416,7 +4513,7 @@ __pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_8, __pyx_t_9);
     }
   }
 
-  /* "rng.pyx":193
+  /* "rng.pyx":201
  * 
  *         # free up memory not needed anymore
  *         free(closest_dist_rb)             # <<<<<<<<<<<<<<
@@ -4425,26 +4522,17 @@ __pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_8, __pyx_t_9);
  */
   free(__pyx_v_closest_dist_rb);
 
-  /* "rng.pyx":194
+  /* "rng.pyx":202
  *         # free up memory not needed anymore
  *         free(closest_dist_rb)
  *         free(closest_dist_br)             # <<<<<<<<<<<<<<
  * 
- *         free(closest_underlying_r)
+ *         free(closest_rb)
  */
   free(__pyx_v_closest_dist_br);
 
-  /* "rng.pyx":196
+  /* "rng.pyx":204
  *         free(closest_dist_br)
- * 
- *         free(closest_underlying_r)             # <<<<<<<<<<<<<<
- * 
- *         free(closest_rb)
- */
-  free(__pyx_v_closest_underlying_r);
-
-  /* "rng.pyx":198
- *         free(closest_underlying_r)
  * 
  *         free(closest_rb)             # <<<<<<<<<<<<<<
  *         free(closest_br)
@@ -4452,7 +4540,7 @@ __pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_8, __pyx_t_9);
  */
   free(__pyx_v_closest_rb);
 
-  /* "rng.pyx":199
+  /* "rng.pyx":205
  * 
  *         free(closest_rb)
  *         free(closest_br)             # <<<<<<<<<<<<<<
@@ -4470,10 +4558,11 @@ __pyx_v_underlying = __pyx_f_3rng_euclidean_local(__pyx_t_8, __pyx_t_9);
  */
 
   /* function exit code */
+  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
 }
 
-/* "rng.pyx":206
+/* "rng.pyx":212
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
  *     cdef void add_edge(             # <<<<<<<<<<<<<<
@@ -4491,7 +4580,7 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_add_edge(struct __pyx_obj_3
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("add_edge", 0);
 
-  /* "rng.pyx":216
+  /* "rng.pyx":222
  *         ITYPE_t[:, :] knn):
  * 
  *         if self.relative_neighbors(point_a, point_b, mrd, data, core_distances, knn):             # <<<<<<<<<<<<<<
@@ -4501,7 +4590,7 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_add_edge(struct __pyx_obj_3
   __pyx_t_1 = (((struct __pyx_vtabstruct_3rng_RelativeNeighborhoodGraph *)__pyx_v_self->__pyx_vtab)->relative_neighbors(__pyx_v_self, __pyx_v_point_a, __pyx_v_point_b, __pyx_v_mrd, __pyx_v_data, __pyx_v_core_distances, __pyx_v_knn) != 0);
   if (__pyx_t_1) {
 
-    /* "rng.pyx":217
+    /* "rng.pyx":223
  * 
  *         if self.relative_neighbors(point_a, point_b, mrd, data, core_distances, knn):
  *             self.u.append(point_a)             # <<<<<<<<<<<<<<
@@ -4510,46 +4599,46 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_add_edge(struct __pyx_obj_3
  */
     if (unlikely(__pyx_v_self->u == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "append");
-      __PYX_ERR(0, 217, __pyx_L1_error)
+      __PYX_ERR(0, 223, __pyx_L1_error)
     }
-    __pyx_t_2 = __Pyx_PyInt_From_npy_int64(__pyx_v_point_a); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_npy_int64(__pyx_v_point_a); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 223, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyList_Append(__pyx_v_self->u, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 217, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyList_Append(__pyx_v_self->u, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 223, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "rng.pyx":218
+    /* "rng.pyx":224
  *         if self.relative_neighbors(point_a, point_b, mrd, data, core_distances, knn):
  *             self.u.append(point_a)
  *             self.v.append(point_b)             # <<<<<<<<<<<<<<
  *             self.w.append(weight)
- *             # print(min(point_a, point_b), max(point_a, point_b))
+ * 
  */
     if (unlikely(__pyx_v_self->v == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "append");
-      __PYX_ERR(0, 218, __pyx_L1_error)
+      __PYX_ERR(0, 224, __pyx_L1_error)
     }
-    __pyx_t_2 = __Pyx_PyInt_From_npy_int64(__pyx_v_point_b); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_npy_int64(__pyx_v_point_b); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyList_Append(__pyx_v_self->v, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 218, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyList_Append(__pyx_v_self->v, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 224, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "rng.pyx":219
+    /* "rng.pyx":225
  *             self.u.append(point_a)
  *             self.v.append(point_b)
  *             self.w.append(weight)             # <<<<<<<<<<<<<<
- *             # print(min(point_a, point_b), max(point_a, point_b))
+ * 
  * 
  */
     if (unlikely(__pyx_v_self->w == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "append");
-      __PYX_ERR(0, 219, __pyx_L1_error)
+      __PYX_ERR(0, 225, __pyx_L1_error)
     }
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_weight); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 219, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_weight); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 225, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyList_Append(__pyx_v_self->w, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 219, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyList_Append(__pyx_v_self->w, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 225, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "rng.pyx":216
+    /* "rng.pyx":222
  *         ITYPE_t[:, :] knn):
  * 
  *         if self.relative_neighbors(point_a, point_b, mrd, data, core_distances, knn):             # <<<<<<<<<<<<<<
@@ -4558,7 +4647,7 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_add_edge(struct __pyx_obj_3
  */
   }
 
-  /* "rng.pyx":206
+  /* "rng.pyx":212
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
  *     cdef void add_edge(             # <<<<<<<<<<<<<<
@@ -4575,7 +4664,7 @@ static void __pyx_f_3rng_25RelativeNeighborhoodGraph_add_edge(struct __pyx_obj_3
   __Pyx_RefNannyFinishContext();
 }
 
-/* "rng.pyx":226
+/* "rng.pyx":232
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
  *     cdef bint relative_neighbors(             # <<<<<<<<<<<<<<
@@ -4589,7 +4678,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("relative_neighbors", 0);
 
-  /* "rng.pyx":235
+  /* "rng.pyx":241
  *         ITYPE_t[:, :] knn):
  * 
  *         if self.quick:             # <<<<<<<<<<<<<<
@@ -4599,7 +4688,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
   __pyx_t_1 = (__pyx_v_self->quick != 0);
   if (__pyx_t_1) {
 
-    /* "rng.pyx":236
+    /* "rng.pyx":242
  * 
  *         if self.quick:
  *             if not self._relative_neighbors_quick(point_a, point_b, weight, data, core_distances, knn):             # <<<<<<<<<<<<<<
@@ -4609,7 +4698,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
     __pyx_t_1 = ((!(((struct __pyx_vtabstruct_3rng_RelativeNeighborhoodGraph *)__pyx_v_self->__pyx_vtab)->_relative_neighbors_quick(__pyx_v_self, __pyx_v_point_a, __pyx_v_point_b, __pyx_v_weight, __pyx_v_data, __pyx_v_core_distances, __pyx_v_knn) != 0)) != 0);
     if (__pyx_t_1) {
 
-      /* "rng.pyx":237
+      /* "rng.pyx":243
  *         if self.quick:
  *             if not self._relative_neighbors_quick(point_a, point_b, weight, data, core_distances, knn):
  *                 return False             # <<<<<<<<<<<<<<
@@ -4619,7 +4708,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
       __pyx_r = 0;
       goto __pyx_L0;
 
-      /* "rng.pyx":236
+      /* "rng.pyx":242
  * 
  *         if self.quick:
  *             if not self._relative_neighbors_quick(point_a, point_b, weight, data, core_distances, knn):             # <<<<<<<<<<<<<<
@@ -4628,7 +4717,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
  */
     }
 
-    /* "rng.pyx":235
+    /* "rng.pyx":241
  *         ITYPE_t[:, :] knn):
  * 
  *         if self.quick:             # <<<<<<<<<<<<<<
@@ -4637,7 +4726,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
  */
   }
 
-  /* "rng.pyx":239
+  /* "rng.pyx":245
  *                 return False
  * 
  *         if self.naive:             # <<<<<<<<<<<<<<
@@ -4647,7 +4736,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
   __pyx_t_1 = (__pyx_v_self->naive != 0);
   if (__pyx_t_1) {
 
-    /* "rng.pyx":240
+    /* "rng.pyx":246
  * 
  *         if self.naive:
  *             if not self._relative_neighbors_naive(point_a, point_b, weight, data, core_distances):             # <<<<<<<<<<<<<<
@@ -4657,7 +4746,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
     __pyx_t_1 = ((!(((struct __pyx_vtabstruct_3rng_RelativeNeighborhoodGraph *)__pyx_v_self->__pyx_vtab)->_relative_neighbors_naive(__pyx_v_self, __pyx_v_point_a, __pyx_v_point_b, __pyx_v_weight, __pyx_v_data, __pyx_v_core_distances) != 0)) != 0);
     if (__pyx_t_1) {
 
-      /* "rng.pyx":241
+      /* "rng.pyx":247
  *         if self.naive:
  *             if not self._relative_neighbors_naive(point_a, point_b, weight, data, core_distances):
  *                 return False             # <<<<<<<<<<<<<<
@@ -4667,7 +4756,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
       __pyx_r = 0;
       goto __pyx_L0;
 
-      /* "rng.pyx":240
+      /* "rng.pyx":246
  * 
  *         if self.naive:
  *             if not self._relative_neighbors_naive(point_a, point_b, weight, data, core_distances):             # <<<<<<<<<<<<<<
@@ -4676,7 +4765,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
  */
     }
 
-    /* "rng.pyx":239
+    /* "rng.pyx":245
  *                 return False
  * 
  *         if self.naive:             # <<<<<<<<<<<<<<
@@ -4685,7 +4774,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
  */
   }
 
-  /* "rng.pyx":243
+  /* "rng.pyx":249
  *                 return False
  * 
  *         return True             # <<<<<<<<<<<<<<
@@ -4695,7 +4784,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "rng.pyx":226
+  /* "rng.pyx":232
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
  *     cdef bint relative_neighbors(             # <<<<<<<<<<<<<<
@@ -4709,7 +4798,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph_relative_neighbors(struct __
   return __pyx_r;
 }
 
-/* "rng.pyx":250
+/* "rng.pyx":256
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
  *     cdef bint _relative_neighbors_quick(             # <<<<<<<<<<<<<<
@@ -4733,10 +4822,10 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
   __pyx_t_3rng_ITYPE_t __pyx_t_9;
   __Pyx_RefNannySetupContext("_relative_neighbors_quick", 0);
 
-  /* "rng.pyx":261
+  /* "rng.pyx":267
  *         cdef ITYPE_t c, point_c
  * 
- *         if cabs(weight - max(core_distances[point_a], core_distances[point_b])) < 0.000000001:             # <<<<<<<<<<<<<<
+ *         if weight == max(core_distances[point_a], core_distances[point_b]):             # <<<<<<<<<<<<<<
  *             return True
  * 
  */
@@ -4749,12 +4838,12 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
   } else {
     __pyx_t_4 = __pyx_t_3;
   }
-  __pyx_t_5 = ((fabs((__pyx_v_weight - __pyx_t_4)) < 0.000000001) != 0);
+  __pyx_t_5 = ((__pyx_v_weight == __pyx_t_4) != 0);
   if (__pyx_t_5) {
 
-    /* "rng.pyx":262
+    /* "rng.pyx":268
  * 
- *         if cabs(weight - max(core_distances[point_a], core_distances[point_b])) < 0.000000001:
+ *         if weight == max(core_distances[point_a], core_distances[point_b]):
  *             return True             # <<<<<<<<<<<<<<
  * 
  *         for c in xrange(1, self.min_points):
@@ -4762,16 +4851,16 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "rng.pyx":261
+    /* "rng.pyx":267
  *         cdef ITYPE_t c, point_c
  * 
- *         if cabs(weight - max(core_distances[point_a], core_distances[point_b])) < 0.000000001:             # <<<<<<<<<<<<<<
+ *         if weight == max(core_distances[point_a], core_distances[point_b]):             # <<<<<<<<<<<<<<
  *             return True
  * 
  */
   }
 
-  /* "rng.pyx":264
+  /* "rng.pyx":270
  *             return True
  * 
  *         for c in xrange(1, self.min_points):             # <<<<<<<<<<<<<<
@@ -4783,7 +4872,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
   for (__pyx_t_7 = 1; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_c = __pyx_t_7;
 
-    /* "rng.pyx":265
+    /* "rng.pyx":271
  * 
  *         for c in xrange(1, self.min_points):
  *             point_c = knn[point_a, c]             # <<<<<<<<<<<<<<
@@ -4794,7 +4883,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
     __pyx_t_9 = __pyx_v_c;
     __pyx_v_point_c = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_knn.data + __pyx_t_8 * __pyx_v_knn.strides[0]) ) + __pyx_t_9 * __pyx_v_knn.strides[1]) )));
 
-    /* "rng.pyx":267
+    /* "rng.pyx":273
  *             point_c = knn[point_a, c]
  * 
  *             if core_distances[point_c] < weight:             # <<<<<<<<<<<<<<
@@ -4805,7 +4894,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
     __pyx_t_5 = (((*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_9 * __pyx_v_core_distances.strides[0]) ))) < __pyx_v_weight) != 0);
     if (__pyx_t_5) {
 
-      /* "rng.pyx":270
+      /* "rng.pyx":276
  *                 if weight > max(
  *                     _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                     _mutual_reachability_distance(point_b, point_c, data, core_distances)):             # <<<<<<<<<<<<<<
@@ -4814,7 +4903,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
  */
       __pyx_t_4 = __pyx_f_3rng__mutual_reachability_distance(__pyx_v_point_b, __pyx_v_point_c, __pyx_v_data, __pyx_v_core_distances);
 
-      /* "rng.pyx":269
+      /* "rng.pyx":275
  *             if core_distances[point_c] < weight:
  *                 if weight > max(
  *                     _mutual_reachability_distance(point_a, point_c, data, core_distances),             # <<<<<<<<<<<<<<
@@ -4823,7 +4912,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
  */
       __pyx_t_2 = __pyx_f_3rng__mutual_reachability_distance(__pyx_v_point_a, __pyx_v_point_c, __pyx_v_data, __pyx_v_core_distances);
 
-      /* "rng.pyx":270
+      /* "rng.pyx":276
  *                 if weight > max(
  *                     _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                     _mutual_reachability_distance(point_b, point_c, data, core_distances)):             # <<<<<<<<<<<<<<
@@ -4836,7 +4925,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
         __pyx_t_3 = __pyx_t_2;
       }
 
-      /* "rng.pyx":268
+      /* "rng.pyx":274
  * 
  *             if core_distances[point_c] < weight:
  *                 if weight > max(             # <<<<<<<<<<<<<<
@@ -4846,7 +4935,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
       __pyx_t_5 = ((__pyx_v_weight > __pyx_t_3) != 0);
       if (__pyx_t_5) {
 
-        /* "rng.pyx":271
+        /* "rng.pyx":277
  *                     _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                     _mutual_reachability_distance(point_b, point_c, data, core_distances)):
  *                     return False             # <<<<<<<<<<<<<<
@@ -4856,7 +4945,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
         __pyx_r = 0;
         goto __pyx_L0;
 
-        /* "rng.pyx":268
+        /* "rng.pyx":274
  * 
  *             if core_distances[point_c] < weight:
  *                 if weight > max(             # <<<<<<<<<<<<<<
@@ -4865,7 +4954,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
  */
       }
 
-      /* "rng.pyx":267
+      /* "rng.pyx":273
  *             point_c = knn[point_a, c]
  * 
  *             if core_distances[point_c] < weight:             # <<<<<<<<<<<<<<
@@ -4875,7 +4964,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
     }
   }
 
-  /* "rng.pyx":273
+  /* "rng.pyx":279
  *                     return False
  * 
  *         for c in xrange(1, self.min_points):             # <<<<<<<<<<<<<<
@@ -4887,7 +4976,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
   for (__pyx_t_7 = 1; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_c = __pyx_t_7;
 
-    /* "rng.pyx":274
+    /* "rng.pyx":280
  * 
  *         for c in xrange(1, self.min_points):
  *             point_c = knn[point_b, c]             # <<<<<<<<<<<<<<
@@ -4898,7 +4987,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
     __pyx_t_8 = __pyx_v_c;
     __pyx_v_point_c = (*((__pyx_t_3rng_ITYPE_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_knn.data + __pyx_t_9 * __pyx_v_knn.strides[0]) ) + __pyx_t_8 * __pyx_v_knn.strides[1]) )));
 
-    /* "rng.pyx":276
+    /* "rng.pyx":282
  *             point_c = knn[point_b, c]
  * 
  *             if core_distances[point_c] < weight:             # <<<<<<<<<<<<<<
@@ -4909,7 +4998,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
     __pyx_t_5 = (((*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_8 * __pyx_v_core_distances.strides[0]) ))) < __pyx_v_weight) != 0);
     if (__pyx_t_5) {
 
-      /* "rng.pyx":279
+      /* "rng.pyx":285
  *                 if weight > max(
  *                     _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                     _mutual_reachability_distance(point_b, point_c, data, core_distances)):             # <<<<<<<<<<<<<<
@@ -4918,7 +5007,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
  */
       __pyx_t_3 = __pyx_f_3rng__mutual_reachability_distance(__pyx_v_point_b, __pyx_v_point_c, __pyx_v_data, __pyx_v_core_distances);
 
-      /* "rng.pyx":278
+      /* "rng.pyx":284
  *             if core_distances[point_c] < weight:
  *                 if weight > max(
  *                     _mutual_reachability_distance(point_a, point_c, data, core_distances),             # <<<<<<<<<<<<<<
@@ -4927,7 +5016,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
  */
       __pyx_t_4 = __pyx_f_3rng__mutual_reachability_distance(__pyx_v_point_a, __pyx_v_point_c, __pyx_v_data, __pyx_v_core_distances);
 
-      /* "rng.pyx":279
+      /* "rng.pyx":285
  *                 if weight > max(
  *                     _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                     _mutual_reachability_distance(point_b, point_c, data, core_distances)):             # <<<<<<<<<<<<<<
@@ -4940,7 +5029,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
         __pyx_t_2 = __pyx_t_4;
       }
 
-      /* "rng.pyx":277
+      /* "rng.pyx":283
  * 
  *             if core_distances[point_c] < weight:
  *                 if weight > max(             # <<<<<<<<<<<<<<
@@ -4950,7 +5039,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
       __pyx_t_5 = ((__pyx_v_weight > __pyx_t_2) != 0);
       if (__pyx_t_5) {
 
-        /* "rng.pyx":280
+        /* "rng.pyx":286
  *                     _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                     _mutual_reachability_distance(point_b, point_c, data, core_distances)):
  *                     return False             # <<<<<<<<<<<<<<
@@ -4960,7 +5049,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
         __pyx_r = 0;
         goto __pyx_L0;
 
-        /* "rng.pyx":277
+        /* "rng.pyx":283
  * 
  *             if core_distances[point_c] < weight:
  *                 if weight > max(             # <<<<<<<<<<<<<<
@@ -4969,7 +5058,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
  */
       }
 
-      /* "rng.pyx":276
+      /* "rng.pyx":282
  *             point_c = knn[point_b, c]
  * 
  *             if core_distances[point_c] < weight:             # <<<<<<<<<<<<<<
@@ -4979,7 +5068,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
     }
   }
 
-  /* "rng.pyx":282
+  /* "rng.pyx":288
  *                     return False
  * 
  *         return True             # <<<<<<<<<<<<<<
@@ -4989,7 +5078,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "rng.pyx":250
+  /* "rng.pyx":256
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
  *     cdef bint _relative_neighbors_quick(             # <<<<<<<<<<<<<<
@@ -5003,7 +5092,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_quick(st
   return __pyx_r;
 }
 
-/* "rng.pyx":289
+/* "rng.pyx":295
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
  *     cdef bint _relative_neighbors_naive(             # <<<<<<<<<<<<<<
@@ -5024,7 +5113,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
   int __pyx_t_7;
   __Pyx_RefNannySetupContext("_relative_neighbors_naive", 0);
 
-  /* "rng.pyx":299
+  /* "rng.pyx":305
  *         cdef ITYPE_t point_c
  * 
  *         for point_c in xrange(self.n):             # <<<<<<<<<<<<<<
@@ -5036,7 +5125,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_point_c = __pyx_t_3;
 
-    /* "rng.pyx":302
+    /* "rng.pyx":308
  *             if weight > max(
  *                 _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                 _mutual_reachability_distance(point_b, point_c, data, core_distances)):             # <<<<<<<<<<<<<<
@@ -5045,7 +5134,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
  */
     __pyx_t_4 = __pyx_f_3rng__mutual_reachability_distance(__pyx_v_point_b, __pyx_v_point_c, __pyx_v_data, __pyx_v_core_distances);
 
-    /* "rng.pyx":301
+    /* "rng.pyx":307
  *         for point_c in xrange(self.n):
  *             if weight > max(
  *                 _mutual_reachability_distance(point_a, point_c, data, core_distances),             # <<<<<<<<<<<<<<
@@ -5054,7 +5143,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
  */
     __pyx_t_5 = __pyx_f_3rng__mutual_reachability_distance(__pyx_v_point_a, __pyx_v_point_c, __pyx_v_data, __pyx_v_core_distances);
 
-    /* "rng.pyx":302
+    /* "rng.pyx":308
  *             if weight > max(
  *                 _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                 _mutual_reachability_distance(point_b, point_c, data, core_distances)):             # <<<<<<<<<<<<<<
@@ -5067,7 +5156,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
       __pyx_t_6 = __pyx_t_5;
     }
 
-    /* "rng.pyx":300
+    /* "rng.pyx":306
  * 
  *         for point_c in xrange(self.n):
  *             if weight > max(             # <<<<<<<<<<<<<<
@@ -5077,7 +5166,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
     __pyx_t_7 = ((__pyx_v_weight > __pyx_t_6) != 0);
     if (__pyx_t_7) {
 
-      /* "rng.pyx":303
+      /* "rng.pyx":309
  *                 _mutual_reachability_distance(point_a, point_c, data, core_distances),
  *                 _mutual_reachability_distance(point_b, point_c, data, core_distances)):
  *                 return False             # <<<<<<<<<<<<<<
@@ -5087,7 +5176,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
       __pyx_r = 0;
       goto __pyx_L0;
 
-      /* "rng.pyx":300
+      /* "rng.pyx":306
  * 
  *         for point_c in xrange(self.n):
  *             if weight > max(             # <<<<<<<<<<<<<<
@@ -5097,7 +5186,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
     }
   }
 
-  /* "rng.pyx":305
+  /* "rng.pyx":311
  *                 return False
  * 
  *         return True             # <<<<<<<<<<<<<<
@@ -5107,7 +5196,7 @@ static int __pyx_f_3rng_25RelativeNeighborhoodGraph__relative_neighbors_naive(st
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "rng.pyx":289
+  /* "rng.pyx":295
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
  *     cdef bint _relative_neighbors_naive(             # <<<<<<<<<<<<<<
@@ -5462,7 +5551,7 @@ static PyObject *__pyx_pf_3rng_25RelativeNeighborhoodGraph_6__setstate_cython__(
   return __pyx_r;
 }
 
-/* "rng.pyx":312
+/* "rng.pyx":318
  * @cython.nonecheck(False)
  * @cython.initializedcheck(False)
  * cdef DTYPE_t _mutual_reachability_distance(             # <<<<<<<<<<<<<<
@@ -5482,7 +5571,7 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng__mutual_reachability_distance(__pyx_t_3
   __pyx_t_3rng_DTYPE_t __pyx_t_7;
   __Pyx_RefNannySetupContext("_mutual_reachability_distance", 0);
 
-  /* "rng.pyx":320
+  /* "rng.pyx":326
  *     return max(
  *         euclidean_local(data[point_a], data[point_b]),
  *         core_distances[point_a],             # <<<<<<<<<<<<<<
@@ -5492,7 +5581,7 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng__mutual_reachability_distance(__pyx_t_3
   __pyx_t_1 = __pyx_v_point_a;
   __pyx_t_2 = (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_1 * __pyx_v_core_distances.strides[0]) )));
 
-  /* "rng.pyx":321
+  /* "rng.pyx":327
  *         euclidean_local(data[point_a], data[point_b]),
  *         core_distances[point_a],
  *         core_distances[point_b])             # <<<<<<<<<<<<<<
@@ -5502,7 +5591,7 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng__mutual_reachability_distance(__pyx_t_3
   __pyx_t_1 = __pyx_v_point_b;
   __pyx_t_3 = (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_core_distances.data + __pyx_t_1 * __pyx_v_core_distances.strides[0]) )));
 
-  /* "rng.pyx":319
+  /* "rng.pyx":325
  * 
  *     return max(
  *         euclidean_local(data[point_a], data[point_b]),             # <<<<<<<<<<<<<<
@@ -5535,7 +5624,7 @@ __pyx_t_5.shape[0] = __pyx_v_data.shape[1];
 __pyx_t_5.strides[0] = __pyx_v_data.strides[1];
     __pyx_t_5.suboffsets[0] = -1;
 
-__pyx_t_6 = __pyx_f_3rng_euclidean_local(__pyx_t_4, __pyx_t_5);
+__pyx_t_6 = __pyx_f_3rng_euclidean_local(__pyx_t_4, __pyx_t_5, 0);
   __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
@@ -5543,7 +5632,7 @@ __pyx_t_6 = __pyx_f_3rng_euclidean_local(__pyx_t_4, __pyx_t_5);
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "rng.pyx":320
+  /* "rng.pyx":326
  *     return max(
  *         euclidean_local(data[point_a], data[point_b]),
  *         core_distances[point_a],             # <<<<<<<<<<<<<<
@@ -5557,7 +5646,7 @@ __pyx_t_6 = __pyx_f_3rng_euclidean_local(__pyx_t_4, __pyx_t_5);
   }
   __pyx_t_6 = __pyx_t_7;
 
-  /* "rng.pyx":321
+  /* "rng.pyx":327
  *         euclidean_local(data[point_a], data[point_b]),
  *         core_distances[point_a],
  *         core_distances[point_b])             # <<<<<<<<<<<<<<
@@ -5572,7 +5661,7 @@ __pyx_t_6 = __pyx_f_3rng_euclidean_local(__pyx_t_4, __pyx_t_5);
   __pyx_r = __pyx_t_7;
   goto __pyx_L0;
 
-  /* "rng.pyx":312
+  /* "rng.pyx":318
  * @cython.nonecheck(False)
  * @cython.initializedcheck(False)
  * cdef DTYPE_t _mutual_reachability_distance(             # <<<<<<<<<<<<<<
@@ -5586,15 +5675,16 @@ __pyx_t_6 = __pyx_f_3rng_euclidean_local(__pyx_t_4, __pyx_t_5);
   return __pyx_r;
 }
 
-/* "rng.pyx":328
+/* "rng.pyx":334
  * @cython.nonecheck(False)
  * @cython.initializedcheck(False)
- * cdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):             # <<<<<<<<<<<<<<
+ * cpdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):             # <<<<<<<<<<<<<<
  *     cdef ITYPE_t i, m
  *     cdef DTYPE_t d = 0.0
  */
 
-static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __pyx_v_v1, __Pyx_memviewslice __pyx_v_v2) {
+static PyObject *__pyx_pw_3rng_1euclidean_local(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __pyx_v_v1, __Pyx_memviewslice __pyx_v_v2, CYTHON_UNUSED int __pyx_skip_dispatch) {
   __pyx_t_3rng_ITYPE_t __pyx_v_i;
   __pyx_t_3rng_ITYPE_t __pyx_v_m;
   __pyx_t_3rng_DTYPE_t __pyx_v_d;
@@ -5607,8 +5697,8 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __py
   __pyx_t_3rng_ITYPE_t __pyx_t_5;
   __Pyx_RefNannySetupContext("euclidean_local", 0);
 
-  /* "rng.pyx":330
- * cdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
+  /* "rng.pyx":336
+ * cpdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
  *     cdef ITYPE_t i, m
  *     cdef DTYPE_t d = 0.0             # <<<<<<<<<<<<<<
  *     m = v1.shape[0]
@@ -5616,7 +5706,7 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __py
  */
   __pyx_v_d = 0.0;
 
-  /* "rng.pyx":331
+  /* "rng.pyx":337
  *     cdef ITYPE_t i, m
  *     cdef DTYPE_t d = 0.0
  *     m = v1.shape[0]             # <<<<<<<<<<<<<<
@@ -5625,7 +5715,7 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __py
  */
   __pyx_v_m = (__pyx_v_v1.shape[0]);
 
-  /* "rng.pyx":333
+  /* "rng.pyx":339
  *     m = v1.shape[0]
  * 
  *     for i in xrange(m):             # <<<<<<<<<<<<<<
@@ -5637,7 +5727,7 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __py
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "rng.pyx":334
+    /* "rng.pyx":340
  * 
  *     for i in xrange(m):
  *         d += (v1[i] - v2[i])**2             # <<<<<<<<<<<<<<
@@ -5649,7 +5739,7 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __py
     __pyx_v_d = (__pyx_v_d + pow(((*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_v1.data + __pyx_t_4 * __pyx_v_v1.strides[0]) ))) - (*((__pyx_t_3rng_DTYPE_t *) ( /* dim=0 */ (__pyx_v_v2.data + __pyx_t_5 * __pyx_v_v2.strides[0]) )))), 2.0));
   }
 
-  /* "rng.pyx":336
+  /* "rng.pyx":342
  *         d += (v1[i] - v2[i])**2
  * 
  *     return sqrt(d)             # <<<<<<<<<<<<<<
@@ -5657,16 +5747,108 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __py
   __pyx_r = sqrt(__pyx_v_d);
   goto __pyx_L0;
 
-  /* "rng.pyx":328
+  /* "rng.pyx":334
  * @cython.nonecheck(False)
  * @cython.initializedcheck(False)
- * cdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):             # <<<<<<<<<<<<<<
+ * cpdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):             # <<<<<<<<<<<<<<
  *     cdef ITYPE_t i, m
  *     cdef DTYPE_t d = 0.0
  */
 
   /* function exit code */
   __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3rng_1euclidean_local(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3rng_1euclidean_local(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  __Pyx_memviewslice __pyx_v_v1 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_v_v2 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("euclidean_local (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_v1,&__pyx_n_s_v2,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_v1)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_v2)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("euclidean_local", 1, 2, 2, 1); __PYX_ERR(0, 334, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "euclidean_local") < 0)) __PYX_ERR(0, 334, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+    }
+    __pyx_v_v1 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_3rng_DTYPE_t(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_v1.memview)) __PYX_ERR(0, 334, __pyx_L3_error)
+    __pyx_v_v2 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_3rng_DTYPE_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_v2.memview)) __PYX_ERR(0, 334, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("euclidean_local", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 334, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("rng.euclidean_local", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_3rng_euclidean_local(__pyx_self, __pyx_v_v1, __pyx_v_v2);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3rng_euclidean_local(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_v1, __Pyx_memviewslice __pyx_v_v2) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("euclidean_local", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_3rng_euclidean_local(__pyx_v_v1, __pyx_v_v2, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 334, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("rng.euclidean_local", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_v1, 1);
+  __PYX_XDEC_MEMVIEW(&__pyx_v_v2, 1);
+  __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5678,9 +5860,9 @@ static __pyx_t_3rng_DTYPE_t __pyx_f_3rng_euclidean_local(__Pyx_memviewslice __py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3rng_1__pyx_unpickle_RelativeNeighborhoodGraph(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_3rng_1__pyx_unpickle_RelativeNeighborhoodGraph = {"__pyx_unpickle_RelativeNeighborhoodGraph", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3rng_1__pyx_unpickle_RelativeNeighborhoodGraph, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3rng_1__pyx_unpickle_RelativeNeighborhoodGraph(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3rng_3__pyx_unpickle_RelativeNeighborhoodGraph(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_3rng_3__pyx_unpickle_RelativeNeighborhoodGraph = {"__pyx_unpickle_RelativeNeighborhoodGraph", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3rng_3__pyx_unpickle_RelativeNeighborhoodGraph, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_3rng_3__pyx_unpickle_RelativeNeighborhoodGraph(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v___pyx_type = 0;
   long __pyx_v___pyx_checksum;
   PyObject *__pyx_v___pyx_state = 0;
@@ -5746,14 +5928,14 @@ static PyObject *__pyx_pw_3rng_1__pyx_unpickle_RelativeNeighborhoodGraph(PyObjec
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3rng___pyx_unpickle_RelativeNeighborhoodGraph(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_3rng_2__pyx_unpickle_RelativeNeighborhoodGraph(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3rng___pyx_unpickle_RelativeNeighborhoodGraph(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_3rng_2__pyx_unpickle_RelativeNeighborhoodGraph(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -21019,6 +21201,7 @@ static PyTypeObject __pyx_type___pyx_memoryviewslice = {
 };
 
 static PyMethodDef __pyx_methods[] = {
+  {"euclidean_local", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3rng_1euclidean_local, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -21188,14 +21371,16 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_unable_to_allocate_shape_and_str, __pyx_k_unable_to_allocate_shape_and_str, sizeof(__pyx_k_unable_to_allocate_shape_and_str), 0, 0, 1, 0},
   {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
   {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
+  {&__pyx_n_s_v1, __pyx_k_v1, sizeof(__pyx_k_v1), 0, 0, 1, 1},
+  {&__pyx_n_s_v2, __pyx_k_v2, sizeof(__pyx_k_v2), 0, 0, 1, 1},
   {&__pyx_n_s_xrange, __pyx_k_xrange, sizeof(__pyx_k_xrange), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   #if PY_MAJOR_VERSION >= 3
-  __pyx_builtin_xrange = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_xrange) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_builtin_xrange = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_xrange) __PYX_ERR(0, 163, __pyx_L1_error)
   #else
-  __pyx_builtin_xrange = __Pyx_GetBuiltinName(__pyx_n_s_xrange); if (!__pyx_builtin_xrange) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_builtin_xrange = __Pyx_GetBuiltinName(__pyx_n_s_xrange); if (!__pyx_builtin_xrange) __PYX_ERR(0, 163, __pyx_L1_error)
   #endif
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(2, 947, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 133, __pyx_L1_error)
@@ -22071,7 +22256,7 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_3rng_1__pyx_unpickle_RelativeNeighborhoodGraph, NULL, __pyx_n_s_rng); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_3rng_3__pyx_unpickle_RelativeNeighborhoodGraph, NULL, __pyx_n_s_rng); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_RelativeNeighborh, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -25385,6 +25570,251 @@ __pyx_capsule_create(void *p, CYTHON_UNUSED const char *sig)
         return (target_type) value;\
     }
 
+/* TypeInfoCompare */
+  static int
+__pyx_typeinfo_cmp(__Pyx_TypeInfo *a, __Pyx_TypeInfo *b)
+{
+    int i;
+    if (!a || !b)
+        return 0;
+    if (a == b)
+        return 1;
+    if (a->size != b->size || a->typegroup != b->typegroup ||
+            a->is_unsigned != b->is_unsigned || a->ndim != b->ndim) {
+        if (a->typegroup == 'H' || b->typegroup == 'H') {
+            return a->size == b->size;
+        } else {
+            return 0;
+        }
+    }
+    if (a->ndim) {
+        for (i = 0; i < a->ndim; i++)
+            if (a->arraysize[i] != b->arraysize[i])
+                return 0;
+    }
+    if (a->typegroup == 'S') {
+        if (a->flags != b->flags)
+            return 0;
+        if (a->fields || b->fields) {
+            if (!(a->fields && b->fields))
+                return 0;
+            for (i = 0; a->fields[i].type && b->fields[i].type; i++) {
+                __Pyx_StructField *field_a = a->fields + i;
+                __Pyx_StructField *field_b = b->fields + i;
+                if (field_a->offset != field_b->offset ||
+                    !__pyx_typeinfo_cmp(field_a->type, field_b->type))
+                    return 0;
+            }
+            return !a->fields[i].type && !b->fields[i].type;
+        }
+    }
+    return 1;
+}
+
+/* MemviewSliceValidateAndInit */
+  static int
+__pyx_check_strides(Py_buffer *buf, int dim, int ndim, int spec)
+{
+    if (buf->shape[dim] <= 1)
+        return 1;
+    if (buf->strides) {
+        if (spec & __Pyx_MEMVIEW_CONTIG) {
+            if (spec & (__Pyx_MEMVIEW_PTR|__Pyx_MEMVIEW_FULL)) {
+                if (unlikely(buf->strides[dim] != sizeof(void *))) {
+                    PyErr_Format(PyExc_ValueError,
+                                 "Buffer is not indirectly contiguous "
+                                 "in dimension %d.", dim);
+                    goto fail;
+                }
+            } else if (unlikely(buf->strides[dim] != buf->itemsize)) {
+                PyErr_SetString(PyExc_ValueError,
+                                "Buffer and memoryview are not contiguous "
+                                "in the same dimension.");
+                goto fail;
+            }
+        }
+        if (spec & __Pyx_MEMVIEW_FOLLOW) {
+            Py_ssize_t stride = buf->strides[dim];
+            if (stride < 0)
+                stride = -stride;
+            if (unlikely(stride < buf->itemsize)) {
+                PyErr_SetString(PyExc_ValueError,
+                                "Buffer and memoryview are not contiguous "
+                                "in the same dimension.");
+                goto fail;
+            }
+        }
+    } else {
+        if (unlikely(spec & __Pyx_MEMVIEW_CONTIG && dim != ndim - 1)) {
+            PyErr_Format(PyExc_ValueError,
+                         "C-contiguous buffer is not contiguous in "
+                         "dimension %d", dim);
+            goto fail;
+        } else if (unlikely(spec & (__Pyx_MEMVIEW_PTR))) {
+            PyErr_Format(PyExc_ValueError,
+                         "C-contiguous buffer is not indirect in "
+                         "dimension %d", dim);
+            goto fail;
+        } else if (unlikely(buf->suboffsets)) {
+            PyErr_SetString(PyExc_ValueError,
+                            "Buffer exposes suboffsets but no strides");
+            goto fail;
+        }
+    }
+    return 1;
+fail:
+    return 0;
+}
+static int
+__pyx_check_suboffsets(Py_buffer *buf, int dim, CYTHON_UNUSED int ndim, int spec)
+{
+    if (spec & __Pyx_MEMVIEW_DIRECT) {
+        if (unlikely(buf->suboffsets && buf->suboffsets[dim] >= 0)) {
+            PyErr_Format(PyExc_ValueError,
+                         "Buffer not compatible with direct access "
+                         "in dimension %d.", dim);
+            goto fail;
+        }
+    }
+    if (spec & __Pyx_MEMVIEW_PTR) {
+        if (unlikely(!buf->suboffsets || (buf->suboffsets[dim] < 0))) {
+            PyErr_Format(PyExc_ValueError,
+                         "Buffer is not indirectly accessible "
+                         "in dimension %d.", dim);
+            goto fail;
+        }
+    }
+    return 1;
+fail:
+    return 0;
+}
+static int
+__pyx_verify_contig(Py_buffer *buf, int ndim, int c_or_f_flag)
+{
+    int i;
+    if (c_or_f_flag & __Pyx_IS_F_CONTIG) {
+        Py_ssize_t stride = 1;
+        for (i = 0; i < ndim; i++) {
+            if (unlikely(stride * buf->itemsize != buf->strides[i]  &&  buf->shape[i] > 1)) {
+                PyErr_SetString(PyExc_ValueError,
+                    "Buffer not fortran contiguous.");
+                goto fail;
+            }
+            stride = stride * buf->shape[i];
+        }
+    } else if (c_or_f_flag & __Pyx_IS_C_CONTIG) {
+        Py_ssize_t stride = 1;
+        for (i = ndim - 1; i >- 1; i--) {
+            if (unlikely(stride * buf->itemsize != buf->strides[i]  &&  buf->shape[i] > 1)) {
+                PyErr_SetString(PyExc_ValueError,
+                    "Buffer not C contiguous.");
+                goto fail;
+            }
+            stride = stride * buf->shape[i];
+        }
+    }
+    return 1;
+fail:
+    return 0;
+}
+static int __Pyx_ValidateAndInit_memviewslice(
+                int *axes_specs,
+                int c_or_f_flag,
+                int buf_flags,
+                int ndim,
+                __Pyx_TypeInfo *dtype,
+                __Pyx_BufFmt_StackElem stack[],
+                __Pyx_memviewslice *memviewslice,
+                PyObject *original_obj)
+{
+    struct __pyx_memoryview_obj *memview, *new_memview;
+    __Pyx_RefNannyDeclarations
+    Py_buffer *buf;
+    int i, spec = 0, retval = -1;
+    __Pyx_BufFmt_Context ctx;
+    int from_memoryview = __pyx_memoryview_check(original_obj);
+    __Pyx_RefNannySetupContext("ValidateAndInit_memviewslice", 0);
+    if (from_memoryview && __pyx_typeinfo_cmp(dtype, ((struct __pyx_memoryview_obj *)
+                                                            original_obj)->typeinfo)) {
+        memview = (struct __pyx_memoryview_obj *) original_obj;
+        new_memview = NULL;
+    } else {
+        memview = (struct __pyx_memoryview_obj *) __pyx_memoryview_new(
+                                            original_obj, buf_flags, 0, dtype);
+        new_memview = memview;
+        if (unlikely(!memview))
+            goto fail;
+    }
+    buf = &memview->view;
+    if (unlikely(buf->ndim != ndim)) {
+        PyErr_Format(PyExc_ValueError,
+                "Buffer has wrong number of dimensions (expected %d, got %d)",
+                ndim, buf->ndim);
+        goto fail;
+    }
+    if (new_memview) {
+        __Pyx_BufFmt_Init(&ctx, stack, dtype);
+        if (unlikely(!__Pyx_BufFmt_CheckString(&ctx, buf->format))) goto fail;
+    }
+    if (unlikely((unsigned) buf->itemsize != dtype->size)) {
+        PyErr_Format(PyExc_ValueError,
+                     "Item size of buffer (%" CYTHON_FORMAT_SSIZE_T "u byte%s) "
+                     "does not match size of '%s' (%" CYTHON_FORMAT_SSIZE_T "u byte%s)",
+                     buf->itemsize,
+                     (buf->itemsize > 1) ? "s" : "",
+                     dtype->name,
+                     dtype->size,
+                     (dtype->size > 1) ? "s" : "");
+        goto fail;
+    }
+    if (buf->len > 0) {
+        for (i = 0; i < ndim; i++) {
+            spec = axes_specs[i];
+            if (unlikely(!__pyx_check_strides(buf, i, ndim, spec)))
+                goto fail;
+            if (unlikely(!__pyx_check_suboffsets(buf, i, ndim, spec)))
+                goto fail;
+        }
+        if (unlikely(buf->strides && !__pyx_verify_contig(buf, ndim, c_or_f_flag)))
+            goto fail;
+    }
+    if (unlikely(__Pyx_init_memviewslice(memview, ndim, memviewslice,
+                                         new_memview != NULL) == -1)) {
+        goto fail;
+    }
+    retval = 0;
+    goto no_fail;
+fail:
+    Py_XDECREF(new_memview);
+    retval = -1;
+no_fail:
+    __Pyx_RefNannyFinishContext();
+    return retval;
+}
+
+/* ObjectToMemviewSlice */
+  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_3rng_DTYPE_t(PyObject *obj, int writable_flag) {
+    __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
+    __Pyx_BufFmt_StackElem stack[1];
+    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_STRIDED) };
+    int retcode;
+    if (obj == Py_None) {
+        result.memview = (struct __pyx_memoryview_obj *) Py_None;
+        return result;
+    }
+    retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, 0,
+                                                 PyBUF_RECORDS_RO | writable_flag, 1,
+                                                 &__Pyx_TypeInfo_nn___pyx_t_3rng_DTYPE_t, stack,
+                                                 &result, obj);
+    if (unlikely(retcode == -1))
+        goto __pyx_fail;
+    return result;
+__pyx_fail:
+    result.memview = NULL;
+    result.data = NULL;
+    return result;
+}
+
 /* Declarations */
   #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -26658,228 +27088,6 @@ raise_neg_overflow:
     return (char) -1;
 }
 
-/* TypeInfoCompare */
-  static int
-__pyx_typeinfo_cmp(__Pyx_TypeInfo *a, __Pyx_TypeInfo *b)
-{
-    int i;
-    if (!a || !b)
-        return 0;
-    if (a == b)
-        return 1;
-    if (a->size != b->size || a->typegroup != b->typegroup ||
-            a->is_unsigned != b->is_unsigned || a->ndim != b->ndim) {
-        if (a->typegroup == 'H' || b->typegroup == 'H') {
-            return a->size == b->size;
-        } else {
-            return 0;
-        }
-    }
-    if (a->ndim) {
-        for (i = 0; i < a->ndim; i++)
-            if (a->arraysize[i] != b->arraysize[i])
-                return 0;
-    }
-    if (a->typegroup == 'S') {
-        if (a->flags != b->flags)
-            return 0;
-        if (a->fields || b->fields) {
-            if (!(a->fields && b->fields))
-                return 0;
-            for (i = 0; a->fields[i].type && b->fields[i].type; i++) {
-                __Pyx_StructField *field_a = a->fields + i;
-                __Pyx_StructField *field_b = b->fields + i;
-                if (field_a->offset != field_b->offset ||
-                    !__pyx_typeinfo_cmp(field_a->type, field_b->type))
-                    return 0;
-            }
-            return !a->fields[i].type && !b->fields[i].type;
-        }
-    }
-    return 1;
-}
-
-/* MemviewSliceValidateAndInit */
-  static int
-__pyx_check_strides(Py_buffer *buf, int dim, int ndim, int spec)
-{
-    if (buf->shape[dim] <= 1)
-        return 1;
-    if (buf->strides) {
-        if (spec & __Pyx_MEMVIEW_CONTIG) {
-            if (spec & (__Pyx_MEMVIEW_PTR|__Pyx_MEMVIEW_FULL)) {
-                if (unlikely(buf->strides[dim] != sizeof(void *))) {
-                    PyErr_Format(PyExc_ValueError,
-                                 "Buffer is not indirectly contiguous "
-                                 "in dimension %d.", dim);
-                    goto fail;
-                }
-            } else if (unlikely(buf->strides[dim] != buf->itemsize)) {
-                PyErr_SetString(PyExc_ValueError,
-                                "Buffer and memoryview are not contiguous "
-                                "in the same dimension.");
-                goto fail;
-            }
-        }
-        if (spec & __Pyx_MEMVIEW_FOLLOW) {
-            Py_ssize_t stride = buf->strides[dim];
-            if (stride < 0)
-                stride = -stride;
-            if (unlikely(stride < buf->itemsize)) {
-                PyErr_SetString(PyExc_ValueError,
-                                "Buffer and memoryview are not contiguous "
-                                "in the same dimension.");
-                goto fail;
-            }
-        }
-    } else {
-        if (unlikely(spec & __Pyx_MEMVIEW_CONTIG && dim != ndim - 1)) {
-            PyErr_Format(PyExc_ValueError,
-                         "C-contiguous buffer is not contiguous in "
-                         "dimension %d", dim);
-            goto fail;
-        } else if (unlikely(spec & (__Pyx_MEMVIEW_PTR))) {
-            PyErr_Format(PyExc_ValueError,
-                         "C-contiguous buffer is not indirect in "
-                         "dimension %d", dim);
-            goto fail;
-        } else if (unlikely(buf->suboffsets)) {
-            PyErr_SetString(PyExc_ValueError,
-                            "Buffer exposes suboffsets but no strides");
-            goto fail;
-        }
-    }
-    return 1;
-fail:
-    return 0;
-}
-static int
-__pyx_check_suboffsets(Py_buffer *buf, int dim, CYTHON_UNUSED int ndim, int spec)
-{
-    if (spec & __Pyx_MEMVIEW_DIRECT) {
-        if (unlikely(buf->suboffsets && buf->suboffsets[dim] >= 0)) {
-            PyErr_Format(PyExc_ValueError,
-                         "Buffer not compatible with direct access "
-                         "in dimension %d.", dim);
-            goto fail;
-        }
-    }
-    if (spec & __Pyx_MEMVIEW_PTR) {
-        if (unlikely(!buf->suboffsets || (buf->suboffsets[dim] < 0))) {
-            PyErr_Format(PyExc_ValueError,
-                         "Buffer is not indirectly accessible "
-                         "in dimension %d.", dim);
-            goto fail;
-        }
-    }
-    return 1;
-fail:
-    return 0;
-}
-static int
-__pyx_verify_contig(Py_buffer *buf, int ndim, int c_or_f_flag)
-{
-    int i;
-    if (c_or_f_flag & __Pyx_IS_F_CONTIG) {
-        Py_ssize_t stride = 1;
-        for (i = 0; i < ndim; i++) {
-            if (unlikely(stride * buf->itemsize != buf->strides[i]  &&  buf->shape[i] > 1)) {
-                PyErr_SetString(PyExc_ValueError,
-                    "Buffer not fortran contiguous.");
-                goto fail;
-            }
-            stride = stride * buf->shape[i];
-        }
-    } else if (c_or_f_flag & __Pyx_IS_C_CONTIG) {
-        Py_ssize_t stride = 1;
-        for (i = ndim - 1; i >- 1; i--) {
-            if (unlikely(stride * buf->itemsize != buf->strides[i]  &&  buf->shape[i] > 1)) {
-                PyErr_SetString(PyExc_ValueError,
-                    "Buffer not C contiguous.");
-                goto fail;
-            }
-            stride = stride * buf->shape[i];
-        }
-    }
-    return 1;
-fail:
-    return 0;
-}
-static int __Pyx_ValidateAndInit_memviewslice(
-                int *axes_specs,
-                int c_or_f_flag,
-                int buf_flags,
-                int ndim,
-                __Pyx_TypeInfo *dtype,
-                __Pyx_BufFmt_StackElem stack[],
-                __Pyx_memviewslice *memviewslice,
-                PyObject *original_obj)
-{
-    struct __pyx_memoryview_obj *memview, *new_memview;
-    __Pyx_RefNannyDeclarations
-    Py_buffer *buf;
-    int i, spec = 0, retval = -1;
-    __Pyx_BufFmt_Context ctx;
-    int from_memoryview = __pyx_memoryview_check(original_obj);
-    __Pyx_RefNannySetupContext("ValidateAndInit_memviewslice", 0);
-    if (from_memoryview && __pyx_typeinfo_cmp(dtype, ((struct __pyx_memoryview_obj *)
-                                                            original_obj)->typeinfo)) {
-        memview = (struct __pyx_memoryview_obj *) original_obj;
-        new_memview = NULL;
-    } else {
-        memview = (struct __pyx_memoryview_obj *) __pyx_memoryview_new(
-                                            original_obj, buf_flags, 0, dtype);
-        new_memview = memview;
-        if (unlikely(!memview))
-            goto fail;
-    }
-    buf = &memview->view;
-    if (unlikely(buf->ndim != ndim)) {
-        PyErr_Format(PyExc_ValueError,
-                "Buffer has wrong number of dimensions (expected %d, got %d)",
-                ndim, buf->ndim);
-        goto fail;
-    }
-    if (new_memview) {
-        __Pyx_BufFmt_Init(&ctx, stack, dtype);
-        if (unlikely(!__Pyx_BufFmt_CheckString(&ctx, buf->format))) goto fail;
-    }
-    if (unlikely((unsigned) buf->itemsize != dtype->size)) {
-        PyErr_Format(PyExc_ValueError,
-                     "Item size of buffer (%" CYTHON_FORMAT_SSIZE_T "u byte%s) "
-                     "does not match size of '%s' (%" CYTHON_FORMAT_SSIZE_T "u byte%s)",
-                     buf->itemsize,
-                     (buf->itemsize > 1) ? "s" : "",
-                     dtype->name,
-                     dtype->size,
-                     (dtype->size > 1) ? "s" : "");
-        goto fail;
-    }
-    if (buf->len > 0) {
-        for (i = 0; i < ndim; i++) {
-            spec = axes_specs[i];
-            if (unlikely(!__pyx_check_strides(buf, i, ndim, spec)))
-                goto fail;
-            if (unlikely(!__pyx_check_suboffsets(buf, i, ndim, spec)))
-                goto fail;
-        }
-        if (unlikely(buf->strides && !__pyx_verify_contig(buf, ndim, c_or_f_flag)))
-            goto fail;
-    }
-    if (unlikely(__Pyx_init_memviewslice(memview, ndim, memviewslice,
-                                         new_memview != NULL) == -1)) {
-        goto fail;
-    }
-    retval = 0;
-    goto no_fail;
-fail:
-    Py_XDECREF(new_memview);
-    retval = -1;
-no_fail:
-    __Pyx_RefNannyFinishContext();
-    return retval;
-}
-
 /* ObjectToMemviewSlice */
   static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_3rng_DTYPE_t(PyObject *obj, int writable_flag) {
     __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -26892,29 +27100,6 @@ no_fail:
     }
     retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, 0,
                                                  PyBUF_RECORDS_RO | writable_flag, 2,
-                                                 &__Pyx_TypeInfo_nn___pyx_t_3rng_DTYPE_t, stack,
-                                                 &result, obj);
-    if (unlikely(retcode == -1))
-        goto __pyx_fail;
-    return result;
-__pyx_fail:
-    result.memview = NULL;
-    result.data = NULL;
-    return result;
-}
-
-/* ObjectToMemviewSlice */
-  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_3rng_DTYPE_t(PyObject *obj, int writable_flag) {
-    __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
-    __Pyx_BufFmt_StackElem stack[1];
-    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_STRIDED) };
-    int retcode;
-    if (obj == Py_None) {
-        result.memview = (struct __pyx_memoryview_obj *) Py_None;
-        return result;
-    }
-    retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, 0,
-                                                 PyBUF_RECORDS_RO | writable_flag, 1,
                                                  &__Pyx_TypeInfo_nn___pyx_t_3rng_DTYPE_t, stack,
                                                  &result, obj);
     if (unlikely(retcode == -1))

@@ -109,8 +109,8 @@ ALL=[[ $KNN && $KNN_INC && $RNG ]]
 SECONDS=0
 for i in $(seq 1)
 do
-	minpoints
 	dimensions
+	minpoints
 	dataset
 done
 

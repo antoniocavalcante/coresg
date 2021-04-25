@@ -133,22 +133,38 @@ cdef class RelativeNeighborhoodGraph:
         r_size = red.shape[0]
         b_size = blue.shape[0]
 
+        # both sets are singletons
+        if r_size == 1 and b_size == 1:
+
+            underlying = euclidean_local(data[red[0]], data[blue[0]])
+            d_rb = max(underlying, core_distances[red[0]], core_distances[blue[0]])
+
+            self.add_edge(
+                red[0], 
+                blue[0], 
+                d_rb,
+                underlying, 
+                data, 
+                core_distances, 
+                knn)
+
+            return
+        
         min_dist = INFINITY
 
-        cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
-        cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))
-
-        cdef DTYPE_t* closest_underlying_r = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
+        cdef ITYPE_t num_closest = 0
 
         cdef ITYPE_t* closest_rb = <ITYPE_t*> malloc(r_size * sizeof(ITYPE_t))
         cdef ITYPE_t* closest_br = <ITYPE_t*> malloc(b_size * sizeof(ITYPE_t))
+
+        cdef DTYPE_t* closest_dist_rb = <DTYPE_t*> malloc(r_size * sizeof(DTYPE_t))
+        cdef DTYPE_t* closest_dist_br = <DTYPE_t*> malloc(b_size * sizeof(DTYPE_t))
 
         for b in xrange(b_size):
             closest_dist_br[b] = INFINITY
 
         for r in xrange(r_size):
             closest_dist_rb[r] = INFINITY
-            closest_underlying_r[r] = INFINITY
 
             point_r = red[r]
 
@@ -158,17 +174,9 @@ cdef class RelativeNeighborhoodGraph:
                 underlying = euclidean_local(data[point_r], data[point_b])
                 d_rb = max(underlying, core_distances[point_r], core_distances[point_b])
 
-                if d_rb <= closest_dist_rb[r]:
-                    if d_rb < closest_dist_rb[r]:
-                        closest_dist_rb[r] = d_rb
-                        closest_rb[r] = b
-                        closest_underlying_r[r] = underlying
-                    else:
-                        if underlying < closest_underlying_r[r]:
-                            closest_dist_rb[r] = d_rb
-                            closest_rb[r] = b
-                            
-                            closest_underlying_r[r] = underlying
+                if d_rb < closest_dist_rb[r]:
+                    closest_dist_rb[r] = d_rb
+                    closest_rb[r] = b
 
                 if d_rb < closest_dist_br[b]:
                     closest_dist_br[b] = d_rb
@@ -183,7 +191,7 @@ cdef class RelativeNeighborhoodGraph:
                         red[r], 
                         blue[b], 
                         closest_dist_rb[r],
-                        closest_underlying_r[r], 
+                        euclidean_local(data[red[r]], data[blue[b]]), 
                         data, 
                         core_distances, 
                         knn)
@@ -192,8 +200,6 @@ cdef class RelativeNeighborhoodGraph:
         # free up memory not needed anymore
         free(closest_dist_rb)
         free(closest_dist_br)
-
-        free(closest_underlying_r)
 
         free(closest_rb)
         free(closest_br)
@@ -217,7 +223,7 @@ cdef class RelativeNeighborhoodGraph:
             self.u.append(point_a)
             self.v.append(point_b)
             self.w.append(weight)
-            # print(min(point_a, point_b), max(point_a, point_b))
+
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
@@ -258,7 +264,7 @@ cdef class RelativeNeighborhoodGraph:
 
         cdef ITYPE_t c, point_c
 
-        if cabs(weight - max(core_distances[point_a], core_distances[point_b])) < 0.000000001:
+        if weight == max(core_distances[point_a], core_distances[point_b]):
             return True
 
         for c in xrange(1, self.min_points):
@@ -325,7 +331,7 @@ cdef DTYPE_t _mutual_reachability_distance(
 @cython.wraparound(False)
 @cython.nonecheck(False)
 @cython.initializedcheck(False)
-cdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
+cpdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
     cdef ITYPE_t i, m
     cdef DTYPE_t d = 0.0
     m = v1.shape[0]

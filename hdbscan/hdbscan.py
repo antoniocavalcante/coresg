@@ -11,6 +11,8 @@ from scipy.sparse import csr_matrix, lil_matrix, save_npz, load_npz, triu
 
 from rng.rng import RelativeNeighborhoodGraph
 
+from rng.rng import euclidean_local
+
 from mst.mst import prim
 from mst.mst import prim_plus
 from mst.mst import prim_inc
@@ -53,12 +55,13 @@ class HDBSCAN:
         except:
             from sklearn.neighbors import NearestNeighbors
             nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
-            
+
             # computes the core-distances and knn information
             self.core_distances, self.knn = nbrs.kneighbors(self.data)
 
-            # fixes precision
-            self.core_distances = np.around(self.core_distances, decimals=12)
+            for i in range(self.n):
+                for k in range(1, self.min_pts):
+                    self.core_distances[i, k] = euclidean_local(self.data[i], self.data[self.knn[i, k]])
 
             # saving the computed core-distances, knn and knng on files.
             np.savetxt(datafile + "-" + str(self.min_pts) + ".cd" , self.core_distances, delimiter=delimiter)
