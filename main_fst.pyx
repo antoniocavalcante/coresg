@@ -2,11 +2,9 @@ import numpy as np
 
 import mst
 
-import pyximport; pyximport.install()
-
 from sklearn.neighbors import NearestNeighbors
 
-from rng.fair_split_tree import FairSplitTree
+from rng.FairSplitTree cimport FairSplitTree
 
 if __name__ == "__main__":
     

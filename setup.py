@@ -6,18 +6,18 @@ import numpy
 
 extensions = [
     Extension(
-        "mst",
+        "mst.mst",
         ["mst/mst.pyx"],
         extra_compile_args = ["-ffast-math"]
     ),
     Extension(
-        "rng",
+        "rng.rng",
         ["rng/rng.pyx"],
         extra_compile_args = ["-ffast-math"]
     ),
     Extension(
-        "fst",
-        ["rng/fair_split_tree.pyx"],
+        "rng.fst.fstree",
+        ["rng/fst/fstree.pyx"],
         extra_compile_args = ["-ffast-math"]
     )
 ]

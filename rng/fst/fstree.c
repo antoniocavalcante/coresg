@@ -7,12 +7,12 @@
         "extra_compile_args": [
             "-ffast-math"
         ],
-        "name": "fst",
+        "name": "rng.fst.fstree",
         "sources": [
-            "rng/fair_split_tree.pyx"
+            "rng/fst/fstree.pyx"
         ]
     },
-    "module_name": "fst"
+    "module_name": "rng.fst.fstree"
 }
 END: Cython Metadata */
 
@@ -618,8 +618,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__fst
-#define __PYX_HAVE_API__fst
+#define __PYX_HAVE__rng__fst__fstree
+#define __PYX_HAVE_API__rng__fst__fstree
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -862,11 +862,11 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "rng/fair_split_tree.pyx",
+  "rng/fst/fstree.pyx",
   "stringsource",
   "env/lib/python3.9/site-packages/numpy/__init__.pxd",
   "env/lib/python3.9/site-packages/Cython/Includes/cpython/type.pxd",
-  "rng/../parameters.pxi",
+  "rng/fst/../../parameters.pxi",
 };
 /* BufferFormatStructs.proto */
 #define IS_UNSIGNED(type) (((type) -1) > 0)
@@ -1100,7 +1100,7 @@ typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
  * 
  * ITYPE = np.int64
  */
-typedef __pyx_t_5numpy_float64_t __pyx_t_3fst_DTYPE_t;
+typedef __pyx_t_5numpy_float64_t __pyx_t_3rng_3fst_6fstree_DTYPE_t;
 
 /* "parameters.pxi":5
  * 
@@ -1109,7 +1109,7 @@ typedef __pyx_t_5numpy_float64_t __pyx_t_3fst_DTYPE_t;
  * 
  * # Fused type for int32 and int64
  */
-typedef __pyx_t_5numpy_int64_t __pyx_t_3fst_ITYPE_t;
+typedef __pyx_t_5numpy_int64_t __pyx_t_3rng_3fst_6fstree_ITYPE_t;
 /* Declarations.proto */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -1136,8 +1136,8 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 
 /*--- Type declarations ---*/
-struct __pyx_obj_3fst_FairSplitTree;
-struct __pyx_obj_3fst_FairSplitTreeNode;
+struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree;
+struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode;
 
 /* "env/lib/python3.9/site-packages/numpy/__init__.pxd":729
  * ctypedef npy_longdouble longdouble_t
@@ -1175,32 +1175,32 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
 
-/* "rng/fair_split_tree.pyx":14
- * include '../parameters.pxi'
+/* "rng/fst/fstree.pyx":12
+ * include '../../parameters.pxi'
  * 
  * cdef class FairSplitTree:             # <<<<<<<<<<<<<<
  * 
- *     cdef public FairSplitTreeNode root
+ *     cdef FairSplitTreeNode root
  */
-struct __pyx_obj_3fst_FairSplitTree {
+struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree {
   PyObject_HEAD
-  struct __pyx_vtabstruct_3fst_FairSplitTree *__pyx_vtab;
-  struct __pyx_obj_3fst_FairSplitTreeNode *root;
+  struct __pyx_vtabstruct_3rng_3fst_6fstree_FairSplitTree *__pyx_vtab;
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *root;
 };
 
 
-/* "rng/fair_split_tree.pyx":136
+/* "rng/fst/fstree.pyx":97
  * 
  * 
  * cdef class FairSplitTreeNode:             # <<<<<<<<<<<<<<
  * 
- *     cdef public np.ndarray points
+ *     cdef np.ndarray points
  */
-struct __pyx_obj_3fst_FairSplitTreeNode {
+struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode {
   PyObject_HEAD
   PyArrayObject *points;
-  struct __pyx_obj_3fst_FairSplitTreeNode *l;
-  struct __pyx_obj_3fst_FairSplitTreeNode *r;
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *l;
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *r;
   __pyx_t_5numpy_float64_t diameter;
   PyArrayObject *center;
   int leaf;
@@ -1208,18 +1208,18 @@ struct __pyx_obj_3fst_FairSplitTreeNode {
 
 
 
-/* "rng/fair_split_tree.pyx":14
- * include '../parameters.pxi'
+/* "rng/fst/fstree.pyx":12
+ * include '../../parameters.pxi'
  * 
  * cdef class FairSplitTree:             # <<<<<<<<<<<<<<
  * 
- *     cdef public FairSplitTreeNode root
+ *     cdef FairSplitTreeNode root
  */
 
-struct __pyx_vtabstruct_3fst_FairSplitTree {
-  PyObject *(*construct)(struct __pyx_obj_3fst_FairSplitTree *, PyArrayObject *, PyArrayObject *);
+struct __pyx_vtabstruct_3rng_3fst_6fstree_FairSplitTree {
+  void (*construct)(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *, PyArrayObject *, PyArrayObject *);
 };
-static struct __pyx_vtabstruct_3fst_FairSplitTree *__pyx_vtabptr_3fst_FairSplitTree;
+static struct __pyx_vtabstruct_3rng_3fst_6fstree_FairSplitTree *__pyx_vtabptr_3rng_3fst_6fstree_FairSplitTree;
 
 /* --- Runtime support code (head) --- */
 /* Refnanny.proto */
@@ -1588,6 +1588,11 @@ static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
 #define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
 #endif
 
+/* WriteUnraisableException.proto */
+static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil);
+
 /* PyErrExceptionMatches.proto */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyErr_ExceptionMatches(err) __Pyx_PyErr_ExceptionMatchesInState(__pyx_tstate, err)
@@ -1601,11 +1606,6 @@ static CYTHON_INLINE PyObject *__Pyx_GetAttr(PyObject *, PyObject *);
 
 /* GetAttr3.proto */
 static CYTHON_INLINE PyObject *__Pyx_GetAttr3(PyObject *, PyObject *, PyObject *);
-
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
 
 /* Import.proto */
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level);
@@ -1832,6 +1832,9 @@ typedef struct {
 /* CIntFromPy.proto */
 static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
 
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_Py_intptr_t(Py_intptr_t value);
+
 /* CIntFromPy.proto */
 static CYTHON_INLINE npy_int64 __Pyx_PyInt_As_npy_int64(PyObject *);
 
@@ -1863,7 +1866,7 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances); /* proto*/
+static void __pyx_f_3rng_3fst_6fstree_13FairSplitTree_construct(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances); /* proto*/
 
 /* Module declarations from 'cpython.buffer' */
 
@@ -1907,27 +1910,24 @@ static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 
 /* Module declarations from 'libc.math' */
 
-/* Module declarations from 'fst' */
-static PyTypeObject *__pyx_ptype_3fst_FairSplitTree = 0;
-static PyTypeObject *__pyx_ptype_3fst_FairSplitTreeNode = 0;
-static int __pyx_f_3fst_separated(struct __pyx_obj_3fst_FairSplitTreeNode *, struct __pyx_obj_3fst_FairSplitTreeNode *, int __pyx_skip_dispatch); /*proto*/
-static __pyx_t_3fst_DTYPE_t __pyx_f_3fst_node_distances(struct __pyx_obj_3fst_FairSplitTreeNode *, struct __pyx_obj_3fst_FairSplitTreeNode *); /*proto*/
-static __pyx_t_3fst_DTYPE_t __pyx_f_3fst_euclidean(PyArrayObject *, PyArrayObject *); /*proto*/
-static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTree__set_state(struct __pyx_obj_3fst_FairSplitTree *, PyObject *); /*proto*/
-static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTreeNode__set_state(struct __pyx_obj_3fst_FairSplitTreeNode *, PyObject *); /*proto*/
-static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t = { "DTYPE_t", NULL, sizeof(__pyx_t_3fst_DTYPE_t), { 0 }, 0, 'R', 0, 0 };
-static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
+/* Module declarations from 'rng.fst.fstree' */
+static PyTypeObject *__pyx_ptype_3rng_3fst_6fstree_FairSplitTree = 0;
+static PyTypeObject *__pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode = 0;
+static __pyx_t_3rng_3fst_6fstree_DTYPE_t __pyx_f_3rng_3fst_6fstree_euclidean(PyArrayObject *, PyArrayObject *); /*proto*/
+static PyObject *__pyx_f_3rng_3fst_6fstree___pyx_unpickle_FairSplitTree__set_state(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *, PyObject *); /*proto*/
+static PyObject *__pyx_f_3rng_3fst_6fstree___pyx_unpickle_FairSplitTreeNode__set_state(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *, PyObject *); /*proto*/
+static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t = { "DTYPE_t", NULL, sizeof(__pyx_t_3rng_3fst_6fstree_DTYPE_t), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_int64_t = { "int64_t", NULL, sizeof(__pyx_t_5numpy_int64_t), { 0 }, 0, IS_UNSIGNED(__pyx_t_5numpy_int64_t) ? 'U' : 'I', IS_UNSIGNED(__pyx_t_5numpy_int64_t), 0 };
-#define __Pyx_MODULE_NAME "fst"
-extern int __pyx_module_is_main_fst;
-int __pyx_module_is_main_fst = 0;
+static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
+#define __Pyx_MODULE_NAME "rng.fst.fstree"
+extern int __pyx_module_is_main_rng__fst__fstree;
+int __pyx_module_is_main_rng__fst__fstree = 0;
 
-/* Implementation of 'fst' */
+/* Implementation of 'rng.fst.fstree' */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_xrange;
 static PyObject *__pyx_builtin_ImportError;
 static const char __pyx_k_np[] = "np";
-static const char __pyx_k_fst[] = "fst";
 static const char __pyx_k_max[] = "max";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_pop[] = "pop";
@@ -1937,7 +1937,6 @@ static const char __pyx_k_axis[] = "axis";
 static const char __pyx_k_copy[] = "copy";
 static const char __pyx_k_data[] = "data";
 static const char __pyx_k_dict[] = "__dict__";
-static const char __pyx_k_left[] = "left";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_math[] = "math";
 static const char __pyx_k_name[] = "__name__";
@@ -1948,21 +1947,16 @@ static const char __pyx_k_dtype[] = "dtype";
 static const char __pyx_k_int64[] = "int64";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_range[] = "range";
-static const char __pyx_k_right[] = "right";
 static const char __pyx_k_zeros[] = "zeros";
 static const char __pyx_k_arange[] = "arange";
 static const char __pyx_k_argmax[] = "argmax";
-static const char __pyx_k_center[] = "center";
 static const char __pyx_k_import[] = "__import__";
-static const char __pyx_k_node_a[] = "node_a";
-static const char __pyx_k_node_b[] = "node_b";
 static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_points[] = "points";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_update[] = "update";
 static const char __pyx_k_xrange[] = "xrange";
 static const char __pyx_k_float64[] = "float64";
-static const char __pyx_k_distance[] = "distance";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
 static const char __pyx_k_setstate[] = "__setstate__";
@@ -1976,8 +1970,8 @@ static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
 static const char __pyx_k_stringsource[] = "stringsource";
 static const char __pyx_k_FairSplitTree[] = "FairSplitTree";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
-static const char __pyx_k_scipy_spatial[] = "scipy.spatial";
 static const char __pyx_k_core_distances[] = "core_distances";
+static const char __pyx_k_rng_fst_fstree[] = "rng.fst.fstree";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_FairSplitTreeNode[] = "FairSplitTreeNode";
@@ -2001,27 +1995,21 @@ static PyObject *__pyx_n_s_amin;
 static PyObject *__pyx_n_s_arange;
 static PyObject *__pyx_n_s_argmax;
 static PyObject *__pyx_n_s_axis;
-static PyObject *__pyx_n_s_center;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_copy;
 static PyObject *__pyx_n_s_core_distances;
 static PyObject *__pyx_n_s_data;
 static PyObject *__pyx_n_s_dict;
-static PyObject *__pyx_n_s_distance;
 static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_float64;
-static PyObject *__pyx_n_s_fst;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_int64;
-static PyObject *__pyx_n_s_left;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_math;
 static PyObject *__pyx_n_s_max;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_new;
-static PyObject *__pyx_n_s_node_a;
-static PyObject *__pyx_n_s_node_b;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
@@ -2041,8 +2029,7 @@ static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
-static PyObject *__pyx_n_s_right;
-static PyObject *__pyx_n_s_scipy_spatial;
+static PyObject *__pyx_n_s_rng_fst_fstree;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_kp_s_stringsource;
@@ -2050,36 +2037,16 @@ static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_update;
 static PyObject *__pyx_n_s_xrange;
 static PyObject *__pyx_n_s_zeros;
-static int __pyx_pf_3fst_13FairSplitTree___init__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances); /* proto */
-static PyObject *__pyx_pf_3fst_13FairSplitTree_4root___get__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self); /* proto */
-static int __pyx_pf_3fst_13FairSplitTree_4root_2__set__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static int __pyx_pf_3fst_13FairSplitTree_4root_4__del__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3fst_13FairSplitTree_2__reduce_cython__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3fst_13FairSplitTree_4__setstate_cython__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_3fst_separated(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_a, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_b); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode___init__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyArrayObject *__pyx_v_points, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_left, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_right, CYTHON_UNUSED PyArrayObject *__pyx_v_center); /* proto */
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_6points___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_6points_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_6points_4__del__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_1l___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_1l_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_1l_4__del__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_1r___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_1r_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_1r_4__del__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_8diameter___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_8diameter_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_6center___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_6center_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_6center_4__del__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_4leaf___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static int __pyx_pf_3fst_17FairSplitTreeNode_4leaf_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_2__reduce_cython__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_4__setstate_cython__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_3fst_2__pyx_unpickle_FairSplitTree(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_3fst_4__pyx_unpickle_FairSplitTreeNode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_tp_new_3fst_FairSplitTree(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_3fst_FairSplitTreeNode(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static int __pyx_pf_3rng_3fst_6fstree_13FairSplitTree___init__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances); /* proto */
+static PyObject *__pyx_pf_3rng_3fst_6fstree_13FairSplitTree_2__reduce_cython__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3rng_3fst_6fstree_13FairSplitTree_4__setstate_cython__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode___init__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *__pyx_v_self, PyArrayObject *__pyx_v_points); /* proto */
+static PyObject *__pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode_2__reduce_cython__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode_4__setstate_cython__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_3rng_3fst_6fstree___pyx_unpickle_FairSplitTree(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_3rng_3fst_6fstree_2__pyx_unpickle_FairSplitTreeNode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_tp_new_3rng_3fst_6fstree_FairSplitTree(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_3rng_3fst_6fstree_FairSplitTreeNode(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static __Pyx_CachedCFunction __pyx_umethod_PyList_Type_pop = {0, &__pyx_n_s_pop, 0, 0, 0};
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_2;
@@ -2093,8 +2060,8 @@ static PyObject *__pyx_codeobj__4;
 static PyObject *__pyx_codeobj__6;
 /* Late includes */
 
-/* "rng/fair_split_tree.pyx":18
- *     cdef public FairSplitTreeNode root
+/* "rng/fst/fstree.pyx":16
+ *     cdef FairSplitTreeNode root
  * 
  *     def __init__(             # <<<<<<<<<<<<<<
  *         self,
@@ -2102,8 +2069,8 @@ static PyObject *__pyx_codeobj__6;
  */
 
 /* Python wrapper */
-static int __pyx_pw_3fst_13FairSplitTree_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_3fst_13FairSplitTree_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_3rng_3fst_6fstree_13FairSplitTree_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_3rng_3fst_6fstree_13FairSplitTree_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_data = 0;
   PyArrayObject *__pyx_v_core_distances = 0;
   int __pyx_lineno = 0;
@@ -2135,11 +2102,11 @@ static int __pyx_pw_3fst_13FairSplitTree_1__init__(PyObject *__pyx_v_self, PyObj
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_core_distances)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 18, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 16, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 18, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 16, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -2152,15 +2119,15 @@ static int __pyx_pw_3fst_13FairSplitTree_1__init__(PyObject *__pyx_v_self, PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 18, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 16, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("fst.FairSplitTree.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.FairSplitTree.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_data), __pyx_ptype_5numpy_ndarray, 1, "data", 0))) __PYX_ERR(0, 20, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_core_distances), __pyx_ptype_5numpy_ndarray, 1, "core_distances", 0))) __PYX_ERR(0, 21, __pyx_L1_error)
-  __pyx_r = __pyx_pf_3fst_13FairSplitTree___init__(((struct __pyx_obj_3fst_FairSplitTree *)__pyx_v_self), __pyx_v_data, __pyx_v_core_distances);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_data), __pyx_ptype_5numpy_ndarray, 1, "data", 0))) __PYX_ERR(0, 18, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_core_distances), __pyx_ptype_5numpy_ndarray, 1, "core_distances", 0))) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_r = __pyx_pf_3rng_3fst_6fstree_13FairSplitTree___init__(((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *)__pyx_v_self), __pyx_v_data, __pyx_v_core_distances);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2171,7 +2138,7 @@ static int __pyx_pw_3fst_13FairSplitTree_1__init__(PyObject *__pyx_v_self, PyObj
   return __pyx_r;
 }
 
-static int __pyx_pf_3fst_13FairSplitTree___init__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances) {
+static int __pyx_pf_3rng_3fst_6fstree_13FairSplitTree___init__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_core_distances;
   __Pyx_Buffer __pyx_pybuffer_core_distances;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_data;
@@ -2180,9 +2147,8 @@ static int __pyx_pf_3fst_13FairSplitTree___init__(struct __pyx_obj_3fst_FairSpli
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
-  Py_ssize_t __pyx_t_3;
+  PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2197,68 +2163,65 @@ static int __pyx_pf_3fst_13FairSplitTree___init__(struct __pyx_obj_3fst_FairSpli
   __pyx_pybuffernd_core_distances.rcbuffer = &__pyx_pybuffer_core_distances;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_data.rcbuffer->pybuffer, (PyObject*)__pyx_v_data, &__Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 18, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_data.rcbuffer->pybuffer, (PyObject*)__pyx_v_data, &__Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 16, __pyx_L1_error)
   }
   __pyx_pybuffernd_data.diminfo[0].strides = __pyx_pybuffernd_data.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_data.diminfo[0].shape = __pyx_pybuffernd_data.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_data.diminfo[1].strides = __pyx_pybuffernd_data.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_data.diminfo[1].shape = __pyx_pybuffernd_data.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_core_distances.rcbuffer->pybuffer, (PyObject*)__pyx_v_core_distances, &__Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 18, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_core_distances.rcbuffer->pybuffer, (PyObject*)__pyx_v_core_distances, &__Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 16, __pyx_L1_error)
   }
   __pyx_pybuffernd_core_distances.diminfo[0].strides = __pyx_pybuffernd_core_distances.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_core_distances.diminfo[0].shape = __pyx_pybuffernd_core_distances.rcbuffer->pybuffer.shape[0];
 
-  /* "rng/fair_split_tree.pyx":23
+  /* "rng/fst/fstree.pyx":21
  *         np.ndarray[DTYPE_t, ndim=1] core_distances):
  * 
- *         self.root = FairSplitTreeNode(np.arange(len(data), dtype=ITYPE))             # <<<<<<<<<<<<<<
+ *         self.root = FairSplitTreeNode(np.arange(data.shape[0], dtype=ITYPE))             # <<<<<<<<<<<<<<
  * 
  *         self.construct(data, core_distances)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_arange); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_arange); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_data)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 23, __pyx_L1_error)
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_data->dimensions[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_ITYPE); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_ITYPE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_3fst_FairSplitTreeNode), __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode), __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->root);
   __Pyx_DECREF(((PyObject *)__pyx_v_self->root));
-  __pyx_v_self->root = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_1);
+  __pyx_v_self->root = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "rng/fair_split_tree.pyx":25
- *         self.root = FairSplitTreeNode(np.arange(len(data), dtype=ITYPE))
+  /* "rng/fst/fstree.pyx":23
+ *         self.root = FairSplitTreeNode(np.arange(data.shape[0], dtype=ITYPE))
  * 
  *         self.construct(data, core_distances)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_3fst_FairSplitTree *)__pyx_v_self->__pyx_vtab)->construct(__pyx_v_self, ((PyArrayObject *)__pyx_v_data), ((PyArrayObject *)__pyx_v_core_distances)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  ((struct __pyx_vtabstruct_3rng_3fst_6fstree_FairSplitTree *)__pyx_v_self->__pyx_vtab)->construct(__pyx_v_self, ((PyArrayObject *)__pyx_v_data), ((PyArrayObject *)__pyx_v_core_distances));
 
-  /* "rng/fair_split_tree.pyx":18
- *     cdef public FairSplitTreeNode root
+  /* "rng/fst/fstree.pyx":16
+ *     cdef FairSplitTreeNode root
  * 
  *     def __init__(             # <<<<<<<<<<<<<<
  *         self,
@@ -2271,8 +2234,8 @@ static int __pyx_pf_3fst_13FairSplitTree___init__(struct __pyx_obj_3fst_FairSpli
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -2280,7 +2243,7 @@ static int __pyx_pf_3fst_13FairSplitTree___init__(struct __pyx_obj_3fst_FairSpli
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_core_distances.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_data.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("fst.FairSplitTree.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.FairSplitTree.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2291,26 +2254,26 @@ static int __pyx_pf_3fst_13FairSplitTree___init__(struct __pyx_obj_3fst_FairSpli
   return __pyx_r;
 }
 
-/* "rng/fair_split_tree.pyx":32
+/* "rng/fst/fstree.pyx":30
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
- *     cdef construct(             # <<<<<<<<<<<<<<
+ *     cdef void construct(             # <<<<<<<<<<<<<<
  *         self,
  *         np.ndarray[DTYPE_t, ndim=2] data,
  */
 
-static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances) {
-  struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node = 0;
-  __pyx_t_3fst_ITYPE_t __pyx_v_point;
-  __pyx_t_3fst_ITYPE_t __pyx_v_split_dim;
-  __pyx_t_3fst_ITYPE_t __pyx_v_i;
-  __pyx_t_3fst_ITYPE_t __pyx_v_idx_left;
-  __pyx_t_3fst_ITYPE_t __pyx_v_idx_right;
-  __pyx_t_3fst_ITYPE_t __pyx_v_n;
-  CYTHON_UNUSED __pyx_t_3fst_ITYPE_t __pyx_v_current_idx;
+static void __pyx_f_3rng_3fst_6fstree_13FairSplitTree_construct(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v_self, PyArrayObject *__pyx_v_data, PyArrayObject *__pyx_v_core_distances) {
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *__pyx_v_node = 0;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_point;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_split_dim;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_i;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_idx_left;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_idx_right;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_n;
+  CYTHON_UNUSED __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_current_idx;
   PyArrayObject *__pyx_v_left = 0;
   PyArrayObject *__pyx_v_right = 0;
-  __pyx_t_3fst_DTYPE_t __pyx_v_split_val;
+  __pyx_t_3rng_3fst_6fstree_DTYPE_t __pyx_v_split_val;
   PyArrayObject *__pyx_v_maxdim = 0;
   PyArrayObject *__pyx_v_mindim = 0;
   PyObject *__pyx_v_stack = 0;
@@ -2322,27 +2285,25 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
   __Pyx_Buffer __pyx_pybuffer_maxdim;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_mindim;
   __Pyx_Buffer __pyx_pybuffer_mindim;
-  PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
-  Py_ssize_t __pyx_t_3;
+  PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
-  PyArrayObject *__pyx_t_7 = NULL;
-  int __pyx_t_8;
+  int __pyx_t_5;
+  PyArrayObject *__pyx_t_6 = NULL;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
   PyObject *__pyx_t_9 = NULL;
   PyObject *__pyx_t_10 = NULL;
-  PyObject *__pyx_t_11 = NULL;
-  __pyx_t_3fst_DTYPE_t __pyx_t_12;
-  __pyx_t_5numpy_float64_t __pyx_t_13;
-  __pyx_t_3fst_ITYPE_t __pyx_t_14;
-  __pyx_t_3fst_ITYPE_t __pyx_t_15;
-  __pyx_t_3fst_ITYPE_t __pyx_t_16;
-  __pyx_t_3fst_ITYPE_t __pyx_t_17;
-  __pyx_t_3fst_ITYPE_t __pyx_t_18;
-  int __pyx_t_19;
+  __pyx_t_3rng_3fst_6fstree_DTYPE_t __pyx_t_11;
+  __pyx_t_5numpy_float64_t __pyx_t_12;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_13;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_14;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_15;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_16;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_17;
+  int __pyx_t_18;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2365,23 +2326,23 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
   __pyx_pybuffernd_core_distances.rcbuffer = &__pyx_pybuffer_core_distances;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_data.rcbuffer->pybuffer, (PyObject*)__pyx_v_data, &__Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 32, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_data.rcbuffer->pybuffer, (PyObject*)__pyx_v_data, &__Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 30, __pyx_L1_error)
   }
   __pyx_pybuffernd_data.diminfo[0].strides = __pyx_pybuffernd_data.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_data.diminfo[0].shape = __pyx_pybuffernd_data.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_data.diminfo[1].strides = __pyx_pybuffernd_data.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_data.diminfo[1].shape = __pyx_pybuffernd_data.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_core_distances.rcbuffer->pybuffer, (PyObject*)__pyx_v_core_distances, &__Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 32, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_core_distances.rcbuffer->pybuffer, (PyObject*)__pyx_v_core_distances, &__Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 30, __pyx_L1_error)
   }
   __pyx_pybuffernd_core_distances.diminfo[0].strides = __pyx_pybuffernd_core_distances.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_core_distances.diminfo[0].shape = __pyx_pybuffernd_core_distances.rcbuffer->pybuffer.shape[0];
 
-  /* "rng/fair_split_tree.pyx":45
+  /* "rng/fst/fstree.pyx":43
  * 
  *         # starts with the root of the tree
  *         cdef list stack = [self.root]             # <<<<<<<<<<<<<<
  * 
  *         current_idx = 1
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self->root));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self->root));
@@ -2389,356 +2350,350 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
   __pyx_v_stack = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "rng/fair_split_tree.pyx":47
+  /* "rng/fst/fstree.pyx":45
  *         cdef list stack = [self.root]
  * 
  *         current_idx = 1             # <<<<<<<<<<<<<<
  * 
- *         left  = np.zeros(len(data), dtype=ITYPE)
+ *         left  = np.zeros(data.shape[0], dtype=ITYPE)
  */
   __pyx_v_current_idx = 1;
 
-  /* "rng/fair_split_tree.pyx":49
+  /* "rng/fst/fstree.pyx":47
  *         current_idx = 1
  * 
- *         left  = np.zeros(len(data), dtype=ITYPE)             # <<<<<<<<<<<<<<
- *         right = np.zeros(len(data), dtype=ITYPE)
+ *         left  = np.zeros(data.shape[0], dtype=ITYPE)             # <<<<<<<<<<<<<<
+ *         right = np.zeros(data.shape[0], dtype=ITYPE)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_data)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 49, __pyx_L1_error)
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_data->dimensions[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_ITYPE); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 49, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 49, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_ITYPE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 49, __pyx_L1_error)
-  __pyx_v_left = ((PyArrayObject *)__pyx_t_5);
-  __pyx_t_5 = 0;
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_v_left = ((PyArrayObject *)__pyx_t_4);
+  __pyx_t_4 = 0;
 
-  /* "rng/fair_split_tree.pyx":50
+  /* "rng/fst/fstree.pyx":48
  * 
- *         left  = np.zeros(len(data), dtype=ITYPE)
- *         right = np.zeros(len(data), dtype=ITYPE)             # <<<<<<<<<<<<<<
+ *         left  = np.zeros(data.shape[0], dtype=ITYPE)
+ *         right = np.zeros(data.shape[0], dtype=ITYPE)             # <<<<<<<<<<<<<<
  * 
  *         while stack:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = PyObject_Length(((PyObject *)__pyx_v_data)); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 50, __pyx_L1_error)
-  __pyx_t_5 = PyInt_FromSsize_t(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_ITYPE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyInt_From_Py_intptr_t((__pyx_v_data->dimensions[0])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_ITYPE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 50, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 50, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 48, __pyx_L1_error)
   __pyx_v_right = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "rng/fair_split_tree.pyx":52
- *         right = np.zeros(len(data), dtype=ITYPE)
+  /* "rng/fst/fstree.pyx":50
+ *         right = np.zeros(data.shape[0], dtype=ITYPE)
  * 
  *         while stack:             # <<<<<<<<<<<<<<
  * 
  *             node = stack.pop()
  */
   while (1) {
-    __pyx_t_6 = (PyList_GET_SIZE(__pyx_v_stack) != 0);
-    if (!__pyx_t_6) break;
+    __pyx_t_5 = (PyList_GET_SIZE(__pyx_v_stack) != 0);
+    if (!__pyx_t_5) break;
 
-    /* "rng/fair_split_tree.pyx":54
+    /* "rng/fst/fstree.pyx":52
  *         while stack:
  * 
  *             node = stack.pop()             # <<<<<<<<<<<<<<
  * 
- *             n = len(node.points)
+ *             n = node.points.shape[0]
  */
-    __pyx_t_2 = __Pyx_PyList_Pop(__pyx_v_stack); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyList_Pop(__pyx_v_stack); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_3fst_FairSplitTreeNode))))) __PYX_ERR(0, 54, __pyx_L1_error)
-    __Pyx_XDECREF_SET(__pyx_v_node, ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_2));
+    if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode))))) __PYX_ERR(0, 52, __pyx_L1_error)
+    __Pyx_XDECREF_SET(__pyx_v_node, ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_t_2));
     __pyx_t_2 = 0;
 
-    /* "rng/fair_split_tree.pyx":56
+    /* "rng/fst/fstree.pyx":54
  *             node = stack.pop()
  * 
- *             n = len(node.points)             # <<<<<<<<<<<<<<
+ *             n = node.points.shape[0]             # <<<<<<<<<<<<<<
  * 
  *             if n > 1:
  */
-    __pyx_t_2 = ((PyObject *)__pyx_v_node->points);
-    __Pyx_INCREF(__pyx_t_2);
-    __pyx_t_3 = PyObject_Length(__pyx_t_2); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 56, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_v_n = __pyx_t_3;
+    __pyx_v_n = (__pyx_v_node->points->dimensions[0]);
 
-    /* "rng/fair_split_tree.pyx":58
- *             n = len(node.points)
+    /* "rng/fst/fstree.pyx":56
+ *             n = node.points.shape[0]
  * 
  *             if n > 1:             # <<<<<<<<<<<<<<
  *                 # finds the maximum and minimum values for each dimension
  *                 maxdim = np.amax(data[node.points], axis=0)
  */
-    __pyx_t_6 = ((__pyx_v_n > 1) != 0);
-    if (__pyx_t_6) {
+    __pyx_t_5 = ((__pyx_v_n > 1) != 0);
+    if (__pyx_t_5) {
 
-      /* "rng/fair_split_tree.pyx":60
+      /* "rng/fst/fstree.pyx":58
  *             if n > 1:
  *                 # finds the maximum and minimum values for each dimension
  *                 maxdim = np.amax(data[node.points], axis=0)             # <<<<<<<<<<<<<<
  *                 mindim = np.amin(data[node.points], axis=0)
  * 
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_amax); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 60, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_data), ((PyObject *)__pyx_v_node->points)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_amax); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 58, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_GIVEREF(__pyx_t_2);
-      PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
-      __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 60, __pyx_L1_error)
-      __pyx_t_7 = ((PyArrayObject *)__pyx_t_1);
+      __pyx_t_2 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_data), ((PyObject *)__pyx_v_node->points)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_GIVEREF(__pyx_t_2);
+      PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+      __pyx_t_2 = 0;
+      __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 58, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 58, __pyx_L1_error)
+      __pyx_t_6 = ((PyArrayObject *)__pyx_t_1);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
         __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_maxdim.rcbuffer->pybuffer);
-        __pyx_t_8 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_maxdim.rcbuffer->pybuffer, (PyObject*)__pyx_t_7, &__Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
-        if (unlikely(__pyx_t_8 < 0)) {
-          PyErr_Fetch(&__pyx_t_9, &__pyx_t_10, &__pyx_t_11);
-          if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_maxdim.rcbuffer->pybuffer, (PyObject*)__pyx_v_maxdim, &__Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
-            Py_XDECREF(__pyx_t_9); Py_XDECREF(__pyx_t_10); Py_XDECREF(__pyx_t_11);
+        __pyx_t_7 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_maxdim.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+        if (unlikely(__pyx_t_7 < 0)) {
+          PyErr_Fetch(&__pyx_t_8, &__pyx_t_9, &__pyx_t_10);
+          if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_maxdim.rcbuffer->pybuffer, (PyObject*)__pyx_v_maxdim, &__Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+            Py_XDECREF(__pyx_t_8); Py_XDECREF(__pyx_t_9); Py_XDECREF(__pyx_t_10);
             __Pyx_RaiseBufferFallbackError();
           } else {
-            PyErr_Restore(__pyx_t_9, __pyx_t_10, __pyx_t_11);
+            PyErr_Restore(__pyx_t_8, __pyx_t_9, __pyx_t_10);
           }
-          __pyx_t_9 = __pyx_t_10 = __pyx_t_11 = 0;
+          __pyx_t_8 = __pyx_t_9 = __pyx_t_10 = 0;
         }
         __pyx_pybuffernd_maxdim.diminfo[0].strides = __pyx_pybuffernd_maxdim.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_maxdim.diminfo[0].shape = __pyx_pybuffernd_maxdim.rcbuffer->pybuffer.shape[0];
-        if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 60, __pyx_L1_error)
+        if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 58, __pyx_L1_error)
       }
-      __pyx_t_7 = 0;
+      __pyx_t_6 = 0;
       __Pyx_XDECREF_SET(__pyx_v_maxdim, ((PyArrayObject *)__pyx_t_1));
       __pyx_t_1 = 0;
 
-      /* "rng/fair_split_tree.pyx":61
+      /* "rng/fst/fstree.pyx":59
  *                 # finds the maximum and minimum values for each dimension
  *                 maxdim = np.amax(data[node.points], axis=0)
  *                 mindim = np.amin(data[node.points], axis=0)             # <<<<<<<<<<<<<<
  * 
  *                 # updates the diameter of the node (euclidean distance)
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_amin); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_amin); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_data), ((PyObject *)__pyx_v_node->points)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_data), ((PyObject *)__pyx_v_node->points)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_1);
-      PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+      PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
       __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 61, __pyx_L1_error)
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
+      if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_axis, __pyx_int_0) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 61, __pyx_L1_error)
-      __pyx_t_7 = ((PyArrayObject *)__pyx_t_5);
+      if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 59, __pyx_L1_error)
+      __pyx_t_6 = ((PyArrayObject *)__pyx_t_4);
       {
         __Pyx_BufFmt_StackElem __pyx_stack[1];
         __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mindim.rcbuffer->pybuffer);
-        __pyx_t_8 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mindim.rcbuffer->pybuffer, (PyObject*)__pyx_t_7, &__Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
-        if (unlikely(__pyx_t_8 < 0)) {
-          PyErr_Fetch(&__pyx_t_11, &__pyx_t_10, &__pyx_t_9);
-          if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mindim.rcbuffer->pybuffer, (PyObject*)__pyx_v_mindim, &__Pyx_TypeInfo_nn___pyx_t_3fst_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
-            Py_XDECREF(__pyx_t_11); Py_XDECREF(__pyx_t_10); Py_XDECREF(__pyx_t_9);
+        __pyx_t_7 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mindim.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+        if (unlikely(__pyx_t_7 < 0)) {
+          PyErr_Fetch(&__pyx_t_10, &__pyx_t_9, &__pyx_t_8);
+          if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mindim.rcbuffer->pybuffer, (PyObject*)__pyx_v_mindim, &__Pyx_TypeInfo_nn___pyx_t_3rng_3fst_6fstree_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+            Py_XDECREF(__pyx_t_10); Py_XDECREF(__pyx_t_9); Py_XDECREF(__pyx_t_8);
             __Pyx_RaiseBufferFallbackError();
           } else {
-            PyErr_Restore(__pyx_t_11, __pyx_t_10, __pyx_t_9);
+            PyErr_Restore(__pyx_t_10, __pyx_t_9, __pyx_t_8);
           }
-          __pyx_t_11 = __pyx_t_10 = __pyx_t_9 = 0;
+          __pyx_t_10 = __pyx_t_9 = __pyx_t_8 = 0;
         }
         __pyx_pybuffernd_mindim.diminfo[0].strides = __pyx_pybuffernd_mindim.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mindim.diminfo[0].shape = __pyx_pybuffernd_mindim.rcbuffer->pybuffer.shape[0];
-        if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 61, __pyx_L1_error)
+        if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
       }
-      __pyx_t_7 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_mindim, ((PyArrayObject *)__pyx_t_5));
-      __pyx_t_5 = 0;
+      __pyx_t_6 = 0;
+      __Pyx_XDECREF_SET(__pyx_v_mindim, ((PyArrayObject *)__pyx_t_4));
+      __pyx_t_4 = 0;
 
-      /* "rng/fair_split_tree.pyx":66
+      /* "rng/fst/fstree.pyx":64
  *                 node.diameter = max(
  *                     euclidean(maxdim, mindim),
  *                     np.max(core_distances[node.points]))             # <<<<<<<<<<<<<<
  * 
  *                 # updates the geometric center of this node
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_max); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_max); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_core_distances), ((PyObject *)__pyx_v_node->points)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_core_distances), ((PyObject *)__pyx_v_node->points)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_2 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
-        __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
+      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+        __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
         if (likely(__pyx_t_2)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
           __Pyx_INCREF(__pyx_t_2);
           __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_4, function);
+          __Pyx_DECREF_SET(__pyx_t_3, function);
         }
       }
-      __pyx_t_5 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_2, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_1);
+      __pyx_t_4 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_1);
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 66, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 64, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "rng/fair_split_tree.pyx":65
+      /* "rng/fst/fstree.pyx":63
  *                 # updates the diameter of the node (euclidean distance)
  *                 node.diameter = max(
  *                     euclidean(maxdim, mindim),             # <<<<<<<<<<<<<<
  *                     np.max(core_distances[node.points]))
  * 
  */
-      __pyx_t_12 = __pyx_f_3fst_euclidean(((PyArrayObject *)__pyx_v_maxdim), ((PyArrayObject *)__pyx_v_mindim));
+      __pyx_t_11 = __pyx_f_3rng_3fst_6fstree_euclidean(((PyArrayObject *)__pyx_v_maxdim), ((PyArrayObject *)__pyx_v_mindim));
 
-      /* "rng/fair_split_tree.pyx":66
+      /* "rng/fst/fstree.pyx":64
  *                 node.diameter = max(
  *                     euclidean(maxdim, mindim),
  *                     np.max(core_distances[node.points]))             # <<<<<<<<<<<<<<
  * 
  *                 # updates the geometric center of this node
  */
-      __pyx_t_1 = PyFloat_FromDouble(__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble(__pyx_t_11); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_2 = PyObject_RichCompare(__pyx_t_5, __pyx_t_1, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
+      __pyx_t_2 = PyObject_RichCompare(__pyx_t_4, __pyx_t_1, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 64, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 66, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 64, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (__pyx_t_6) {
-        __Pyx_INCREF(__pyx_t_5);
-        __pyx_t_4 = __pyx_t_5;
+      if (__pyx_t_5) {
+        __Pyx_INCREF(__pyx_t_4);
+        __pyx_t_3 = __pyx_t_4;
       } else {
 
-        /* "rng/fair_split_tree.pyx":65
+        /* "rng/fst/fstree.pyx":63
  *                 # updates the diameter of the node (euclidean distance)
  *                 node.diameter = max(
  *                     euclidean(maxdim, mindim),             # <<<<<<<<<<<<<<
  *                     np.max(core_distances[node.points]))
  * 
  */
-        __pyx_t_2 = PyFloat_FromDouble(__pyx_t_12); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_2 = PyFloat_FromDouble(__pyx_t_11); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_4 = __pyx_t_2;
+        __pyx_t_3 = __pyx_t_2;
         __pyx_t_2 = 0;
       }
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "rng/fair_split_tree.pyx":66
+      /* "rng/fst/fstree.pyx":64
  *                 node.diameter = max(
  *                     euclidean(maxdim, mindim),
  *                     np.max(core_distances[node.points]))             # <<<<<<<<<<<<<<
  * 
  *                 # updates the geometric center of this node
  */
-      __pyx_t_13 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_13 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 66, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_12 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_12 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "rng/fair_split_tree.pyx":64
+      /* "rng/fst/fstree.pyx":62
  * 
  *                 # updates the diameter of the node (euclidean distance)
  *                 node.diameter = max(             # <<<<<<<<<<<<<<
  *                     euclidean(maxdim, mindim),
  *                     np.max(core_distances[node.points]))
  */
-      __pyx_v_node->diameter = __pyx_t_13;
+      __pyx_v_node->diameter = __pyx_t_12;
 
-      /* "rng/fair_split_tree.pyx":69
+      /* "rng/fst/fstree.pyx":67
  * 
  *                 # updates the geometric center of this node
  *                 node.center = (maxdim + mindim)/2             # <<<<<<<<<<<<<<
  * 
  *                 split_dim = np.argmax(maxdim - mindim)
  */
-      __pyx_t_4 = PyNumber_Add(((PyObject *)__pyx_v_maxdim), ((PyObject *)__pyx_v_mindim)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_Add(((PyObject *)__pyx_v_maxdim), ((PyObject *)__pyx_v_mindim)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_int_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 67, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_int_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 69, __pyx_L1_error)
-      __Pyx_GIVEREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 67, __pyx_L1_error)
+      __Pyx_GIVEREF(__pyx_t_4);
       __Pyx_GOTREF(__pyx_v_node->center);
       __Pyx_DECREF(((PyObject *)__pyx_v_node->center));
-      __pyx_v_node->center = ((PyArrayObject *)__pyx_t_5);
-      __pyx_t_5 = 0;
+      __pyx_v_node->center = ((PyArrayObject *)__pyx_t_4);
+      __pyx_t_4 = 0;
 
-      /* "rng/fair_split_tree.pyx":71
+      /* "rng/fst/fstree.pyx":69
  *                 node.center = (maxdim + mindim)/2
  * 
  *                 split_dim = np.argmax(maxdim - mindim)             # <<<<<<<<<<<<<<
  *                 split_val = (mindim[split_dim] + maxdim[split_dim]) / 2
  * 
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_argmax); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_argmax); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_Subtract(((PyObject *)__pyx_v_maxdim), ((PyObject *)__pyx_v_mindim)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_3 = PyNumber_Subtract(((PyObject *)__pyx_v_maxdim), ((PyObject *)__pyx_v_mindim)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_1 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
         __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_2);
@@ -2749,28 +2704,28 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
           __Pyx_DECREF_SET(__pyx_t_2, function);
         }
       }
-      __pyx_t_5 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_1, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4);
+      __pyx_t_4 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3);
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_14 = __Pyx_PyInt_As_npy_int64(__pyx_t_5); if (unlikely((__pyx_t_14 == ((npy_int64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 71, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_v_split_dim = __pyx_t_14;
+      __pyx_t_13 = __Pyx_PyInt_As_npy_int64(__pyx_t_4); if (unlikely((__pyx_t_13 == ((npy_int64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_v_split_dim = __pyx_t_13;
 
-      /* "rng/fair_split_tree.pyx":72
+      /* "rng/fst/fstree.pyx":70
  * 
  *                 split_dim = np.argmax(maxdim - mindim)
  *                 split_val = (mindim[split_dim] + maxdim[split_dim]) / 2             # <<<<<<<<<<<<<<
  * 
  *                 idx_left  = 0
  */
+      __pyx_t_13 = __pyx_v_split_dim;
       __pyx_t_14 = __pyx_v_split_dim;
-      __pyx_t_15 = __pyx_v_split_dim;
-      __pyx_v_split_val = (((*__Pyx_BufPtrStrided1d(__pyx_t_3fst_DTYPE_t *, __pyx_pybuffernd_mindim.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_mindim.diminfo[0].strides)) + (*__Pyx_BufPtrStrided1d(__pyx_t_3fst_DTYPE_t *, __pyx_pybuffernd_maxdim.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_maxdim.diminfo[0].strides))) / 2.0);
+      __pyx_v_split_val = (((*__Pyx_BufPtrStrided1d(__pyx_t_3rng_3fst_6fstree_DTYPE_t *, __pyx_pybuffernd_mindim.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_mindim.diminfo[0].strides)) + (*__Pyx_BufPtrStrided1d(__pyx_t_3rng_3fst_6fstree_DTYPE_t *, __pyx_pybuffernd_maxdim.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_maxdim.diminfo[0].strides))) / 2.0);
 
-      /* "rng/fair_split_tree.pyx":74
+      /* "rng/fst/fstree.pyx":72
  *                 split_val = (mindim[split_dim] + maxdim[split_dim]) / 2
  * 
  *                 idx_left  = 0             # <<<<<<<<<<<<<<
@@ -2779,65 +2734,65 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
  */
       __pyx_v_idx_left = 0;
 
-      /* "rng/fair_split_tree.pyx":75
+      /* "rng/fst/fstree.pyx":73
  * 
  *                 idx_left  = 0
  *                 idx_right = 0             # <<<<<<<<<<<<<<
  * 
- *                 # left  = np.zeros(n, dtype=ITYPE)
+ *                 for i in range(n):
  */
       __pyx_v_idx_right = 0;
 
-      /* "rng/fair_split_tree.pyx":80
- *                 # right = np.zeros(n, dtype=ITYPE)
+      /* "rng/fst/fstree.pyx":75
+ *                 idx_right = 0
  * 
  *                 for i in range(n):             # <<<<<<<<<<<<<<
  *                     point = node.points[i]
  * 
  */
-      __pyx_t_15 = __pyx_v_n;
-      __pyx_t_14 = __pyx_t_15;
-      for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_14; __pyx_t_16+=1) {
-        __pyx_v_i = __pyx_t_16;
+      __pyx_t_14 = __pyx_v_n;
+      __pyx_t_13 = __pyx_t_14;
+      for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_13; __pyx_t_15+=1) {
+        __pyx_v_i = __pyx_t_15;
 
-        /* "rng/fair_split_tree.pyx":81
+        /* "rng/fst/fstree.pyx":76
  * 
  *                 for i in range(n):
  *                     point = node.points[i]             # <<<<<<<<<<<<<<
  * 
  *                     if data[point, split_dim] <  split_val:
  */
-        __pyx_t_5 = __Pyx_GetItemInt(((PyObject *)__pyx_v_node->points), __pyx_v_i, __pyx_t_3fst_ITYPE_t, 1, __Pyx_PyInt_From_npy_int64, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_17 = __Pyx_PyInt_As_npy_int64(__pyx_t_5); if (unlikely((__pyx_t_17 == ((npy_int64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __pyx_v_point = __pyx_t_17;
+        __pyx_t_4 = __Pyx_GetItemInt(((PyObject *)__pyx_v_node->points), __pyx_v_i, __pyx_t_3rng_3fst_6fstree_ITYPE_t, 1, __Pyx_PyInt_From_npy_int64, 0, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_16 = __Pyx_PyInt_As_npy_int64(__pyx_t_4); if (unlikely((__pyx_t_16 == ((npy_int64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 76, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __pyx_v_point = __pyx_t_16;
 
-        /* "rng/fair_split_tree.pyx":83
+        /* "rng/fst/fstree.pyx":78
  *                     point = node.points[i]
  * 
  *                     if data[point, split_dim] <  split_val:             # <<<<<<<<<<<<<<
  *                         left[idx_left] = point
  *                         idx_left += 1
  */
-        __pyx_t_17 = __pyx_v_point;
-        __pyx_t_18 = __pyx_v_split_dim;
-        __pyx_t_6 = (((*__Pyx_BufPtrStrided2d(__pyx_t_3fst_DTYPE_t *, __pyx_pybuffernd_data.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_data.diminfo[0].strides, __pyx_t_18, __pyx_pybuffernd_data.diminfo[1].strides)) < __pyx_v_split_val) != 0);
-        if (__pyx_t_6) {
+        __pyx_t_16 = __pyx_v_point;
+        __pyx_t_17 = __pyx_v_split_dim;
+        __pyx_t_5 = (((*__Pyx_BufPtrStrided2d(__pyx_t_3rng_3fst_6fstree_DTYPE_t *, __pyx_pybuffernd_data.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_data.diminfo[0].strides, __pyx_t_17, __pyx_pybuffernd_data.diminfo[1].strides)) < __pyx_v_split_val) != 0);
+        if (__pyx_t_5) {
 
-          /* "rng/fair_split_tree.pyx":84
+          /* "rng/fst/fstree.pyx":79
  * 
  *                     if data[point, split_dim] <  split_val:
  *                         left[idx_left] = point             # <<<<<<<<<<<<<<
  *                         idx_left += 1
  *                     else:
  */
-          __pyx_t_5 = __Pyx_PyInt_From_npy_int64(__pyx_v_point); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 84, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_5);
-          if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_left), __pyx_v_idx_left, __pyx_t_5, __pyx_t_3fst_ITYPE_t, 1, __Pyx_PyInt_From_npy_int64, 0, 0, 0) < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
-          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __pyx_t_4 = __Pyx_PyInt_From_npy_int64(__pyx_v_point); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_4);
+          if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_left), __pyx_v_idx_left, __pyx_t_4, __pyx_t_3rng_3fst_6fstree_ITYPE_t, 1, __Pyx_PyInt_From_npy_int64, 0, 0, 0) < 0)) __PYX_ERR(0, 79, __pyx_L1_error)
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-          /* "rng/fair_split_tree.pyx":85
+          /* "rng/fst/fstree.pyx":80
  *                     if data[point, split_dim] <  split_val:
  *                         left[idx_left] = point
  *                         idx_left += 1             # <<<<<<<<<<<<<<
@@ -2846,7 +2801,7 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
  */
           __pyx_v_idx_left = (__pyx_v_idx_left + 1);
 
-          /* "rng/fair_split_tree.pyx":83
+          /* "rng/fst/fstree.pyx":78
  *                     point = node.points[i]
  * 
  *                     if data[point, split_dim] <  split_val:             # <<<<<<<<<<<<<<
@@ -2856,7 +2811,7 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
           goto __pyx_L8;
         }
 
-        /* "rng/fair_split_tree.pyx":87
+        /* "rng/fst/fstree.pyx":82
  *                         idx_left += 1
  *                     else:
  *                         right[idx_right] = point             # <<<<<<<<<<<<<<
@@ -2864,12 +2819,12 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
  * 
  */
         /*else*/ {
-          __pyx_t_5 = __Pyx_PyInt_From_npy_int64(__pyx_v_point); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 87, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_5);
-          if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_right), __pyx_v_idx_right, __pyx_t_5, __pyx_t_3fst_ITYPE_t, 1, __Pyx_PyInt_From_npy_int64, 0, 0, 0) < 0)) __PYX_ERR(0, 87, __pyx_L1_error)
-          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __pyx_t_4 = __Pyx_PyInt_From_npy_int64(__pyx_v_point); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_4);
+          if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_right), __pyx_v_idx_right, __pyx_t_4, __pyx_t_3rng_3fst_6fstree_ITYPE_t, 1, __Pyx_PyInt_From_npy_int64, 0, 0, 0) < 0)) __PYX_ERR(0, 82, __pyx_L1_error)
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-          /* "rng/fair_split_tree.pyx":88
+          /* "rng/fst/fstree.pyx":83
  *                     else:
  *                         right[idx_right] = point
  *                         idx_right += 1             # <<<<<<<<<<<<<<
@@ -2881,65 +2836,65 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
         __pyx_L8:;
       }
 
-      /* "rng/fair_split_tree.pyx":90
+      /* "rng/fst/fstree.pyx":85
  *                         idx_right += 1
  * 
  *                 if (idx_left > 0):             # <<<<<<<<<<<<<<
  *                     node.l = FairSplitTreeNode(left[0:idx_left].copy())
  *                     stack.append(node.l)
  */
-      __pyx_t_6 = ((__pyx_v_idx_left > 0) != 0);
-      if (__pyx_t_6) {
+      __pyx_t_5 = ((__pyx_v_idx_left > 0) != 0);
+      if (__pyx_t_5) {
 
-        /* "rng/fair_split_tree.pyx":91
+        /* "rng/fst/fstree.pyx":86
  * 
  *                 if (idx_left > 0):
  *                     node.l = FairSplitTreeNode(left[0:idx_left].copy())             # <<<<<<<<<<<<<<
  *                     stack.append(node.l)
  * 
  */
-        __pyx_t_2 = __Pyx_PyObject_GetSlice(((PyObject *)__pyx_v_left), 0, __pyx_v_idx_left, NULL, NULL, NULL, 1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_GetSlice(((PyObject *)__pyx_v_left), 0, __pyx_v_idx_left, NULL, NULL, NULL, 1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_copy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_copy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __pyx_t_2 = NULL;
-        if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
-          __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
+        if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+          __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
           if (likely(__pyx_t_2)) {
-            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
             __Pyx_INCREF(__pyx_t_2);
             __Pyx_INCREF(function);
-            __Pyx_DECREF_SET(__pyx_t_4, function);
+            __Pyx_DECREF_SET(__pyx_t_3, function);
           }
         }
-        __pyx_t_5 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_4);
+        __pyx_t_4 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
         __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 91, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_5);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_4 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_3fst_FairSplitTreeNode), __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
+        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __Pyx_GIVEREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode), __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_GIVEREF(__pyx_t_3);
         __Pyx_GOTREF(__pyx_v_node->l);
         __Pyx_DECREF(((PyObject *)__pyx_v_node->l));
-        __pyx_v_node->l = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_4);
-        __pyx_t_4 = 0;
+        __pyx_v_node->l = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_t_3);
+        __pyx_t_3 = 0;
 
-        /* "rng/fair_split_tree.pyx":92
+        /* "rng/fst/fstree.pyx":87
  *                 if (idx_left > 0):
  *                     node.l = FairSplitTreeNode(left[0:idx_left].copy())
  *                     stack.append(node.l)             # <<<<<<<<<<<<<<
  * 
  *                 if (idx_right > 0):
  */
-        __pyx_t_4 = ((PyObject *)__pyx_v_node->l);
-        __Pyx_INCREF(__pyx_t_4);
-        __pyx_t_19 = __Pyx_PyList_Append(__pyx_v_stack, __pyx_t_4); if (unlikely(__pyx_t_19 == ((int)-1))) __PYX_ERR(0, 92, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __pyx_t_3 = ((PyObject *)__pyx_v_node->l);
+        __Pyx_INCREF(__pyx_t_3);
+        __pyx_t_18 = __Pyx_PyList_Append(__pyx_v_stack, __pyx_t_3); if (unlikely(__pyx_t_18 == ((int)-1))) __PYX_ERR(0, 87, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "rng/fair_split_tree.pyx":90
+        /* "rng/fst/fstree.pyx":85
  *                         idx_right += 1
  * 
  *                 if (idx_left > 0):             # <<<<<<<<<<<<<<
@@ -2948,53 +2903,53 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
  */
       }
 
-      /* "rng/fair_split_tree.pyx":94
+      /* "rng/fst/fstree.pyx":89
  *                     stack.append(node.l)
  * 
  *                 if (idx_right > 0):             # <<<<<<<<<<<<<<
  *                     node.r = FairSplitTreeNode(right[0:idx_right].copy())
  *                     stack.append(node.r)
  */
-      __pyx_t_6 = ((__pyx_v_idx_right > 0) != 0);
-      if (__pyx_t_6) {
+      __pyx_t_5 = ((__pyx_v_idx_right > 0) != 0);
+      if (__pyx_t_5) {
 
-        /* "rng/fair_split_tree.pyx":95
+        /* "rng/fst/fstree.pyx":90
  * 
  *                 if (idx_right > 0):
  *                     node.r = FairSplitTreeNode(right[0:idx_right].copy())             # <<<<<<<<<<<<<<
  *                     stack.append(node.r)
  *             else:
  */
-        __pyx_t_5 = __Pyx_PyObject_GetSlice(((PyObject *)__pyx_v_right), 0, __pyx_v_idx_right, NULL, NULL, NULL, 1, 1, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 95, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_copy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 95, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_GetSlice(((PyObject *)__pyx_v_right), 0, __pyx_v_idx_right, NULL, NULL, NULL, 1, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_copy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __pyx_t_5 = NULL;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __pyx_t_4 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
-          __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
-          if (likely(__pyx_t_5)) {
+          __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_2);
+          if (likely(__pyx_t_4)) {
             PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-            __Pyx_INCREF(__pyx_t_5);
+            __Pyx_INCREF(__pyx_t_4);
             __Pyx_INCREF(function);
             __Pyx_DECREF_SET(__pyx_t_2, function);
           }
         }
-        __pyx_t_4 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_2);
-        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_3 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_2);
+        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_3fst_FairSplitTreeNode), __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 95, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode), __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GIVEREF(__pyx_t_2);
         __Pyx_GOTREF(__pyx_v_node->r);
         __Pyx_DECREF(((PyObject *)__pyx_v_node->r));
-        __pyx_v_node->r = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_2);
+        __pyx_v_node->r = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "rng/fair_split_tree.pyx":96
+        /* "rng/fst/fstree.pyx":91
  *                 if (idx_right > 0):
  *                     node.r = FairSplitTreeNode(right[0:idx_right].copy())
  *                     stack.append(node.r)             # <<<<<<<<<<<<<<
@@ -3003,10 +2958,10 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
  */
         __pyx_t_2 = ((PyObject *)__pyx_v_node->r);
         __Pyx_INCREF(__pyx_t_2);
-        __pyx_t_19 = __Pyx_PyList_Append(__pyx_v_stack, __pyx_t_2); if (unlikely(__pyx_t_19 == ((int)-1))) __PYX_ERR(0, 96, __pyx_L1_error)
+        __pyx_t_18 = __Pyx_PyList_Append(__pyx_v_stack, __pyx_t_2); if (unlikely(__pyx_t_18 == ((int)-1))) __PYX_ERR(0, 91, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-        /* "rng/fair_split_tree.pyx":94
+        /* "rng/fst/fstree.pyx":89
  *                     stack.append(node.l)
  * 
  *                 if (idx_right > 0):             # <<<<<<<<<<<<<<
@@ -3015,8 +2970,8 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
  */
       }
 
-      /* "rng/fair_split_tree.pyx":58
- *             n = len(node.points)
+      /* "rng/fst/fstree.pyx":56
+ *             n = node.points.shape[0]
  * 
  *             if n > 1:             # <<<<<<<<<<<<<<
  *                 # finds the maximum and minimum values for each dimension
@@ -3025,7 +2980,7 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
       goto __pyx_L5;
     }
 
-    /* "rng/fair_split_tree.pyx":98
+    /* "rng/fst/fstree.pyx":93
  *                     stack.append(node.r)
  *             else:
  *                 node.center = data[node.points[0]]             # <<<<<<<<<<<<<<
@@ -3033,19 +2988,19 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
  * 
  */
     /*else*/ {
-      __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_node->points), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 98, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_node->points), 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 93, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_data), __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 98, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_data), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 98, __pyx_L1_error)
-      __Pyx_GIVEREF(__pyx_t_4);
+      if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 93, __pyx_L1_error)
+      __Pyx_GIVEREF(__pyx_t_3);
       __Pyx_GOTREF(__pyx_v_node->center);
       __Pyx_DECREF(((PyObject *)__pyx_v_node->center));
-      __pyx_v_node->center = ((PyArrayObject *)__pyx_t_4);
-      __pyx_t_4 = 0;
+      __pyx_v_node->center = ((PyArrayObject *)__pyx_t_3);
+      __pyx_t_3 = 0;
 
-      /* "rng/fair_split_tree.pyx":99
+      /* "rng/fst/fstree.pyx":94
  *             else:
  *                 node.center = data[node.points[0]]
  *                 node.leaf = True             # <<<<<<<<<<<<<<
@@ -3057,22 +3012,21 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
     __pyx_L5:;
   }
 
-  /* "rng/fair_split_tree.pyx":32
+  /* "rng/fst/fstree.pyx":30
  *     @cython.nonecheck(False)
  *     @cython.initializedcheck(False)
- *     cdef construct(             # <<<<<<<<<<<<<<
+ *     cdef void construct(             # <<<<<<<<<<<<<<
  *         self,
  *         np.ndarray[DTYPE_t, ndim=2] data,
  */
 
   /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -3082,8 +3036,7 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_maxdim.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mindim.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("fst.FairSplitTree.construct", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
+  __Pyx_WriteUnraisable("rng.fst.fstree.FairSplitTree.construct", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   goto __pyx_L2;
   __pyx_L0:;
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_core_distances.rcbuffer->pybuffer);
@@ -3097,117 +3050,7 @@ static PyObject *__pyx_f_3fst_13FairSplitTree_construct(struct __pyx_obj_3fst_Fa
   __Pyx_XDECREF((PyObject *)__pyx_v_maxdim);
   __Pyx_XDECREF((PyObject *)__pyx_v_mindim);
   __Pyx_XDECREF(__pyx_v_stack);
-  __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":16
- * cdef class FairSplitTree:
- * 
- *     cdef public FairSplitTreeNode root             # <<<<<<<<<<<<<<
- * 
- *     def __init__(
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3fst_13FairSplitTree_4root_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_3fst_13FairSplitTree_4root_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_13FairSplitTree_4root___get__(((struct __pyx_obj_3fst_FairSplitTree *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3fst_13FairSplitTree_4root___get__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((PyObject *)__pyx_v_self->root));
-  __pyx_r = ((PyObject *)__pyx_v_self->root);
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_13FairSplitTree_4root_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_3fst_13FairSplitTree_4root_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_13FairSplitTree_4root_2__set__(((struct __pyx_obj_3fst_FairSplitTree *)__pyx_v_self), ((PyObject *)__pyx_v_value));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_13FairSplitTree_4root_2__set__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(((__pyx_v_value) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_value, __pyx_ptype_3fst_FairSplitTreeNode))))) __PYX_ERR(0, 16, __pyx_L1_error)
-  __pyx_t_1 = __pyx_v_value;
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __Pyx_GOTREF(__pyx_v_self->root);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->root));
-  __pyx_v_self->root = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTree.root.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_13FairSplitTree_4root_5__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pw_3fst_13FairSplitTree_4root_5__del__(PyObject *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_13FairSplitTree_4root_4__del__(((struct __pyx_obj_3fst_FairSplitTree *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_13FairSplitTree_4root_4__del__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__", 0);
-  __Pyx_INCREF(Py_None);
-  __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(__pyx_v_self->root);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->root));
-  __pyx_v_self->root = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None);
-
-  /* function exit code */
-  __pyx_r = 0;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
 }
 
 /* "(tree fragment)":1
@@ -3217,19 +3060,19 @@ static int __pyx_pf_3fst_13FairSplitTree_4root_4__del__(struct __pyx_obj_3fst_Fa
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3fst_13FairSplitTree_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_3fst_13FairSplitTree_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_3rng_3fst_6fstree_13FairSplitTree_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3rng_3fst_6fstree_13FairSplitTree_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_13FairSplitTree_2__reduce_cython__(((struct __pyx_obj_3fst_FairSplitTree *)__pyx_v_self));
+  __pyx_r = __pyx_pf_3rng_3fst_6fstree_13FairSplitTree_2__reduce_cython__(((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3fst_13FairSplitTree_2__reduce_cython__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self) {
+static PyObject *__pyx_pf_3rng_3fst_6fstree_13FairSplitTree_2__reduce_cython__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -3434,7 +3277,7 @@ static PyObject *__pyx_pf_3fst_13FairSplitTree_2__reduce_cython__(struct __pyx_o
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("fst.FairSplitTree.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.FairSplitTree.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -3452,19 +3295,19 @@ static PyObject *__pyx_pf_3fst_13FairSplitTree_2__reduce_cython__(struct __pyx_o
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3fst_13FairSplitTree_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_3fst_13FairSplitTree_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_3rng_3fst_6fstree_13FairSplitTree_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_3rng_3fst_6fstree_13FairSplitTree_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_13FairSplitTree_4__setstate_cython__(((struct __pyx_obj_3fst_FairSplitTree *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_3rng_3fst_6fstree_13FairSplitTree_4__setstate_cython__(((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3fst_13FairSplitTree_4__setstate_cython__(struct __pyx_obj_3fst_FairSplitTree *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_3rng_3fst_6fstree_13FairSplitTree_4__setstate_cython__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3479,7 +3322,7 @@ static PyObject *__pyx_pf_3fst_13FairSplitTree_4__setstate_cython__(struct __pyx
  *     __pyx_unpickle_FairSplitTree__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_3fst___pyx_unpickle_FairSplitTree__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3rng_3fst_6fstree___pyx_unpickle_FairSplitTree__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -3495,7 +3338,7 @@ static PyObject *__pyx_pf_3fst_13FairSplitTree_4__setstate_cython__(struct __pyx
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTree.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.FairSplitTree.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3503,336 +3346,18 @@ static PyObject *__pyx_pf_3fst_13FairSplitTree_4__setstate_cython__(struct __pyx
   return __pyx_r;
 }
 
-/* "rng/fair_split_tree.pyx":107
- * @cython.nonecheck(False)
- * @cython.initializedcheck(False)
- * cpdef bint separated(FairSplitTreeNode node_a, FairSplitTreeNode node_b):             # <<<<<<<<<<<<<<
- *     return node_distances(node_a, node_b) >= max(node_a.diameter, node_b.diameter)
- * 
- */
-
-static PyObject *__pyx_pw_3fst_1separated(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_f_3fst_separated(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_a, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_b, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __pyx_t_5numpy_float64_t __pyx_t_1;
-  __pyx_t_5numpy_float64_t __pyx_t_2;
-  __pyx_t_5numpy_float64_t __pyx_t_3;
-  __Pyx_RefNannySetupContext("separated", 0);
-
-  /* "rng/fair_split_tree.pyx":108
- * @cython.initializedcheck(False)
- * cpdef bint separated(FairSplitTreeNode node_a, FairSplitTreeNode node_b):
- *     return node_distances(node_a, node_b) >= max(node_a.diameter, node_b.diameter)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __pyx_t_1 = __pyx_v_node_b->diameter;
-  __pyx_t_2 = __pyx_v_node_a->diameter;
-  if (((__pyx_t_1 > __pyx_t_2) != 0)) {
-    __pyx_t_3 = __pyx_t_1;
-  } else {
-    __pyx_t_3 = __pyx_t_2;
-  }
-  __pyx_r = (__pyx_f_3fst_node_distances(__pyx_v_node_a, __pyx_v_node_b) >= __pyx_t_3);
-  goto __pyx_L0;
-
-  /* "rng/fair_split_tree.pyx":107
- * @cython.nonecheck(False)
- * @cython.initializedcheck(False)
- * cpdef bint separated(FairSplitTreeNode node_a, FairSplitTreeNode node_b):             # <<<<<<<<<<<<<<
- *     return node_distances(node_a, node_b) >= max(node_a.diameter, node_b.diameter)
- * 
- */
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3fst_1separated(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3fst_1separated(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_a = 0;
-  struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_b = 0;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("separated (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_node_a,&__pyx_n_s_node_b,0};
-    PyObject* values[2] = {0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_node_a)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_node_b)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("separated", 1, 2, 2, 1); __PYX_ERR(0, 107, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "separated") < 0)) __PYX_ERR(0, 107, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-    }
-    __pyx_v_node_a = ((struct __pyx_obj_3fst_FairSplitTreeNode *)values[0]);
-    __pyx_v_node_b = ((struct __pyx_obj_3fst_FairSplitTreeNode *)values[1]);
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("separated", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 107, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("fst.separated", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_node_a), __pyx_ptype_3fst_FairSplitTreeNode, 1, "node_a", 0))) __PYX_ERR(0, 107, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_node_b), __pyx_ptype_3fst_FairSplitTreeNode, 1, "node_b", 0))) __PYX_ERR(0, 107, __pyx_L1_error)
-  __pyx_r = __pyx_pf_3fst_separated(__pyx_self, __pyx_v_node_a, __pyx_v_node_b);
-
-  /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3fst_separated(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_a, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_b) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("separated", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_f_3fst_separated(__pyx_v_node_a, __pyx_v_node_b, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.separated", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":117
- * @cython.initializedcheck(False)
- * @cython.cdivision(True)
- * cdef DTYPE_t node_distances(FairSplitTreeNode node_a, FairSplitTreeNode node_b):             # <<<<<<<<<<<<<<
- *     return euclidean(node_a.center, node_b.center) - node_a.diameter/2 - node_b.diameter/2
- * 
- */
-
-static __pyx_t_3fst_DTYPE_t __pyx_f_3fst_node_distances(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_a, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_node_b) {
-  __pyx_t_3fst_DTYPE_t __pyx_r;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  __Pyx_RefNannySetupContext("node_distances", 0);
-
-  /* "rng/fair_split_tree.pyx":118
- * @cython.cdivision(True)
- * cdef DTYPE_t node_distances(FairSplitTreeNode node_a, FairSplitTreeNode node_b):
- *     return euclidean(node_a.center, node_b.center) - node_a.diameter/2 - node_b.diameter/2             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __pyx_t_1 = ((PyObject *)__pyx_v_node_a->center);
-  __Pyx_INCREF(__pyx_t_1);
-  __pyx_t_2 = ((PyObject *)__pyx_v_node_b->center);
-  __Pyx_INCREF(__pyx_t_2);
-  __pyx_r = ((__pyx_f_3fst_euclidean(((PyArrayObject *)__pyx_t_1), ((PyArrayObject *)__pyx_t_2)) - (__pyx_v_node_a->diameter / 2.0)) - (__pyx_v_node_b->diameter / 2.0));
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  goto __pyx_L0;
-
-  /* "rng/fair_split_tree.pyx":117
- * @cython.initializedcheck(False)
- * @cython.cdivision(True)
- * cdef DTYPE_t node_distances(FairSplitTreeNode node_a, FairSplitTreeNode node_b):             # <<<<<<<<<<<<<<
- *     return euclidean(node_a.center, node_b.center) - node_a.diameter/2 - node_b.diameter/2
- * 
- */
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":125
- * @cython.nonecheck(False)
- * @cython.initializedcheck(False)
- * cdef DTYPE_t euclidean(np.ndarray[np.float64_t, ndim=1] v1, np.ndarray[np.float64_t, ndim=1] v2):             # <<<<<<<<<<<<<<
- *     cdef ITYPE_t i, m
- *     cdef DTYPE_t d = 0.0
- */
-
-static __pyx_t_3fst_DTYPE_t __pyx_f_3fst_euclidean(PyArrayObject *__pyx_v_v1, PyArrayObject *__pyx_v_v2) {
-  __pyx_t_3fst_ITYPE_t __pyx_v_i;
-  __pyx_t_3fst_ITYPE_t __pyx_v_m;
-  __pyx_t_3fst_DTYPE_t __pyx_v_d;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_v1;
-  __Pyx_Buffer __pyx_pybuffer_v1;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_v2;
-  __Pyx_Buffer __pyx_pybuffer_v2;
-  __pyx_t_3fst_DTYPE_t __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __pyx_t_3fst_ITYPE_t __pyx_t_1;
-  __pyx_t_3fst_ITYPE_t __pyx_t_2;
-  __pyx_t_3fst_ITYPE_t __pyx_t_3;
-  __pyx_t_3fst_ITYPE_t __pyx_t_4;
-  __pyx_t_3fst_ITYPE_t __pyx_t_5;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("euclidean", 0);
-  __pyx_pybuffer_v1.pybuffer.buf = NULL;
-  __pyx_pybuffer_v1.refcount = 0;
-  __pyx_pybuffernd_v1.data = NULL;
-  __pyx_pybuffernd_v1.rcbuffer = &__pyx_pybuffer_v1;
-  __pyx_pybuffer_v2.pybuffer.buf = NULL;
-  __pyx_pybuffer_v2.refcount = 0;
-  __pyx_pybuffernd_v2.data = NULL;
-  __pyx_pybuffernd_v2.rcbuffer = &__pyx_pybuffer_v2;
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_v1.rcbuffer->pybuffer, (PyObject*)__pyx_v_v1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 125, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_v1.diminfo[0].strides = __pyx_pybuffernd_v1.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_v1.diminfo[0].shape = __pyx_pybuffernd_v1.rcbuffer->pybuffer.shape[0];
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_v2.rcbuffer->pybuffer, (PyObject*)__pyx_v_v2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 125, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_v2.diminfo[0].strides = __pyx_pybuffernd_v2.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_v2.diminfo[0].shape = __pyx_pybuffernd_v2.rcbuffer->pybuffer.shape[0];
-
-  /* "rng/fair_split_tree.pyx":127
- * cdef DTYPE_t euclidean(np.ndarray[np.float64_t, ndim=1] v1, np.ndarray[np.float64_t, ndim=1] v2):
- *     cdef ITYPE_t i, m
- *     cdef DTYPE_t d = 0.0             # <<<<<<<<<<<<<<
- *     m = v1.shape[0]
- * 
- */
-  __pyx_v_d = 0.0;
-
-  /* "rng/fair_split_tree.pyx":128
- *     cdef ITYPE_t i, m
- *     cdef DTYPE_t d = 0.0
- *     m = v1.shape[0]             # <<<<<<<<<<<<<<
- * 
- *     for i in xrange(m):
- */
-  __pyx_v_m = (__pyx_v_v1->dimensions[0]);
-
-  /* "rng/fair_split_tree.pyx":130
- *     m = v1.shape[0]
- * 
- *     for i in xrange(m):             # <<<<<<<<<<<<<<
- *         d += (v1[i] - v2[i])**2
- * 
- */
-  __pyx_t_1 = __pyx_v_m;
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_i = __pyx_t_3;
-
-    /* "rng/fair_split_tree.pyx":131
- * 
- *     for i in xrange(m):
- *         d += (v1[i] - v2[i])**2             # <<<<<<<<<<<<<<
- * 
- *     return sqrt(d)
- */
-    __pyx_t_4 = __pyx_v_i;
-    __pyx_t_5 = __pyx_v_i;
-    __pyx_v_d = (__pyx_v_d + pow(((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_v1.rcbuffer->pybuffer.buf, __pyx_t_4, __pyx_pybuffernd_v1.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_v2.rcbuffer->pybuffer.buf, __pyx_t_5, __pyx_pybuffernd_v2.diminfo[0].strides))), 2.0));
-  }
-
-  /* "rng/fair_split_tree.pyx":133
- *         d += (v1[i] - v2[i])**2
- * 
- *     return sqrt(d)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __pyx_r = sqrt(__pyx_v_d);
-  goto __pyx_L0;
-
-  /* "rng/fair_split_tree.pyx":125
- * @cython.nonecheck(False)
- * @cython.initializedcheck(False)
- * cdef DTYPE_t euclidean(np.ndarray[np.float64_t, ndim=1] v1, np.ndarray[np.float64_t, ndim=1] v2):             # <<<<<<<<<<<<<<
- *     cdef ITYPE_t i, m
- *     cdef DTYPE_t d = 0.0
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
-    __Pyx_PyThreadState_declare
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_v1.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_v2.rcbuffer->pybuffer);
-  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_WriteUnraisable("fst.euclidean", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_r = 0;
-  goto __pyx_L2;
-  __pyx_L0:;
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_v1.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_v2.rcbuffer->pybuffer);
-  __pyx_L2:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":144
- *     cdef public bint leaf
+/* "rng/fst/fstree.pyx":105
+ *     cdef bint leaf
  * 
  *     def __init__(             # <<<<<<<<<<<<<<
  *         self,
- *         np.ndarray[np.int64_t, ndim=1] points,
+ *         np.ndarray[np.int64_t, ndim=1] points):
  */
 
 /* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_points = 0;
-  struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_left = 0;
-  struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_right = 0;
-  CYTHON_UNUSED PyArrayObject *__pyx_v_center = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3840,45 +3365,12 @@ static int __pyx_pw_3fst_17FairSplitTreeNode_1__init__(PyObject *__pyx_v_self, P
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_points,&__pyx_n_s_left,&__pyx_n_s_right,&__pyx_n_s_center,0};
-    PyObject* values[4] = {0,0,0,0};
-
-    /* "rng/fair_split_tree.pyx":147
- *         self,
- *         np.ndarray[np.int64_t, ndim=1] points,
- *         FairSplitTreeNode left = None,             # <<<<<<<<<<<<<<
- *         FairSplitTreeNode right = None,
- *         np.ndarray[np.float64_t, ndim=1] center = None):
- */
-    values[1] = (PyObject *)((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None);
-
-    /* "rng/fair_split_tree.pyx":148
- *         np.ndarray[np.int64_t, ndim=1] points,
- *         FairSplitTreeNode left = None,
- *         FairSplitTreeNode right = None,             # <<<<<<<<<<<<<<
- *         np.ndarray[np.float64_t, ndim=1] center = None):
- * 
- */
-    values[2] = (PyObject *)((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None);
-
-    /* "rng/fair_split_tree.pyx":149
- *         FairSplitTreeNode left = None,
- *         FairSplitTreeNode right = None,
- *         np.ndarray[np.float64_t, ndim=1] center = None):             # <<<<<<<<<<<<<<
- * 
- *         self.points = points
- */
-    values[3] = (PyObject *)((PyArrayObject *)Py_None);
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_points,0};
+    PyObject* values[1] = {0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
-        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
-        CYTHON_FALLTHROUGH;
-        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        CYTHON_FALLTHROUGH;
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
         CYTHON_FALLTHROUGH;
         case  0: break;
@@ -3889,67 +3381,27 @@ static int __pyx_pw_3fst_17FairSplitTreeNode_1__init__(PyObject *__pyx_v_self, P
         case  0:
         if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_points)) != 0)) kw_args--;
         else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_left);
-          if (value) { values[1] = value; kw_args--; }
-        }
-        CYTHON_FALLTHROUGH;
-        case  2:
-        if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_right);
-          if (value) { values[2] = value; kw_args--; }
-        }
-        CYTHON_FALLTHROUGH;
-        case  3:
-        if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_center);
-          if (value) { values[3] = value; kw_args--; }
-        }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 144, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 105, __pyx_L3_error)
       }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
+      goto __pyx_L5_argtuple_error;
     } else {
-      switch (PyTuple_GET_SIZE(__pyx_args)) {
-        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
-        CYTHON_FALLTHROUGH;
-        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        CYTHON_FALLTHROUGH;
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
     }
     __pyx_v_points = ((PyArrayObject *)values[0]);
-    __pyx_v_left = ((struct __pyx_obj_3fst_FairSplitTreeNode *)values[1]);
-    __pyx_v_right = ((struct __pyx_obj_3fst_FairSplitTreeNode *)values[2]);
-    __pyx_v_center = ((PyArrayObject *)values[3]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 144, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 105, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.FairSplitTreeNode.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_points), __pyx_ptype_5numpy_ndarray, 1, "points", 0))) __PYX_ERR(0, 146, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_left), __pyx_ptype_3fst_FairSplitTreeNode, 1, "left", 0))) __PYX_ERR(0, 147, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_right), __pyx_ptype_3fst_FairSplitTreeNode, 1, "right", 0))) __PYX_ERR(0, 148, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_center), __pyx_ptype_5numpy_ndarray, 1, "center", 0))) __PYX_ERR(0, 149, __pyx_L1_error)
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode___init__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self), __pyx_v_points, __pyx_v_left, __pyx_v_right, __pyx_v_center);
-
-  /* "rng/fair_split_tree.pyx":144
- *     cdef public bint leaf
- * 
- *     def __init__(             # <<<<<<<<<<<<<<
- *         self,
- *         np.ndarray[np.int64_t, ndim=1] points,
- */
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_points), __pyx_ptype_5numpy_ndarray, 1, "points", 0))) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_r = __pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode___init__(((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_v_self), __pyx_v_points);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3960,9 +3412,7 @@ static int __pyx_pw_3fst_17FairSplitTreeNode_1__init__(PyObject *__pyx_v_self, P
   return __pyx_r;
 }
 
-static int __pyx_pf_3fst_17FairSplitTreeNode___init__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyArrayObject *__pyx_v_points, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_left, struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_right, CYTHON_UNUSED PyArrayObject *__pyx_v_center) {
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_center;
-  __Pyx_Buffer __pyx_pybuffer_center;
+static int __pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode___init__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *__pyx_v_self, PyArrayObject *__pyx_v_points) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_points;
   __Pyx_Buffer __pyx_pybuffer_points;
   int __pyx_r;
@@ -3975,27 +3425,18 @@ static int __pyx_pf_3fst_17FairSplitTreeNode___init__(struct __pyx_obj_3fst_Fair
   __pyx_pybuffer_points.refcount = 0;
   __pyx_pybuffernd_points.data = NULL;
   __pyx_pybuffernd_points.rcbuffer = &__pyx_pybuffer_points;
-  __pyx_pybuffer_center.pybuffer.buf = NULL;
-  __pyx_pybuffer_center.refcount = 0;
-  __pyx_pybuffernd_center.data = NULL;
-  __pyx_pybuffernd_center.rcbuffer = &__pyx_pybuffer_center;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_points.rcbuffer->pybuffer, (PyObject*)__pyx_v_points, &__Pyx_TypeInfo_nn___pyx_t_5numpy_int64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 144, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_points.rcbuffer->pybuffer, (PyObject*)__pyx_v_points, &__Pyx_TypeInfo_nn___pyx_t_5numpy_int64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 105, __pyx_L1_error)
   }
   __pyx_pybuffernd_points.diminfo[0].strides = __pyx_pybuffernd_points.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_points.diminfo[0].shape = __pyx_pybuffernd_points.rcbuffer->pybuffer.shape[0];
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_center.rcbuffer->pybuffer, (PyObject*)__pyx_v_center, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 144, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_center.diminfo[0].strides = __pyx_pybuffernd_center.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_center.diminfo[0].shape = __pyx_pybuffernd_center.rcbuffer->pybuffer.shape[0];
 
-  /* "rng/fair_split_tree.pyx":151
- *         np.ndarray[np.float64_t, ndim=1] center = None):
+  /* "rng/fst/fstree.pyx":109
+ *         np.ndarray[np.int64_t, ndim=1] points):
  * 
  *         self.points = points             # <<<<<<<<<<<<<<
- *         self.l = left
- *         self.r = right
+ *         self.l = None
+ *         self.r = None
  */
   __Pyx_INCREF(((PyObject *)__pyx_v_points));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_points));
@@ -4003,46 +3444,47 @@ static int __pyx_pf_3fst_17FairSplitTreeNode___init__(struct __pyx_obj_3fst_Fair
   __Pyx_DECREF(((PyObject *)__pyx_v_self->points));
   __pyx_v_self->points = ((PyArrayObject *)__pyx_v_points);
 
-  /* "rng/fair_split_tree.pyx":152
+  /* "rng/fst/fstree.pyx":110
  * 
  *         self.points = points
- *         self.l = left             # <<<<<<<<<<<<<<
- *         self.r = right
+ *         self.l = None             # <<<<<<<<<<<<<<
+ *         self.r = None
  *         self.diameter = 0
  */
-  __Pyx_INCREF(((PyObject *)__pyx_v_left));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_left));
+  __Pyx_INCREF(Py_None);
+  __Pyx_GIVEREF(Py_None);
   __Pyx_GOTREF(__pyx_v_self->l);
   __Pyx_DECREF(((PyObject *)__pyx_v_self->l));
-  __pyx_v_self->l = __pyx_v_left;
+  __pyx_v_self->l = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)Py_None);
 
-  /* "rng/fair_split_tree.pyx":153
+  /* "rng/fst/fstree.pyx":111
  *         self.points = points
- *         self.l = left
- *         self.r = right             # <<<<<<<<<<<<<<
+ *         self.l = None
+ *         self.r = None             # <<<<<<<<<<<<<<
  *         self.diameter = 0
  *         self.center = None
  */
-  __Pyx_INCREF(((PyObject *)__pyx_v_right));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_right));
+  __Pyx_INCREF(Py_None);
+  __Pyx_GIVEREF(Py_None);
   __Pyx_GOTREF(__pyx_v_self->r);
   __Pyx_DECREF(((PyObject *)__pyx_v_self->r));
-  __pyx_v_self->r = __pyx_v_right;
+  __pyx_v_self->r = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)Py_None);
 
-  /* "rng/fair_split_tree.pyx":154
- *         self.l = left
- *         self.r = right
+  /* "rng/fst/fstree.pyx":112
+ *         self.l = None
+ *         self.r = None
  *         self.diameter = 0             # <<<<<<<<<<<<<<
  *         self.center = None
  *         self.leaf = False
  */
   __pyx_v_self->diameter = 0.0;
 
-  /* "rng/fair_split_tree.pyx":155
- *         self.r = right
+  /* "rng/fst/fstree.pyx":113
+ *         self.r = None
  *         self.diameter = 0
  *         self.center = None             # <<<<<<<<<<<<<<
  *         self.leaf = False
+ * 
  */
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
@@ -4050,19 +3492,21 @@ static int __pyx_pf_3fst_17FairSplitTreeNode___init__(struct __pyx_obj_3fst_Fair
   __Pyx_DECREF(((PyObject *)__pyx_v_self->center));
   __pyx_v_self->center = ((PyArrayObject *)Py_None);
 
-  /* "rng/fair_split_tree.pyx":156
+  /* "rng/fst/fstree.pyx":114
  *         self.diameter = 0
  *         self.center = None
  *         self.leaf = False             # <<<<<<<<<<<<<<
+ * 
+ * 
  */
   __pyx_v_self->leaf = 0;
 
-  /* "rng/fair_split_tree.pyx":144
- *     cdef public bint leaf
+  /* "rng/fst/fstree.pyx":105
+ *     cdef bint leaf
  * 
  *     def __init__(             # <<<<<<<<<<<<<<
  *         self,
- *         np.ndarray[np.int64_t, ndim=1] points,
+ *         np.ndarray[np.int64_t, ndim=1] points):
  */
 
   /* function exit code */
@@ -4073,604 +3517,14 @@ static int __pyx_pf_3fst_17FairSplitTreeNode___init__(struct __pyx_obj_3fst_Fair
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_center.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_points.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.FairSplitTreeNode.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   goto __pyx_L2;
   __pyx_L0:;
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_center.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_points.rcbuffer->pybuffer);
   __pyx_L2:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":138
- * cdef class FairSplitTreeNode:
- * 
- *     cdef public np.ndarray points             # <<<<<<<<<<<<<<
- *     cdef public FairSplitTreeNode l, r
- *     cdef public np.float64_t diameter
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_6points_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_6points_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_6points___get__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_6points___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((PyObject *)__pyx_v_self->points));
-  __pyx_r = ((PyObject *)__pyx_v_self->points);
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_6points_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_6points_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_6points_2__set__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self), ((PyObject *)__pyx_v_value));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_6points_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(((__pyx_v_value) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_value, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 138, __pyx_L1_error)
-  __pyx_t_1 = __pyx_v_value;
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __Pyx_GOTREF(__pyx_v_self->points);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->points));
-  __pyx_v_self->points = ((PyArrayObject *)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.points.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_6points_5__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_6points_5__del__(PyObject *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_6points_4__del__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_6points_4__del__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__", 0);
-  __Pyx_INCREF(Py_None);
-  __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(__pyx_v_self->points);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->points));
-  __pyx_v_self->points = ((PyArrayObject *)Py_None);
-
-  /* function exit code */
-  __pyx_r = 0;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":139
- * 
- *     cdef public np.ndarray points
- *     cdef public FairSplitTreeNode l, r             # <<<<<<<<<<<<<<
- *     cdef public np.float64_t diameter
- *     cdef public np.ndarray center
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_1l_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_1l_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_1l___get__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_1l___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((PyObject *)__pyx_v_self->l));
-  __pyx_r = ((PyObject *)__pyx_v_self->l);
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_1l_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_1l_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_1l_2__set__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self), ((PyObject *)__pyx_v_value));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_1l_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(((__pyx_v_value) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_value, __pyx_ptype_3fst_FairSplitTreeNode))))) __PYX_ERR(0, 139, __pyx_L1_error)
-  __pyx_t_1 = __pyx_v_value;
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __Pyx_GOTREF(__pyx_v_self->l);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->l));
-  __pyx_v_self->l = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.l.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_1l_5__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_1l_5__del__(PyObject *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_1l_4__del__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_1l_4__del__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__", 0);
-  __Pyx_INCREF(Py_None);
-  __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(__pyx_v_self->l);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->l));
-  __pyx_v_self->l = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None);
-
-  /* function exit code */
-  __pyx_r = 0;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_1r_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_1r_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_1r___get__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_1r___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((PyObject *)__pyx_v_self->r));
-  __pyx_r = ((PyObject *)__pyx_v_self->r);
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_1r_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_1r_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_1r_2__set__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self), ((PyObject *)__pyx_v_value));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_1r_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(((__pyx_v_value) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_value, __pyx_ptype_3fst_FairSplitTreeNode))))) __PYX_ERR(0, 139, __pyx_L1_error)
-  __pyx_t_1 = __pyx_v_value;
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __Pyx_GOTREF(__pyx_v_self->r);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->r));
-  __pyx_v_self->r = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.r.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_1r_5__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_1r_5__del__(PyObject *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_1r_4__del__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_1r_4__del__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__", 0);
-  __Pyx_INCREF(Py_None);
-  __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(__pyx_v_self->r);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->r));
-  __pyx_v_self->r = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None);
-
-  /* function exit code */
-  __pyx_r = 0;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":140
- *     cdef public np.ndarray points
- *     cdef public FairSplitTreeNode l, r
- *     cdef public np.float64_t diameter             # <<<<<<<<<<<<<<
- *     cdef public np.ndarray center
- *     cdef public bint leaf
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_8diameter_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_8diameter_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_8diameter___get__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_8diameter___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__get__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->diameter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 140, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.diameter.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_8diameter_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_8diameter_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_8diameter_2__set__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self), ((PyObject *)__pyx_v_value));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_8diameter_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __pyx_t_5numpy_float64_t __pyx_t_1;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 140, __pyx_L1_error)
-  __pyx_v_self->diameter = __pyx_t_1;
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.diameter.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":141
- *     cdef public FairSplitTreeNode l, r
- *     cdef public np.float64_t diameter
- *     cdef public np.ndarray center             # <<<<<<<<<<<<<<
- *     cdef public bint leaf
- * 
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_6center_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_6center_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_6center___get__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_6center___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((PyObject *)__pyx_v_self->center));
-  __pyx_r = ((PyObject *)__pyx_v_self->center);
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_6center_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_6center_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_6center_2__set__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self), ((PyObject *)__pyx_v_value));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_6center_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(((__pyx_v_value) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_value, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 141, __pyx_L1_error)
-  __pyx_t_1 = __pyx_v_value;
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __Pyx_GOTREF(__pyx_v_self->center);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->center));
-  __pyx_v_self->center = ((PyArrayObject *)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.center.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_6center_5__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_6center_5__del__(PyObject *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_6center_4__del__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_6center_4__del__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__", 0);
-  __Pyx_INCREF(Py_None);
-  __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(__pyx_v_self->center);
-  __Pyx_DECREF(((PyObject *)__pyx_v_self->center));
-  __pyx_v_self->center = ((PyArrayObject *)Py_None);
-
-  /* function exit code */
-  __pyx_r = 0;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "rng/fair_split_tree.pyx":142
- *     cdef public np.float64_t diameter
- *     cdef public np.ndarray center
- *     cdef public bint leaf             # <<<<<<<<<<<<<<
- * 
- *     def __init__(
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_4leaf_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_4leaf_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_4leaf___get__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_4leaf___get__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__get__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->leaf); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.leaf.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3fst_17FairSplitTreeNode_4leaf_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_3fst_17FairSplitTreeNode_4leaf_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_4leaf_2__set__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self), ((PyObject *)__pyx_v_value));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3fst_17FairSplitTreeNode_4leaf_2__set__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 142, __pyx_L1_error)
-  __pyx_v_self->leaf = __pyx_t_1;
-
-  /* function exit code */
-  __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.leaf.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4682,19 +3536,19 @@ static int __pyx_pf_3fst_17FairSplitTreeNode_4leaf_2__set__(struct __pyx_obj_3fs
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_2__reduce_cython__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self));
+  __pyx_r = __pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode_2__reduce_cython__(((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_2__reduce_cython__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self) {
+static PyObject *__pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode_2__reduce_cython__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -4943,7 +3797,7 @@ static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_2__reduce_cython__(struct __p
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.FairSplitTreeNode.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -4961,19 +3815,19 @@ static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_2__reduce_cython__(struct __p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_3fst_17FairSplitTreeNode_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3fst_17FairSplitTreeNode_4__setstate_cython__(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode_4__setstate_cython__(((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_4__setstate_cython__(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_3rng_3fst_6fstree_17FairSplitTreeNode_4__setstate_cython__(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4988,7 +3842,7 @@ static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_4__setstate_cython__(struct _
  *     __pyx_unpickle_FairSplitTreeNode__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_3fst___pyx_unpickle_FairSplitTreeNode__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3rng_3fst_6fstree___pyx_unpickle_FairSplitTreeNode__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -5004,10 +3858,134 @@ static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_4__setstate_cython__(struct _
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("fst.FairSplitTreeNode.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.FairSplitTreeNode.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rng/fst/fstree.pyx":121
+ * @cython.nonecheck(False)
+ * @cython.initializedcheck(False)
+ * cdef DTYPE_t euclidean(np.ndarray[np.float64_t, ndim=1] v1, np.ndarray[np.float64_t, ndim=1] v2):             # <<<<<<<<<<<<<<
+ *     cdef ITYPE_t i, m
+ *     cdef DTYPE_t d = 0.0
+ */
+
+static __pyx_t_3rng_3fst_6fstree_DTYPE_t __pyx_f_3rng_3fst_6fstree_euclidean(PyArrayObject *__pyx_v_v1, PyArrayObject *__pyx_v_v2) {
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_i;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_v_m;
+  __pyx_t_3rng_3fst_6fstree_DTYPE_t __pyx_v_d;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_v1;
+  __Pyx_Buffer __pyx_pybuffer_v1;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_v2;
+  __Pyx_Buffer __pyx_pybuffer_v2;
+  __pyx_t_3rng_3fst_6fstree_DTYPE_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_1;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_2;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_3;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_4;
+  __pyx_t_3rng_3fst_6fstree_ITYPE_t __pyx_t_5;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("euclidean", 0);
+  __pyx_pybuffer_v1.pybuffer.buf = NULL;
+  __pyx_pybuffer_v1.refcount = 0;
+  __pyx_pybuffernd_v1.data = NULL;
+  __pyx_pybuffernd_v1.rcbuffer = &__pyx_pybuffer_v1;
+  __pyx_pybuffer_v2.pybuffer.buf = NULL;
+  __pyx_pybuffer_v2.refcount = 0;
+  __pyx_pybuffernd_v2.data = NULL;
+  __pyx_pybuffernd_v2.rcbuffer = &__pyx_pybuffer_v2;
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_v1.rcbuffer->pybuffer, (PyObject*)__pyx_v_v1, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 121, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_v1.diminfo[0].strides = __pyx_pybuffernd_v1.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_v1.diminfo[0].shape = __pyx_pybuffernd_v1.rcbuffer->pybuffer.shape[0];
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_v2.rcbuffer->pybuffer, (PyObject*)__pyx_v_v2, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 121, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_v2.diminfo[0].strides = __pyx_pybuffernd_v2.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_v2.diminfo[0].shape = __pyx_pybuffernd_v2.rcbuffer->pybuffer.shape[0];
+
+  /* "rng/fst/fstree.pyx":123
+ * cdef DTYPE_t euclidean(np.ndarray[np.float64_t, ndim=1] v1, np.ndarray[np.float64_t, ndim=1] v2):
+ *     cdef ITYPE_t i, m
+ *     cdef DTYPE_t d = 0.0             # <<<<<<<<<<<<<<
+ *     m = v1.shape[0]
+ * 
+ */
+  __pyx_v_d = 0.0;
+
+  /* "rng/fst/fstree.pyx":124
+ *     cdef ITYPE_t i, m
+ *     cdef DTYPE_t d = 0.0
+ *     m = v1.shape[0]             # <<<<<<<<<<<<<<
+ * 
+ *     for i in xrange(m):
+ */
+  __pyx_v_m = (__pyx_v_v1->dimensions[0]);
+
+  /* "rng/fst/fstree.pyx":126
+ *     m = v1.shape[0]
+ * 
+ *     for i in xrange(m):             # <<<<<<<<<<<<<<
+ *         d += (v1[i] - v2[i])**2
+ * 
+ */
+  __pyx_t_1 = __pyx_v_m;
+  __pyx_t_2 = __pyx_t_1;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "rng/fst/fstree.pyx":127
+ * 
+ *     for i in xrange(m):
+ *         d += (v1[i] - v2[i])**2             # <<<<<<<<<<<<<<
+ * 
+ *     return sqrt(d)
+ */
+    __pyx_t_4 = __pyx_v_i;
+    __pyx_t_5 = __pyx_v_i;
+    __pyx_v_d = (__pyx_v_d + pow(((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_v1.rcbuffer->pybuffer.buf, __pyx_t_4, __pyx_pybuffernd_v1.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_v2.rcbuffer->pybuffer.buf, __pyx_t_5, __pyx_pybuffernd_v2.diminfo[0].strides))), 2.0));
+  }
+
+  /* "rng/fst/fstree.pyx":129
+ *         d += (v1[i] - v2[i])**2
+ * 
+ *     return sqrt(d)             # <<<<<<<<<<<<<<
+ */
+  __pyx_r = sqrt(__pyx_v_d);
+  goto __pyx_L0;
+
+  /* "rng/fst/fstree.pyx":121
+ * @cython.nonecheck(False)
+ * @cython.initializedcheck(False)
+ * cdef DTYPE_t euclidean(np.ndarray[np.float64_t, ndim=1] v1, np.ndarray[np.float64_t, ndim=1] v2):             # <<<<<<<<<<<<<<
+ *     cdef ITYPE_t i, m
+ *     cdef DTYPE_t d = 0.0
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_v1.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_v2.rcbuffer->pybuffer);
+  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
+  __Pyx_WriteUnraisable("rng.fst.fstree.euclidean", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  goto __pyx_L2;
+  __pyx_L0:;
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_v1.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_v2.rcbuffer->pybuffer);
+  __pyx_L2:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5019,9 +3997,9 @@ static PyObject *__pyx_pf_3fst_17FairSplitTreeNode_4__setstate_cython__(struct _
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3fst_3__pyx_unpickle_FairSplitTree(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_3fst_3__pyx_unpickle_FairSplitTree = {"__pyx_unpickle_FairSplitTree", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3fst_3__pyx_unpickle_FairSplitTree, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3fst_3__pyx_unpickle_FairSplitTree(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3rng_3fst_6fstree_1__pyx_unpickle_FairSplitTree(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_3rng_3fst_6fstree_1__pyx_unpickle_FairSplitTree = {"__pyx_unpickle_FairSplitTree", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3rng_3fst_6fstree_1__pyx_unpickle_FairSplitTree, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_3rng_3fst_6fstree_1__pyx_unpickle_FairSplitTree(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v___pyx_type = 0;
   long __pyx_v___pyx_checksum;
   PyObject *__pyx_v___pyx_state = 0;
@@ -5083,18 +4061,18 @@ static PyObject *__pyx_pw_3fst_3__pyx_unpickle_FairSplitTree(PyObject *__pyx_sel
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_FairSplitTree", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 1, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("fst.__pyx_unpickle_FairSplitTree", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.__pyx_unpickle_FairSplitTree", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3fst_2__pyx_unpickle_FairSplitTree(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_3rng_3fst_6fstree___pyx_unpickle_FairSplitTree(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3fst_2__pyx_unpickle_FairSplitTree(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_3rng_3fst_6fstree___pyx_unpickle_FairSplitTree(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -5191,7 +4169,7 @@ static PyObject *__pyx_pf_3fst_2__pyx_unpickle_FairSplitTree(CYTHON_UNUSED PyObj
  *     if __pyx_state is not None:
  *         __pyx_unpickle_FairSplitTree__set_state(<FairSplitTree> __pyx_result, __pyx_state)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_3fst_FairSplitTree), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_3rng_3fst_6fstree_FairSplitTree), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5230,7 +4208,7 @@ static PyObject *__pyx_pf_3fst_2__pyx_unpickle_FairSplitTree(CYTHON_UNUSED PyObj
  * cdef __pyx_unpickle_FairSplitTree__set_state(FairSplitTree __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_3 = __pyx_f_3fst___pyx_unpickle_FairSplitTree__set_state(((struct __pyx_obj_3fst_FairSplitTree *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_3rng_3fst_6fstree___pyx_unpickle_FairSplitTree__set_state(((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
@@ -5267,7 +4245,7 @@ static PyObject *__pyx_pf_3fst_2__pyx_unpickle_FairSplitTree(CYTHON_UNUSED PyObj
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("fst.__pyx_unpickle_FairSplitTree", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.__pyx_unpickle_FairSplitTree", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -5285,7 +4263,7 @@ static PyObject *__pyx_pf_3fst_2__pyx_unpickle_FairSplitTree(CYTHON_UNUSED PyObj
  *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTree__set_state(struct __pyx_obj_3fst_FairSplitTree *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_3rng_3fst_6fstree___pyx_unpickle_FairSplitTree__set_state(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5314,11 +4292,11 @@ static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTree__set_state(struct __p
   }
   __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_3fst_FairSplitTreeNode))))) __PYX_ERR(1, 12, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode))))) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v___pyx_result->root);
   __Pyx_DECREF(((PyObject *)__pyx_v___pyx_result->root));
-  __pyx_v___pyx_result->root = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_1);
+  __pyx_v___pyx_result->root = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "(tree fragment)":13
@@ -5402,7 +4380,7 @@ static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTree__set_state(struct __p
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("fst.__pyx_unpickle_FairSplitTree__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.__pyx_unpickle_FairSplitTree__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5417,9 +4395,9 @@ static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTree__set_state(struct __p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3fst_5__pyx_unpickle_FairSplitTreeNode(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_3fst_5__pyx_unpickle_FairSplitTreeNode = {"__pyx_unpickle_FairSplitTreeNode", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3fst_5__pyx_unpickle_FairSplitTreeNode, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3fst_5__pyx_unpickle_FairSplitTreeNode(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3rng_3fst_6fstree_3__pyx_unpickle_FairSplitTreeNode(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_3rng_3fst_6fstree_3__pyx_unpickle_FairSplitTreeNode = {"__pyx_unpickle_FairSplitTreeNode", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3rng_3fst_6fstree_3__pyx_unpickle_FairSplitTreeNode, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_3rng_3fst_6fstree_3__pyx_unpickle_FairSplitTreeNode(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v___pyx_type = 0;
   long __pyx_v___pyx_checksum;
   PyObject *__pyx_v___pyx_state = 0;
@@ -5481,18 +4459,18 @@ static PyObject *__pyx_pw_3fst_5__pyx_unpickle_FairSplitTreeNode(PyObject *__pyx
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_FairSplitTreeNode", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 1, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("fst.__pyx_unpickle_FairSplitTreeNode", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.__pyx_unpickle_FairSplitTreeNode", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3fst_4__pyx_unpickle_FairSplitTreeNode(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_3rng_3fst_6fstree_2__pyx_unpickle_FairSplitTreeNode(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3fst_4__pyx_unpickle_FairSplitTreeNode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_3rng_3fst_6fstree_2__pyx_unpickle_FairSplitTreeNode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -5589,7 +4567,7 @@ static PyObject *__pyx_pf_3fst_4__pyx_unpickle_FairSplitTreeNode(CYTHON_UNUSED P
  *     if __pyx_state is not None:
  *         __pyx_unpickle_FairSplitTreeNode__set_state(<FairSplitTreeNode> __pyx_result, __pyx_state)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_3fst_FairSplitTreeNode), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5628,7 +4606,7 @@ static PyObject *__pyx_pf_3fst_4__pyx_unpickle_FairSplitTreeNode(CYTHON_UNUSED P
  * cdef __pyx_unpickle_FairSplitTreeNode__set_state(FairSplitTreeNode __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_3 = __pyx_f_3fst___pyx_unpickle_FairSplitTreeNode__set_state(((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_3rng_3fst_6fstree___pyx_unpickle_FairSplitTreeNode__set_state(((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
@@ -5665,7 +4643,7 @@ static PyObject *__pyx_pf_3fst_4__pyx_unpickle_FairSplitTreeNode(CYTHON_UNUSED P
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("fst.__pyx_unpickle_FairSplitTreeNode", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.__pyx_unpickle_FairSplitTreeNode", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -5683,7 +4661,7 @@ static PyObject *__pyx_pf_3fst_4__pyx_unpickle_FairSplitTreeNode(CYTHON_UNUSED P
  *     if len(__pyx_state) > 6 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTreeNode__set_state(struct __pyx_obj_3fst_FairSplitTreeNode *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_3rng_3fst_6fstree___pyx_unpickle_FairSplitTreeNode__set_state(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5734,11 +4712,11 @@ static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTreeNode__set_state(struct
   }
   __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_3fst_FairSplitTreeNode))))) __PYX_ERR(1, 12, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode))))) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v___pyx_result->l);
   __Pyx_DECREF(((PyObject *)__pyx_v___pyx_result->l));
-  __pyx_v___pyx_result->l = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_1);
+  __pyx_v___pyx_result->l = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_t_1);
   __pyx_t_1 = 0;
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -5767,11 +4745,11 @@ static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTreeNode__set_state(struct
   }
   __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 5, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_3fst_FairSplitTreeNode))))) __PYX_ERR(1, 12, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode))))) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v___pyx_result->r);
   __Pyx_DECREF(((PyObject *)__pyx_v___pyx_result->r));
-  __pyx_v___pyx_result->r = ((struct __pyx_obj_3fst_FairSplitTreeNode *)__pyx_t_1);
+  __pyx_v___pyx_result->r = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "(tree fragment)":13
@@ -5855,7 +4833,7 @@ static PyObject *__pyx_f_3fst___pyx_unpickle_FairSplitTreeNode__set_state(struct
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("fst.__pyx_unpickle_FairSplitTreeNode__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("rng.fst.fstree.__pyx_unpickle_FairSplitTreeNode__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6879,10 +5857,10 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
   __pyx_L0:;
   return __pyx_r;
 }
-static struct __pyx_vtabstruct_3fst_FairSplitTree __pyx_vtable_3fst_FairSplitTree;
+static struct __pyx_vtabstruct_3rng_3fst_6fstree_FairSplitTree __pyx_vtable_3rng_3fst_6fstree_FairSplitTree;
 
-static PyObject *__pyx_tp_new_3fst_FairSplitTree(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_3fst_FairSplitTree *p;
+static PyObject *__pyx_tp_new_3rng_3fst_6fstree_FairSplitTree(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -6890,14 +5868,14 @@ static PyObject *__pyx_tp_new_3fst_FairSplitTree(PyTypeObject *t, CYTHON_UNUSED 
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_3fst_FairSplitTree *)o);
-  p->__pyx_vtab = __pyx_vtabptr_3fst_FairSplitTree;
-  p->root = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
+  p = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *)o);
+  p->__pyx_vtab = __pyx_vtabptr_3rng_3fst_6fstree_FairSplitTree;
+  p->root = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
   return o;
 }
 
-static void __pyx_tp_dealloc_3fst_FairSplitTree(PyObject *o) {
-  struct __pyx_obj_3fst_FairSplitTree *p = (struct __pyx_obj_3fst_FairSplitTree *)o;
+static void __pyx_tp_dealloc_3rng_3fst_6fstree_FairSplitTree(PyObject *o) {
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *p = (struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -6908,54 +5886,36 @@ static void __pyx_tp_dealloc_3fst_FairSplitTree(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_3fst_FairSplitTree(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_3rng_3fst_6fstree_FairSplitTree(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_3fst_FairSplitTree *p = (struct __pyx_obj_3fst_FairSplitTree *)o;
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *p = (struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *)o;
   if (p->root) {
     e = (*v)(((PyObject *)p->root), a); if (e) return e;
   }
   return 0;
 }
 
-static int __pyx_tp_clear_3fst_FairSplitTree(PyObject *o) {
+static int __pyx_tp_clear_3rng_3fst_6fstree_FairSplitTree(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_3fst_FairSplitTree *p = (struct __pyx_obj_3fst_FairSplitTree *)o;
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *p = (struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *)o;
   tmp = ((PyObject*)p->root);
-  p->root = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
+  p->root = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   return 0;
 }
 
-static PyObject *__pyx_getprop_3fst_13FairSplitTree_root(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_3fst_13FairSplitTree_4root_1__get__(o);
-}
-
-static int __pyx_setprop_3fst_13FairSplitTree_root(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_3fst_13FairSplitTree_4root_3__set__(o, v);
-  }
-  else {
-    return __pyx_pw_3fst_13FairSplitTree_4root_5__del__(o);
-  }
-}
-
-static PyMethodDef __pyx_methods_3fst_FairSplitTree[] = {
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_3fst_13FairSplitTree_3__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_3fst_13FairSplitTree_5__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_3rng_3fst_6fstree_FairSplitTree[] = {
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_3rng_3fst_6fstree_13FairSplitTree_3__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_3rng_3fst_6fstree_13FairSplitTree_5__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_3fst_FairSplitTree[] = {
-  {(char *)"root", __pyx_getprop_3fst_13FairSplitTree_root, __pyx_setprop_3fst_13FairSplitTree_root, (char *)0, 0},
-  {0, 0, 0, 0, 0}
-};
-
-static PyTypeObject __pyx_type_3fst_FairSplitTree = {
+static PyTypeObject __pyx_type_3rng_3fst_6fstree_FairSplitTree = {
   PyVarObject_HEAD_INIT(0, 0)
-  "fst.FairSplitTree", /*tp_name*/
-  sizeof(struct __pyx_obj_3fst_FairSplitTree), /*tp_basicsize*/
+  "rng.fst.fstree.FairSplitTree", /*tp_name*/
+  sizeof(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_3fst_FairSplitTree, /*tp_dealloc*/
+  __pyx_tp_dealloc_3rng_3fst_6fstree_FairSplitTree, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -6982,23 +5942,23 @@ static PyTypeObject __pyx_type_3fst_FairSplitTree = {
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_3fst_FairSplitTree, /*tp_traverse*/
-  __pyx_tp_clear_3fst_FairSplitTree, /*tp_clear*/
+  __pyx_tp_traverse_3rng_3fst_6fstree_FairSplitTree, /*tp_traverse*/
+  __pyx_tp_clear_3rng_3fst_6fstree_FairSplitTree, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_3fst_FairSplitTree, /*tp_methods*/
+  __pyx_methods_3rng_3fst_6fstree_FairSplitTree, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_3fst_FairSplitTree, /*tp_getset*/
+  0, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pw_3fst_13FairSplitTree_1__init__, /*tp_init*/
+  __pyx_pw_3rng_3fst_6fstree_13FairSplitTree_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_3fst_FairSplitTree, /*tp_new*/
+  __pyx_tp_new_3rng_3fst_6fstree_FairSplitTree, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -7019,8 +5979,8 @@ static PyTypeObject __pyx_type_3fst_FairSplitTree = {
   #endif
 };
 
-static PyObject *__pyx_tp_new_3fst_FairSplitTreeNode(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_3fst_FairSplitTreeNode *p;
+static PyObject *__pyx_tp_new_3rng_3fst_6fstree_FairSplitTreeNode(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -7028,16 +5988,16 @@ static PyObject *__pyx_tp_new_3fst_FairSplitTreeNode(PyTypeObject *t, CYTHON_UNU
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_3fst_FairSplitTreeNode *)o);
+  p = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)o);
   p->points = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
-  p->l = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
-  p->r = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
+  p->l = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
+  p->r = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
   p->center = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   return o;
 }
 
-static void __pyx_tp_dealloc_3fst_FairSplitTreeNode(PyObject *o) {
-  struct __pyx_obj_3fst_FairSplitTreeNode *p = (struct __pyx_obj_3fst_FairSplitTreeNode *)o;
+static void __pyx_tp_dealloc_3rng_3fst_6fstree_FairSplitTreeNode(PyObject *o) {
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *p = (struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -7051,9 +6011,9 @@ static void __pyx_tp_dealloc_3fst_FairSplitTreeNode(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_3fst_FairSplitTreeNode(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_3rng_3fst_6fstree_FairSplitTreeNode(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_3fst_FairSplitTreeNode *p = (struct __pyx_obj_3fst_FairSplitTreeNode *)o;
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *p = (struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)o;
   if (p->points) {
     e = (*v)(((PyObject *)p->points), a); if (e) return e;
   }
@@ -7069,17 +6029,17 @@ static int __pyx_tp_traverse_3fst_FairSplitTreeNode(PyObject *o, visitproc v, vo
   return 0;
 }
 
-static int __pyx_tp_clear_3fst_FairSplitTreeNode(PyObject *o) {
+static int __pyx_tp_clear_3rng_3fst_6fstree_FairSplitTreeNode(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_3fst_FairSplitTreeNode *p = (struct __pyx_obj_3fst_FairSplitTreeNode *)o;
+  struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *p = (struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)o;
   tmp = ((PyObject*)p->points);
   p->points = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->l);
-  p->l = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
+  p->l = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->r);
-  p->r = ((struct __pyx_obj_3fst_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
+  p->r = ((struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->center);
   p->center = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
@@ -7087,108 +6047,18 @@ static int __pyx_tp_clear_3fst_FairSplitTreeNode(PyObject *o) {
   return 0;
 }
 
-static PyObject *__pyx_getprop_3fst_17FairSplitTreeNode_points(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_3fst_17FairSplitTreeNode_6points_1__get__(o);
-}
-
-static int __pyx_setprop_3fst_17FairSplitTreeNode_points(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_3fst_17FairSplitTreeNode_6points_3__set__(o, v);
-  }
-  else {
-    return __pyx_pw_3fst_17FairSplitTreeNode_6points_5__del__(o);
-  }
-}
-
-static PyObject *__pyx_getprop_3fst_17FairSplitTreeNode_l(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_3fst_17FairSplitTreeNode_1l_1__get__(o);
-}
-
-static int __pyx_setprop_3fst_17FairSplitTreeNode_l(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_3fst_17FairSplitTreeNode_1l_3__set__(o, v);
-  }
-  else {
-    return __pyx_pw_3fst_17FairSplitTreeNode_1l_5__del__(o);
-  }
-}
-
-static PyObject *__pyx_getprop_3fst_17FairSplitTreeNode_r(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_3fst_17FairSplitTreeNode_1r_1__get__(o);
-}
-
-static int __pyx_setprop_3fst_17FairSplitTreeNode_r(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_3fst_17FairSplitTreeNode_1r_3__set__(o, v);
-  }
-  else {
-    return __pyx_pw_3fst_17FairSplitTreeNode_1r_5__del__(o);
-  }
-}
-
-static PyObject *__pyx_getprop_3fst_17FairSplitTreeNode_diameter(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_3fst_17FairSplitTreeNode_8diameter_1__get__(o);
-}
-
-static int __pyx_setprop_3fst_17FairSplitTreeNode_diameter(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_3fst_17FairSplitTreeNode_8diameter_3__set__(o, v);
-  }
-  else {
-    PyErr_SetString(PyExc_NotImplementedError, "__del__");
-    return -1;
-  }
-}
-
-static PyObject *__pyx_getprop_3fst_17FairSplitTreeNode_center(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_3fst_17FairSplitTreeNode_6center_1__get__(o);
-}
-
-static int __pyx_setprop_3fst_17FairSplitTreeNode_center(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_3fst_17FairSplitTreeNode_6center_3__set__(o, v);
-  }
-  else {
-    return __pyx_pw_3fst_17FairSplitTreeNode_6center_5__del__(o);
-  }
-}
-
-static PyObject *__pyx_getprop_3fst_17FairSplitTreeNode_leaf(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_3fst_17FairSplitTreeNode_4leaf_1__get__(o);
-}
-
-static int __pyx_setprop_3fst_17FairSplitTreeNode_leaf(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_3fst_17FairSplitTreeNode_4leaf_3__set__(o, v);
-  }
-  else {
-    PyErr_SetString(PyExc_NotImplementedError, "__del__");
-    return -1;
-  }
-}
-
-static PyMethodDef __pyx_methods_3fst_FairSplitTreeNode[] = {
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_3fst_17FairSplitTreeNode_3__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_3fst_17FairSplitTreeNode_5__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_3rng_3fst_6fstree_FairSplitTreeNode[] = {
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_3__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_5__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_3fst_FairSplitTreeNode[] = {
-  {(char *)"points", __pyx_getprop_3fst_17FairSplitTreeNode_points, __pyx_setprop_3fst_17FairSplitTreeNode_points, (char *)0, 0},
-  {(char *)"l", __pyx_getprop_3fst_17FairSplitTreeNode_l, __pyx_setprop_3fst_17FairSplitTreeNode_l, (char *)0, 0},
-  {(char *)"r", __pyx_getprop_3fst_17FairSplitTreeNode_r, __pyx_setprop_3fst_17FairSplitTreeNode_r, (char *)0, 0},
-  {(char *)"diameter", __pyx_getprop_3fst_17FairSplitTreeNode_diameter, __pyx_setprop_3fst_17FairSplitTreeNode_diameter, (char *)0, 0},
-  {(char *)"center", __pyx_getprop_3fst_17FairSplitTreeNode_center, __pyx_setprop_3fst_17FairSplitTreeNode_center, (char *)0, 0},
-  {(char *)"leaf", __pyx_getprop_3fst_17FairSplitTreeNode_leaf, __pyx_setprop_3fst_17FairSplitTreeNode_leaf, (char *)0, 0},
-  {0, 0, 0, 0, 0}
-};
-
-static PyTypeObject __pyx_type_3fst_FairSplitTreeNode = {
+static PyTypeObject __pyx_type_3rng_3fst_6fstree_FairSplitTreeNode = {
   PyVarObject_HEAD_INIT(0, 0)
-  "fst.FairSplitTreeNode", /*tp_name*/
-  sizeof(struct __pyx_obj_3fst_FairSplitTreeNode), /*tp_basicsize*/
+  "rng.fst.fstree.FairSplitTreeNode", /*tp_name*/
+  sizeof(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTreeNode), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_3fst_FairSplitTreeNode, /*tp_dealloc*/
+  __pyx_tp_dealloc_3rng_3fst_6fstree_FairSplitTreeNode, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -7215,23 +6085,23 @@ static PyTypeObject __pyx_type_3fst_FairSplitTreeNode = {
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_3fst_FairSplitTreeNode, /*tp_traverse*/
-  __pyx_tp_clear_3fst_FairSplitTreeNode, /*tp_clear*/
+  __pyx_tp_traverse_3rng_3fst_6fstree_FairSplitTreeNode, /*tp_traverse*/
+  __pyx_tp_clear_3rng_3fst_6fstree_FairSplitTreeNode, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_3fst_FairSplitTreeNode, /*tp_methods*/
+  __pyx_methods_3rng_3fst_6fstree_FairSplitTreeNode, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_3fst_FairSplitTreeNode, /*tp_getset*/
+  0, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pw_3fst_17FairSplitTreeNode_1__init__, /*tp_init*/
+  __pyx_pw_3rng_3fst_6fstree_17FairSplitTreeNode_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_3fst_FairSplitTreeNode, /*tp_new*/
+  __pyx_tp_new_3rng_3fst_6fstree_FairSplitTreeNode, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -7253,24 +6123,23 @@ static PyTypeObject __pyx_type_3fst_FairSplitTreeNode = {
 };
 
 static PyMethodDef __pyx_methods[] = {
-  {"separated", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3fst_1separated, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_fst(PyObject* module); /*proto*/
+static int __pyx_pymod_exec_fstree(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_fst},
+  {Py_mod_exec, (void*)__pyx_pymod_exec_fstree},
   {0, NULL}
 };
 #endif
 
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
-    "fst",
+    "fstree",
     0, /* m_doc */
   #if CYTHON_PEP489_MULTI_PHASE_INIT
     0, /* m_size */
@@ -7312,27 +6181,21 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_arange, __pyx_k_arange, sizeof(__pyx_k_arange), 0, 0, 1, 1},
   {&__pyx_n_s_argmax, __pyx_k_argmax, sizeof(__pyx_k_argmax), 0, 0, 1, 1},
   {&__pyx_n_s_axis, __pyx_k_axis, sizeof(__pyx_k_axis), 0, 0, 1, 1},
-  {&__pyx_n_s_center, __pyx_k_center, sizeof(__pyx_k_center), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_copy, __pyx_k_copy, sizeof(__pyx_k_copy), 0, 0, 1, 1},
   {&__pyx_n_s_core_distances, __pyx_k_core_distances, sizeof(__pyx_k_core_distances), 0, 0, 1, 1},
   {&__pyx_n_s_data, __pyx_k_data, sizeof(__pyx_k_data), 0, 0, 1, 1},
   {&__pyx_n_s_dict, __pyx_k_dict, sizeof(__pyx_k_dict), 0, 0, 1, 1},
-  {&__pyx_n_s_distance, __pyx_k_distance, sizeof(__pyx_k_distance), 0, 0, 1, 1},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
-  {&__pyx_n_s_fst, __pyx_k_fst, sizeof(__pyx_k_fst), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_int64, __pyx_k_int64, sizeof(__pyx_k_int64), 0, 0, 1, 1},
-  {&__pyx_n_s_left, __pyx_k_left, sizeof(__pyx_k_left), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_math, __pyx_k_math, sizeof(__pyx_k_math), 0, 0, 1, 1},
   {&__pyx_n_s_max, __pyx_k_max, sizeof(__pyx_k_max), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_new, __pyx_k_new, sizeof(__pyx_k_new), 0, 0, 1, 1},
-  {&__pyx_n_s_node_a, __pyx_k_node_a, sizeof(__pyx_k_node_a), 0, 0, 1, 1},
-  {&__pyx_n_s_node_b, __pyx_k_node_b, sizeof(__pyx_k_node_b), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
@@ -7352,8 +6215,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
-  {&__pyx_n_s_right, __pyx_k_right, sizeof(__pyx_k_right), 0, 0, 1, 1},
-  {&__pyx_n_s_scipy_spatial, __pyx_k_scipy_spatial, sizeof(__pyx_k_scipy_spatial), 0, 0, 1, 1},
+  {&__pyx_n_s_rng_fst_fstree, __pyx_k_rng_fst_fstree, sizeof(__pyx_k_rng_fst_fstree), 0, 0, 1, 1},
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
   {&__pyx_kp_s_stringsource, __pyx_k_stringsource, sizeof(__pyx_k_stringsource), 0, 0, 1, 0},
@@ -7364,11 +6226,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 75, __pyx_L1_error)
   #if PY_MAJOR_VERSION >= 3
-  __pyx_builtin_xrange = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_xrange) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_builtin_xrange = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_xrange) __PYX_ERR(0, 126, __pyx_L1_error)
   #else
-  __pyx_builtin_xrange = __Pyx_GetBuiltinName(__pyx_n_s_xrange); if (!__pyx_builtin_xrange) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_builtin_xrange = __Pyx_GetBuiltinName(__pyx_n_s_xrange); if (!__pyx_builtin_xrange) __PYX_ERR(0, 126, __pyx_L1_error)
   #endif
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(2, 947, __pyx_L1_error)
   return 0;
@@ -7473,29 +6335,29 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  __pyx_vtabptr_3fst_FairSplitTree = &__pyx_vtable_3fst_FairSplitTree;
-  __pyx_vtable_3fst_FairSplitTree.construct = (PyObject *(*)(struct __pyx_obj_3fst_FairSplitTree *, PyArrayObject *, PyArrayObject *))__pyx_f_3fst_13FairSplitTree_construct;
-  if (PyType_Ready(&__pyx_type_3fst_FairSplitTree) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_vtabptr_3rng_3fst_6fstree_FairSplitTree = &__pyx_vtable_3rng_3fst_6fstree_FairSplitTree;
+  __pyx_vtable_3rng_3fst_6fstree_FairSplitTree.construct = (void (*)(struct __pyx_obj_3rng_3fst_6fstree_FairSplitTree *, PyArrayObject *, PyArrayObject *))__pyx_f_3rng_3fst_6fstree_13FairSplitTree_construct;
+  if (PyType_Ready(&__pyx_type_3rng_3fst_6fstree_FairSplitTree) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_3fst_FairSplitTree.tp_print = 0;
+  __pyx_type_3rng_3fst_6fstree_FairSplitTree.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_3fst_FairSplitTree.tp_dictoffset && __pyx_type_3fst_FairSplitTree.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_3fst_FairSplitTree.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_3rng_3fst_6fstree_FairSplitTree.tp_dictoffset && __pyx_type_3rng_3fst_6fstree_FairSplitTree.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_3rng_3fst_6fstree_FairSplitTree.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_3fst_FairSplitTree.tp_dict, __pyx_vtabptr_3fst_FairSplitTree) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FairSplitTree, (PyObject *)&__pyx_type_3fst_FairSplitTree) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3fst_FairSplitTree) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
-  __pyx_ptype_3fst_FairSplitTree = &__pyx_type_3fst_FairSplitTree;
-  if (PyType_Ready(&__pyx_type_3fst_FairSplitTreeNode) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_3rng_3fst_6fstree_FairSplitTree.tp_dict, __pyx_vtabptr_3rng_3fst_6fstree_FairSplitTree) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FairSplitTree, (PyObject *)&__pyx_type_3rng_3fst_6fstree_FairSplitTree) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3rng_3fst_6fstree_FairSplitTree) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_ptype_3rng_3fst_6fstree_FairSplitTree = &__pyx_type_3rng_3fst_6fstree_FairSplitTree;
+  if (PyType_Ready(&__pyx_type_3rng_3fst_6fstree_FairSplitTreeNode) < 0) __PYX_ERR(0, 97, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_3fst_FairSplitTreeNode.tp_print = 0;
+  __pyx_type_3rng_3fst_6fstree_FairSplitTreeNode.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_3fst_FairSplitTreeNode.tp_dictoffset && __pyx_type_3fst_FairSplitTreeNode.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_3fst_FairSplitTreeNode.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_3rng_3fst_6fstree_FairSplitTreeNode.tp_dictoffset && __pyx_type_3rng_3fst_6fstree_FairSplitTreeNode.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_3rng_3fst_6fstree_FairSplitTreeNode.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FairSplitTreeNode, (PyObject *)&__pyx_type_3fst_FairSplitTreeNode) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3fst_FairSplitTreeNode) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
-  __pyx_ptype_3fst_FairSplitTreeNode = &__pyx_type_3fst_FairSplitTreeNode;
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FairSplitTreeNode, (PyObject *)&__pyx_type_3rng_3fst_6fstree_FairSplitTreeNode) < 0) __PYX_ERR(0, 97, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3rng_3fst_6fstree_FairSplitTreeNode) < 0) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_ptype_3rng_3fst_6fstree_FairSplitTreeNode = &__pyx_type_3rng_3fst_6fstree_FairSplitTreeNode;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -7598,11 +6460,11 @@ static int __Pyx_modinit_function_import_code(void) {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC initfst(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC initfst(void)
+__Pyx_PyMODINIT_FUNC initfstree(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC initfstree(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit_fst(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit_fst(void)
+__Pyx_PyMODINIT_FUNC PyInit_fstree(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit_fstree(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -7669,7 +6531,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec_fst(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec_fstree(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -7682,7 +6544,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_fst(PyObject *__pyx_pyinit_module)
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module 'fst' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module 'fstree' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -7697,7 +6559,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_fst(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_fstree(void)", 0);
   if (__Pyx_check_binary_version() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -7736,7 +6598,7 @@ if (!__Pyx_RefNanny) {
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("fst", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("fstree", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -7754,14 +6616,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_fst) {
+  if (__pyx_module_is_main_rng__fst__fstree) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "fst")) {
-      if (unlikely(PyDict_SetItemString(modules, "fst", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "rng.fst.fstree")) {
+      if (unlikely(PyDict_SetItemString(modules, "rng.fst.fstree", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -7782,7 +6644,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "rng/fair_split_tree.pyx":1
+  /* "rng/fst/fstree.pyx":1
  * import math             # <<<<<<<<<<<<<<
  * 
  * import numpy as np
@@ -7792,7 +6654,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_math, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rng/fair_split_tree.pyx":3
+  /* "rng/fst/fstree.pyx":3
  * import math
  * 
  * import numpy as np             # <<<<<<<<<<<<<<
@@ -7804,39 +6666,18 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rng/fair_split_tree.pyx":8
- * cimport cython
- * 
- * from scipy.spatial import distance             # <<<<<<<<<<<<<<
- * 
- * from libc.math cimport sqrt
- */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s_distance);
-  __Pyx_GIVEREF(__pyx_n_s_distance);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_distance);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_scipy_spatial, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_distance); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_distance, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
   /* "parameters.pxi":1
  * DTYPE = np.float64             # <<<<<<<<<<<<<<
  * ctypedef np.float64_t DTYPE_t
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(4, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_1)) __PYX_ERR(4, 1, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(4, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_1) < 0) __PYX_ERR(4, 1, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float64); if (unlikely(!__pyx_t_2)) __PYX_ERR(4, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(4, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "parameters.pxi":4
  * ctypedef np.float64_t DTYPE_t
@@ -7845,23 +6686,23 @@ if (!__Pyx_RefNanny) {
  * ctypedef np.int64_t ITYPE_t
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(4, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int64); if (unlikely(!__pyx_t_2)) __PYX_ERR(4, 4, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(4, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ITYPE, __pyx_t_2) < 0) __PYX_ERR(4, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int64); if (unlikely(!__pyx_t_1)) __PYX_ERR(4, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ITYPE, __pyx_t_1) < 0) __PYX_ERR(4, 4, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_FairSplitTree(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_3fst_3__pyx_unpickle_FairSplitTree, NULL, __pyx_n_s_fst); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_FairSplitTree, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rng_3fst_6fstree_1__pyx_unpickle_FairSplitTree, NULL, __pyx_n_s_rng_fst_fstree); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_FairSplitTree, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "(tree fragment)":11
  *         __pyx_unpickle_FairSplitTree__set_state(<FairSplitTree> __pyx_result, __pyx_state)
@@ -7870,20 +6711,20 @@ if (!__Pyx_RefNanny) {
  *     __pyx_result.root = __pyx_state[0]
  *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_3fst_5__pyx_unpickle_FairSplitTreeNode, NULL, __pyx_n_s_fst); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_FairSplitTreeNode, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rng_3fst_6fstree_3__pyx_unpickle_FairSplitTreeNode, NULL, __pyx_n_s_rng_fst_fstree); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_FairSplitTreeNode, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rng/fair_split_tree.pyx":1
+  /* "rng/fst/fstree.pyx":1
  * import math             # <<<<<<<<<<<<<<
  * 
  * import numpy as np
  */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "env/lib/python3.9/site-packages/numpy/__init__.pxd":1016
  * 
@@ -7901,11 +6742,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init fst", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init rng.fst.fstree", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init fst");
+    PyErr_SetString(PyExc_ImportError, "init rng.fst.fstree");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -9494,6 +8335,48 @@ bad:
     return NULL;
 }
 
+/* WriteUnraisableException */
+  static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
+                                  int full_traceback, CYTHON_UNUSED int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+#ifdef _MSC_VER
+    else state = (PyGILState_STATE)-1;
+#endif
+#endif
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
+    }
+    #if PY_MAJOR_VERSION < 3
+    ctx = PyString_FromString(name);
+    #else
+    ctx = PyUnicode_FromString(name);
+    #endif
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
+    } else {
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
+    }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
+}
+
 /* PyErrExceptionMatches */
   #if CYTHON_FAST_THREAD_STATE
 static int __Pyx_PyErr_ExceptionMatchesTuple(PyObject *exc_type, PyObject *tuple) {
@@ -9545,48 +8428,6 @@ static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tsta
 static CYTHON_INLINE PyObject *__Pyx_GetAttr3(PyObject *o, PyObject *n, PyObject *d) {
     PyObject *r = __Pyx_GetAttr(o, n);
     return (likely(r)) ? r : __Pyx_GetAttr3Default(d);
-}
-
-/* WriteUnraisableException */
-  static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
 }
 
 /* Import */
@@ -10961,6 +9802,44 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to long");
     return (long) -1;
+}
+
+/* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_Py_intptr_t(Py_intptr_t value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const Py_intptr_t neg_one = (Py_intptr_t) -1, const_zero = (Py_intptr_t) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(Py_intptr_t) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(Py_intptr_t) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(Py_intptr_t) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(Py_intptr_t) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(Py_intptr_t) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(Py_intptr_t),
+                                     little, !is_unsigned);
+    }
 }
 
 /* CIntFromPy */

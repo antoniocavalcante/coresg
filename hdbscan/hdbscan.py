@@ -1,7 +1,5 @@
-import pyximport
-pyximport.install()
-
 import sys
+import os
 import time
 
 import numpy as np
@@ -10,8 +8,6 @@ from scipy.sparse.csgraph import minimum_spanning_tree
 from scipy.sparse import csr_matrix, lil_matrix, save_npz, load_npz, triu
 
 from rng.rng import RelativeNeighborhoodGraph
-
-from rng.rng import euclidean_local
 
 from mst.mst import prim
 from mst.mst import prim_plus
@@ -49,9 +45,11 @@ class HDBSCAN:
         # determines the interval between min_pts values in the range.
         self.skip = skip
 
+        name = os.path.splitext(datafile)[0]
+
         try:
-            self.core_distances = np.genfromtxt(datafile + "-" + str(min_pts) + ".cd", delimiter=delimiter)
-            self.knn = np.genfromtxt(datafile + "-" + str(min_pts) + ".knn", delimiter=delimiter, dtype=np.int64)
+            self.core_distances = np.load(name + "-" + str(min_pts) + "-cd.npy")
+            self.knn = np.load(name + "-" + str(min_pts) + "-knn.npy")
         except:
             from sklearn.neighbors import NearestNeighbors
             nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
@@ -59,14 +57,9 @@ class HDBSCAN:
             # computes the core-distances and knn information
             self.core_distances, self.knn = nbrs.kneighbors(self.data)
 
-            for i in range(self.n):
-                for k in range(1, self.min_pts):
-                    self.core_distances[i, k] = euclidean_local(self.data[i], self.data[self.knn[i, k]])
-
             # saving the computed core-distances, knn and knng on files.
-            np.savetxt(datafile + "-" + str(self.min_pts) + ".cd" , self.core_distances, delimiter=delimiter)
-            np.savetxt(datafile + "-" + str(self.min_pts) + ".knn", self.knn, delimiter=delimiter, fmt='%i')
-
+            np.save(name + "-" + str(self.min_pts) + ".cd" , self.core_distances)
+            np.save(name + "-" + str(self.min_pts) + ".knn", self.knn.astype(int))
 
         try:
             self.knng = load_npz(datafile + "-" + str(self.min_pts) + ".npz")
@@ -209,7 +202,7 @@ class HDBSCAN:
 
 
 
-    def _hdbscan_rng(self, kmin = 1, kmax = 16, quick=True):
+    def _hdbscan_rng(self, kmin = 1, kmax = 16, quick=True, efficient=True):
 
         start = time.time()
 
@@ -218,7 +211,8 @@ class HDBSCAN:
             self.data, 
             self.core_distances, 
             self.knn, 
-            kmax, 
+            kmax,
+            efficient=efficient,
             quick=quick)
        
         # obtains the csr_matrix representation of the RNG

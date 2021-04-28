@@ -6,7 +6,7 @@ DEFAULT_KMAX=100
 DEFAULT_DIM=128
 DEFAULT_DATA=256
 DEFAULT_C=50
-DEFAULT_CF=4
+DEFAULT_CF=5
 
 KNN=false
 KNN_INC=false
@@ -73,15 +73,15 @@ clusters() {
     for c in 10 30 50 70 90;
     do
         if $KNN || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CF}cf-${c}c.dat" "${DEFAULT_KMAX}" "," "knn" >> "mdcgen-knn-hdbscan-dimensions.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CF}cf-${c}c.dat" "${DEFAULT_KMAX}" "," "knn" >> "mdcgen-knn-hdbscan-clusters.results"
         fi
 
         if $KNN_INC || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CF}cf-${c}c.dat" "${DEFAULT_KMAX}" "," "knn_inc" >> "mdcgen-knn-inc-hdbscan-dimensions.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CF}cf-${c}c.dat" "${DEFAULT_KMAX}" "," "knn_inc" >> "mdcgen-knn-inc-hdbscan-clusters.results"
         fi
 
         if $RNG || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CF}cf-${c}c.dat" "${DEFAULT_KMAX}" "," "rng" >> "mdcgen-rng-hdbscan-dimensions.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CF}cf-${c}c.dat" "${DEFAULT_KMAX}" "," "rng" >> "mdcgen-rng-hdbscan-clusters.results"
         fi
     done
 }
@@ -92,15 +92,15 @@ compactness() {
     for cf in 1 3 5 7 9;
     do
         if $KNN || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${cf}cf-${DEFAULT_C}c.dat" "${DEFAULT_KMAX}" "," "knn" >> "mdcgen-knn-hdbscan-dimensions.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${cf}cf-${DEFAULT_C}c.dat" "${DEFAULT_KMAX}" "," "knn" >> "mdcgen-knn-hdbscan-compactness.results"
         fi
 
         if $KNN_INC || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${cf}cf-${DEFAULT_C}c.dat" "${DEFAULT_KMAX}" "," "knn_inc" >> "mdcgen-knn-inc-hdbscan-dimensions.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${cf}cf-${DEFAULT_C}c.dat" "${DEFAULT_KMAX}" "," "knn_inc" >> "mdcgen-knn-inc-hdbscan-compactness.results"
         fi
 
         if $RNG || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${cf}cf-${DEFAULT_C}c.dat" "${DEFAULT_KMAX}" "," "rng" >> "mdcgen-rng-hdbscan-dimensions.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${cf}cf-${DEFAULT_C}c.dat" "${DEFAULT_KMAX}" "," "rng" >> "mdcgen-rng-hdbscan-compactness.results"
         fi
     done
 }

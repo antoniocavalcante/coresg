@@ -14,10 +14,10 @@ from libc.stdlib cimport malloc, free
 
 from libc.math cimport abs as cabs
 
-from scipy.spatial import distance
 from scipy.sparse import csr_matrix
 
-from rng.fair_split_tree import FairSplitTree, FairSplitTreeNode, separated
+from fst.fstree import FairSplitTree, FairSplitTreeNode
+from fst.fstree cimport FairSplitTree, FairSplitTreeNode
 
 include '../parameters.pxi'
 
@@ -31,8 +31,9 @@ cdef class RelativeNeighborhoodGraph:
         np.ndarray[DTYPE_t, ndim=2] data,
         np.ndarray[DTYPE_t, ndim=2] core_distances,
         np.ndarray[ITYPE_t, ndim=2] knn,
-        ITYPE_t min_points, 
-        bint quick = True, 
+        ITYPE_t min_points,
+        bint efficient = True, 
+        bint quick = True,
         bint naive = False):
         
         self.min_points = min_points
@@ -46,8 +47,17 @@ cdef class RelativeNeighborhoodGraph:
 
         self.n = data.shape[0]
 
+        if not efficient:
+
+            self.construct(
+                data, 
+                np.ascontiguousarray(core_distances[:, min_points - 1]), 
+                knn)
+
+            return
+
         # Build Fair Split Tree
-        T = FairSplitTree(
+        cdef FairSplitTree T = FairSplitTree(
             data, 
             np.ascontiguousarray(core_distances[:, min_points - 1]))
 
@@ -57,7 +67,7 @@ cdef class RelativeNeighborhoodGraph:
             data, 
             np.ascontiguousarray(core_distances[:, min_points - 1]), 
             knn)
-
+        
 
     cpdef graph(self):
         return csr_matrix((self.w, (self.u, self.v)), shape=(self.n, self.n))
@@ -67,14 +77,45 @@ cdef class RelativeNeighborhoodGraph:
     @cython.wraparound(False)
     @cython.nonecheck(False)
     @cython.initializedcheck(False)
+    cdef void construct(
+        self,
+        DTYPE_t[:, :] data,
+        DTYPE_t[:] core_distances,
+        ITYPE_t[:, :] knn):
+        
+        cdef ITYPE_t i, j
+        cdef DTYPE_t underlying, d_ij
+
+        for i in xrange(self.n):
+            for j in xrange(i + 1, self.n):
+
+                underlying = euclidean_local(data[i], data[j])
+                d_ij = max(underlying, core_distances[i], core_distances[j])
+
+                self.add_edge(
+                    i, 
+                    j, 
+                    d_ij,
+                    underlying, 
+                    data, 
+                    core_distances, 
+                    knn)
+
+
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    @cython.initializedcheck(False)
     cdef void wspd(
         self, 
-        fst,
+        FairSplitTree fst,
         DTYPE_t[:, :] data,
         DTYPE_t[:] core_distances,
         ITYPE_t[:, :] knn):
         
         cdef list stack = [fst.root]
+
+        cdef FairSplitTreeNode node
 
         while stack:
             node = stack.pop()
@@ -94,26 +135,37 @@ cdef class RelativeNeighborhoodGraph:
     @cython.initializedcheck(False)
     cdef void find_pairs(
         self, 
-        node_a,
-        node_b,
+        FairSplitTreeNode node_a,
+        FairSplitTreeNode node_b,
         DTYPE_t[:, :] data,
         DTYPE_t[:] core_distances,
         ITYPE_t[:, :] knn):
 
-        cdef list stack = [(node_a, node_b)]
+        cdef list stack_a = [node_a]
+        cdef list stack_b = [node_b]
+        
+        cdef FairSplitTreeNode current_a
+        cdef FairSplitTreeNode current_b
 
-        while stack:
-            current_a, current_b = stack.pop()
+        while stack_a:
+            current_a = stack_a.pop()
+            current_b = stack_b.pop()
 
             if separated(current_a, current_b):
                 self.sbcn(current_a.points, current_b.points, data, core_distances, knn)
             else:
                 if current_a.diameter <= current_b.diameter:
-                    stack.append((current_a, current_b.l))
-                    stack.append((current_a, current_b.r))
+                    stack_a.append(current_a)
+                    stack_b.append(current_b.l)
+
+                    stack_a.append(current_a)
+                    stack_b.append(current_b.r)                    
                 else:
-                    stack.append((current_a.l, current_b))
-                    stack.append((current_a.r, current_b))
+                    stack_a.append(current_a.l)
+                    stack_b.append(current_b)
+
+                    stack_a.append(current_a.r)
+                    stack_b.append(current_b)                    
 
 
     @cython.boundscheck(False)
@@ -137,6 +189,7 @@ cdef class RelativeNeighborhoodGraph:
         if r_size == 1 and b_size == 1:
 
             underlying = euclidean_local(data[red[0]], data[blue[0]])
+            # underlying = distance.euclidean(data[red[0]], data[blue[0]])
             d_rb = max(underlying, core_distances[red[0]], core_distances[blue[0]])
 
             self.add_edge(
@@ -331,11 +384,43 @@ cdef DTYPE_t _mutual_reachability_distance(
 @cython.wraparound(False)
 @cython.nonecheck(False)
 @cython.initializedcheck(False)
-cpdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
+cdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
     cdef ITYPE_t i, m
     cdef DTYPE_t d = 0.0
     m = v1.shape[0]
  
+    for i in xrange(m):
+        d += (v1[i] - v2[i])**2
+
+    return sqrt(d)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cdef bint separated(FairSplitTreeNode node_a, FairSplitTreeNode node_b):
+    return node_distances(node_a, node_b) >= max(node_a.diameter, node_b.diameter)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+@cython.cdivision(True)
+cdef DTYPE_t node_distances(FairSplitTreeNode node_a, FairSplitTreeNode node_b):
+    return euclidean(node_a.center, node_b.center) - node_a.diameter/2 - node_b.diameter/2
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cdef DTYPE_t euclidean(np.ndarray[np.float64_t, ndim=1] v1, np.ndarray[np.float64_t, ndim=1] v2):
+    cdef ITYPE_t i, m
+    cdef DTYPE_t d = 0.0
+    m = v1.shape[0]
+
     for i in xrange(m):
         d += (v1[i] - v2[i])**2
 

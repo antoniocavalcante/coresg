@@ -6,7 +6,7 @@ from scipy.sparse import csr_matrix
 
 from hdbscan.hdbscan import HDBSCAN
 
-def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn'):
+def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn', efficient=True):
     
     h = HDBSCAN(datafile, min_pts=kmax, delimiter=delimiter)
 
@@ -17,7 +17,7 @@ def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn'):
         h._hdbscan_knn_incremental(kmin=kmin, kmax=kmax)
 
     if method == 'rng':
-        h._hdbscan_rng(kmin=kmin, kmax=kmax, quick=True)
+        h._hdbscan_rng(kmin=kmin, kmax=kmax, quick=True, efficient=efficient)
 
     if method == 'single':
         h.hdbscan(min_pts=kmax)
