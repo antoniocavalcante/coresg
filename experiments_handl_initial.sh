@@ -19,16 +19,15 @@ run() {
         do
             for kmax in 10 30 50 70;
             do
-                for c in 8;
-                    # Example: 2d-64n-8c-no0.dat
+                    c=8
+
                     if $KNN || $ALL ; then
-                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c-no0.dat" "${kmax}" " " "knn" >> "handl-core-initial-${n}n-${kmax}k.results"
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c-no0.dat" "${kmax}" " " "knn" >> "handl-core-initial-${n}n-${kmax}k-${c}c.results"
                     fi
                     
                     if $RNG || $ALL ; then
-                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c-no0.dat" "${kmax}" " " "rng" >> "handl-rng-star-initial-${n}n-${kmax}k.results"
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c-no0.dat" "${kmax}" " " "rng" >> "handl-rng-star-initial-${n}n-${kmax}k-${c}c.results"
                     fi
-                done
             done
         done
     done
