@@ -14,7 +14,7 @@ ALL=false
 
 run() {
 
-    for n in 8 16 32 64;
+    for n in 8 #16 32 64;
     do
         for dim in 2 4 8 16 32 64 128;
         do
@@ -24,11 +24,11 @@ run() {
                 do
                     echo "Running n=${n} dim=${dim} kmax=${kmax} c=${c} cf=${DEFAULT_CF}"
                     if $KNN || $ALL ; then
-                        python main_experiments.py "${DIR}/${dim}d-${n}n-${DEFAULT_CF}cf-${c}c.dat" "${kmax}" " " "knn" >> "mdcgen-core-initial-${n}n-${kmax}k-${DEFAULT_CF}cf-${c}c.results"
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${DEFAULT_CF}cf-${c}c.dat" "${kmax}" "," "knn" >> "mdcgen-core-initial-${n}n-${kmax}k-${DEFAULT_CF}cf-${c}c.results"
                     fi
 
                     if $RNG || $ALL ; then
-                        python main_experiments.py "${DIR}/${dim}d-${n}n-${DEFAULT_CF}cf-${c}c.dat" "${kmax}" " " "rng" >> "mdcgen-rng-star-initial-${n}n-${kmax}k-${DEFAULT_CF}cf-${c}c.results"
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${DEFAULT_CF}cf-${c}c.dat" "${kmax}" "," "rng" >> "mdcgen-rng-star-initial-${n}n-${kmax}k-${DEFAULT_CF}cf-${c}c.results"
                     fi
                 done
 
@@ -36,11 +36,11 @@ run() {
                 do
                     echo "Running n=${n} dim=${dim} kmax=${kmax} c=${DEFAULT_C} cf=${cf}"
                     if $KNN || $ALL ; then
-                        python main_experiments.py "${DIR}/${dim}d-${n}n-${cf}cf-${DEFAULT_C}c.dat" "${kmax}" " " "knn" >> "mdcgen-core-initial-${n}n-${kmax}k-${cf}cf-${DEFAULT_C}c.results"
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${cf}cf-${DEFAULT_C}c.dat" "${kmax}" "," "knn" >> "mdcgen-core-initial-${n}n-${kmax}k-${cf}cf-${DEFAULT_C}c.results"
                     fi
 
                     if $RNG || $ALL ; then
-                        python main_experiments.py "${DIR}/${dim}d-${n}n-${cf}cf-${DEFAULT_C}c.dat" "${kmax}" " " "rng" >> "mdcgen-rng-star-initial-${n}n-${kmax}k-${cf}cf-${DEFAULT_C}c.results"
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${cf}cf-${DEFAULT_C}c.dat" "${kmax}" "," "rng" >> "mdcgen-rng-star-initial-${n}n-${kmax}k-${cf}cf-${DEFAULT_C}c.results"
                     fi
                 done
 

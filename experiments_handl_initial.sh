@@ -5,7 +5,6 @@ DIR=$1
 DEFAULT_KMAX=100
 DEFAULT_DIM=64
 DEFAULT_DATA=256
-DEFAULT_COMP=6
 DEFAULT_CLUS=10
 
 KNN=false
@@ -14,19 +13,22 @@ ALL=false
 
 run() {
 
-    for n in 32 64 #16 32 64;
+    for n in 64 #16 32 64;
     do
         for dim in 2 4 8 16 32 64 128;
         do
             for kmax in 10 30 50 70;
             do
-                if $KNN || $ALL ; then
-                    python main_experiments.py "${DIR}/${dim}d-${n}.dat" "${kmax}" " " "knn" >> "core-initial-${n}n-${kmax}k.results"
-                fi
-                
-                if $RNG || $ALL ; then
-                    python main_experiments.py "${DIR}/${dim}d-${n}.dat" "${kmax}" " " "rng" >> "rng-star-initial-${n}n-${kmax}k.results"
-                fi
+                for c in 8;
+                    # Example: 2d-64n-8c-no0.dat
+                    if $KNN || $ALL ; then
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c-no0.dat" "${kmax}" " " "knn" >> "handl-core-initial-${n}n-${kmax}k.results"
+                    fi
+                    
+                    if $RNG || $ALL ; then
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c-no0.dat" "${kmax}" " " "rng" >> "handl-rng-star-initial-${n}n-${kmax}k.results"
+                    fi
+                done
             done
         done
     done
