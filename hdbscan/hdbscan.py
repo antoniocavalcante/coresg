@@ -65,8 +65,8 @@ class HDBSCAN:
                     self.core_distances[i, j] = euclidean_export(self.data[i], self.data[self.knn[i, j]])
 
             # saving the computed core-distances, knn and knng on files.
-            np.save(name + "-" + str(self.min_pts) + ".cd" , self.core_distances)
-            np.save(name + "-" + str(self.min_pts) + ".knn", self.knn.astype(int))
+            np.save(name + "-" + str(self.min_pts) + "-cd" , self.core_distances)
+            np.save(name + "-" + str(self.min_pts) + "-knn", self.knn.astype(int))
 
         try:
             self.knng = load_npz(datafile + "-" + str(self.min_pts) + ".npz")
