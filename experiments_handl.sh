@@ -116,10 +116,10 @@ then
 fi
 
 if [[ ${2^^} == "CORE" || $2 == "ALL" ]]; then
-    KNN=true
+    CORE=true
 fi
 if [[ ${2^^} == "CORE_INC" || $2 == "ALL" ]]; then
-    KNN_INC=true
+    CORE_INC=true
 fi
 if [[ ${2^^} == "RNG" || $2 == "ALL" ]]; then
     RNG=true
