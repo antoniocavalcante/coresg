@@ -606,7 +606,19 @@ cdef DTYPE_t euclidean_local(DTYPE_t[:] v1, DTYPE_t[:] v2):
 
     return sqrt(d)
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+@cython.initializedcheck(False)
+cpdef DTYPE_t euclidean_export(DTYPE_t[:] v1, DTYPE_t[:] v2):
+    cdef ITYPE_t i, m
+    cdef DTYPE_t d = 0.0
+    m = v1.shape[0]
 
+    for i in xrange(m):
+        d += (v1[i] - v2[i])**2
+
+    return sqrt(d)
 
 
 ######################################################################

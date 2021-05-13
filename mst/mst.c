@@ -1255,7 +1255,7 @@ struct __pyx_t_3mst_3mst_FibonacciNode;
 struct __pyx_opt_args_3mst_3mst_initialize_node;
 struct __pyx_t_3mst_3mst_FibonacciHeap;
 
-/* "mst/mst.pyx":617
+/* "mst/mst.pyx":629
  * #  Fibonacci heap.
  * #
  * cdef enum FibonacciState:             # <<<<<<<<<<<<<<
@@ -1268,7 +1268,7 @@ enum __pyx_t_3mst_3mst_FibonacciState {
   __pyx_e_3mst_3mst_IN_HEAP
 };
 
-/* "mst/mst.pyx":623
+/* "mst/mst.pyx":635
  * 
  * 
  * cdef struct FibonacciNode:             # <<<<<<<<<<<<<<
@@ -1287,7 +1287,7 @@ struct __pyx_t_3mst_3mst_FibonacciNode {
   struct __pyx_t_3mst_3mst_FibonacciNode *children;
 };
 
-/* "mst/mst.pyx":635
+/* "mst/mst.pyx":647
  * 
  * 
  * cdef void initialize_node(FibonacciNode* node,             # <<<<<<<<<<<<<<
@@ -1299,7 +1299,7 @@ struct __pyx_opt_args_3mst_3mst_initialize_node {
   __pyx_t_3mst_3mst_DTYPE_t val;
 };
 
-/* "mst/mst.pyx":723
+/* "mst/mst.pyx":735
  * #  routines to implement a Fibonacci heap
  * 
  * ctypedef FibonacciNode* pFibonacciNode             # <<<<<<<<<<<<<<
@@ -1308,7 +1308,7 @@ struct __pyx_opt_args_3mst_3mst_initialize_node {
  */
 typedef struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_t_3mst_3mst_pFibonacciNode;
 
-/* "mst/mst.pyx":726
+/* "mst/mst.pyx":738
  * 
  * 
  * cdef struct FibonacciHeap:             # <<<<<<<<<<<<<<
@@ -2300,6 +2300,7 @@ static PyObject *__pyx_f_3mst_3mst_prim(__Pyx_memviewslice, __Pyx_memviewslice, 
 static PyObject *__pyx_f_3mst_3mst_prim_inc(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __pyx_t_3mst_3mst_ITYPE_t, __pyx_t_3mst_3mst_ITYPE_t, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__pyx_f_3mst_3mst_prim_graph(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __pyx_t_3mst_3mst_ITYPE_t, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__pyx_f_3mst_3mst_split_mst(PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
+static __pyx_t_3mst_3mst_DTYPE_t __pyx_f_3mst_3mst_euclidean_export(__Pyx_memviewslice, __Pyx_memviewslice, int __pyx_skip_dispatch); /*proto*/
 static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_FibonacciNode *, unsigned int, struct __pyx_opt_args_3mst_3mst_initialize_node *__pyx_optional_args); /*proto*/
 static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_rightmost_sibling(struct __pyx_t_3mst_3mst_FibonacciNode *); /*proto*/
 static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_leftmost_sibling(struct __pyx_t_3mst_3mst_FibonacciNode *); /*proto*/
@@ -2366,6 +2367,8 @@ static const char __pyx_k_c[] = "c";
 static const char __pyx_k_n[] = "n";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
+static const char __pyx_k_v1[] = "v1";
+static const char __pyx_k_v2[] = "v2";
 static const char __pyx_k_end[] = "end";
 static const char __pyx_k_inf[] = "inf";
 static const char __pyx_k_knn[] = "knn";
@@ -2649,6 +2652,8 @@ static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_n_s_union;
 static PyObject *__pyx_n_s_unpack;
 static PyObject *__pyx_n_s_update;
+static PyObject *__pyx_n_s_v1;
+static PyObject *__pyx_n_s_v2;
 static PyObject *__pyx_n_s_xrange;
 static PyObject *__pyx_n_s_zeros;
 static PyObject *__pyx_pf_3mst_3mst_prim_plus(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_core_distances, __Pyx_memviewslice __pyx_v_knn, __pyx_t_3mst_3mst_ITYPE_t __pyx_v_self_edges); /* proto */
@@ -2657,6 +2662,7 @@ static PyObject *__pyx_pf_3mst_3mst_4prim(CYTHON_UNUSED PyObject *__pyx_self, __
 static PyObject *__pyx_pf_3mst_3mst_6prim_inc(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_mst_indices, __Pyx_memviewslice __pyx_v_mst_indptr, __Pyx_memviewslice __pyx_v_mst_data, __Pyx_memviewslice __pyx_v_knng_indices, __Pyx_memviewslice __pyx_v_knng_indptr, __Pyx_memviewslice __pyx_v_knng_data, __Pyx_memviewslice __pyx_v_core_distances, __pyx_t_3mst_3mst_ITYPE_t __pyx_v_min_pts, __pyx_t_3mst_3mst_ITYPE_t __pyx_v_self_edges); /* proto */
 static PyObject *__pyx_pf_3mst_3mst_8prim_graph(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_indices, __Pyx_memviewslice __pyx_v_indptr, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_core_distances, __pyx_t_3mst_3mst_ITYPE_t __pyx_v_self_edges); /* proto */
 static PyObject *__pyx_pf_3mst_3mst_10split_mst(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_data, PyObject *__pyx_v_nn_distances, PyObject *__pyx_v_knn, PyObject *__pyx_v_mpts, PyObject *__pyx_v_self_edges); /* proto */
+static PyObject *__pyx_pf_3mst_3mst_12euclidean_export(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_v1, __Pyx_memviewslice __pyx_v_v2); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(struct __pyx_array_obj *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_array___pyx_pf_15View_dot_MemoryView_5array_4__dealloc__(struct __pyx_array_obj *__pyx_v_self); /* proto */
@@ -9443,7 +9449,7 @@ static __pyx_t_3mst_3mst_DTYPE_t __pyx_f_3mst_3mst_euclidean_local(__Pyx_memview
  * 
  *     return sqrt(d)             # <<<<<<<<<<<<<<
  * 
- * 
+ * @cython.boundscheck(False)
  */
   __pyx_r = sqrt(__pyx_v_d);
   goto __pyx_L0;
@@ -9462,7 +9468,187 @@ static __pyx_t_3mst_3mst_DTYPE_t __pyx_f_3mst_3mst_euclidean_local(__Pyx_memview
   return __pyx_r;
 }
 
-/* "mst/mst.pyx":635
+/* "mst/mst.pyx":613
+ * @cython.nonecheck(False)
+ * @cython.initializedcheck(False)
+ * cpdef DTYPE_t euclidean_export(DTYPE_t[:] v1, DTYPE_t[:] v2):             # <<<<<<<<<<<<<<
+ *     cdef ITYPE_t i, m
+ *     cdef DTYPE_t d = 0.0
+ */
+
+static PyObject *__pyx_pw_3mst_3mst_13euclidean_export(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static __pyx_t_3mst_3mst_DTYPE_t __pyx_f_3mst_3mst_euclidean_export(__Pyx_memviewslice __pyx_v_v1, __Pyx_memviewslice __pyx_v_v2, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  __pyx_t_3mst_3mst_ITYPE_t __pyx_v_i;
+  __pyx_t_3mst_3mst_ITYPE_t __pyx_v_m;
+  __pyx_t_3mst_3mst_DTYPE_t __pyx_v_d;
+  __pyx_t_3mst_3mst_DTYPE_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __pyx_t_3mst_3mst_ITYPE_t __pyx_t_1;
+  __pyx_t_3mst_3mst_ITYPE_t __pyx_t_2;
+  __pyx_t_3mst_3mst_ITYPE_t __pyx_t_3;
+  __pyx_t_3mst_3mst_ITYPE_t __pyx_t_4;
+  __pyx_t_3mst_3mst_ITYPE_t __pyx_t_5;
+  __Pyx_RefNannySetupContext("euclidean_export", 0);
+
+  /* "mst/mst.pyx":615
+ * cpdef DTYPE_t euclidean_export(DTYPE_t[:] v1, DTYPE_t[:] v2):
+ *     cdef ITYPE_t i, m
+ *     cdef DTYPE_t d = 0.0             # <<<<<<<<<<<<<<
+ *     m = v1.shape[0]
+ * 
+ */
+  __pyx_v_d = 0.0;
+
+  /* "mst/mst.pyx":616
+ *     cdef ITYPE_t i, m
+ *     cdef DTYPE_t d = 0.0
+ *     m = v1.shape[0]             # <<<<<<<<<<<<<<
+ * 
+ *     for i in xrange(m):
+ */
+  __pyx_v_m = (__pyx_v_v1.shape[0]);
+
+  /* "mst/mst.pyx":618
+ *     m = v1.shape[0]
+ * 
+ *     for i in xrange(m):             # <<<<<<<<<<<<<<
+ *         d += (v1[i] - v2[i])**2
+ * 
+ */
+  __pyx_t_1 = __pyx_v_m;
+  __pyx_t_2 = __pyx_t_1;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "mst/mst.pyx":619
+ * 
+ *     for i in xrange(m):
+ *         d += (v1[i] - v2[i])**2             # <<<<<<<<<<<<<<
+ * 
+ *     return sqrt(d)
+ */
+    __pyx_t_4 = __pyx_v_i;
+    __pyx_t_5 = __pyx_v_i;
+    __pyx_v_d = (__pyx_v_d + pow(((*((__pyx_t_3mst_3mst_DTYPE_t *) ( /* dim=0 */ (__pyx_v_v1.data + __pyx_t_4 * __pyx_v_v1.strides[0]) ))) - (*((__pyx_t_3mst_3mst_DTYPE_t *) ( /* dim=0 */ (__pyx_v_v2.data + __pyx_t_5 * __pyx_v_v2.strides[0]) )))), 2.0));
+  }
+
+  /* "mst/mst.pyx":621
+ *         d += (v1[i] - v2[i])**2
+ * 
+ *     return sqrt(d)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_r = sqrt(__pyx_v_d);
+  goto __pyx_L0;
+
+  /* "mst/mst.pyx":613
+ * @cython.nonecheck(False)
+ * @cython.initializedcheck(False)
+ * cpdef DTYPE_t euclidean_export(DTYPE_t[:] v1, DTYPE_t[:] v2):             # <<<<<<<<<<<<<<
+ *     cdef ITYPE_t i, m
+ *     cdef DTYPE_t d = 0.0
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3mst_3mst_13euclidean_export(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3mst_3mst_13euclidean_export(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  __Pyx_memviewslice __pyx_v_v1 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_v_v2 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("euclidean_export (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_v1,&__pyx_n_s_v2,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_v1)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_v2)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("euclidean_export", 1, 2, 2, 1); __PYX_ERR(0, 613, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "euclidean_export") < 0)) __PYX_ERR(0, 613, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+    }
+    __pyx_v_v1 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_3mst_3mst_DTYPE_t(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_v1.memview)) __PYX_ERR(0, 613, __pyx_L3_error)
+    __pyx_v_v2 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_3mst_3mst_DTYPE_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_v2.memview)) __PYX_ERR(0, 613, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("euclidean_export", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 613, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("mst.mst.euclidean_export", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_3mst_3mst_12euclidean_export(__pyx_self, __pyx_v_v1, __pyx_v_v2);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3mst_3mst_12euclidean_export(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_v1, __Pyx_memviewslice __pyx_v_v2) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("euclidean_export", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_3mst_3mst_euclidean_export(__pyx_v_v1, __pyx_v_v2, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 613, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("mst.mst.euclidean_export", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_v1, 1);
+  __PYX_XDEC_MEMVIEW(&__pyx_v_v2, 1);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "mst/mst.pyx":647
  * 
  * 
  * cdef void initialize_node(FibonacciNode* node,             # <<<<<<<<<<<<<<
@@ -9480,7 +9666,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
     }
   }
 
-  /* "mst/mst.pyx":640
+  /* "mst/mst.pyx":652
  *     # Assumptions: - node is a valid pointer
  *     #              - node is not currently part of a heap
  *     node.index = index             # <<<<<<<<<<<<<<
@@ -9489,7 +9675,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->index = __pyx_v_index;
 
-  /* "mst/mst.pyx":641
+  /* "mst/mst.pyx":653
  *     #              - node is not currently part of a heap
  *     node.index = index
  *     node.source = -9999             # <<<<<<<<<<<<<<
@@ -9498,7 +9684,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->source = -9999;
 
-  /* "mst/mst.pyx":642
+  /* "mst/mst.pyx":654
  *     node.index = index
  *     node.source = -9999
  *     node.val = val             # <<<<<<<<<<<<<<
@@ -9507,7 +9693,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->val = __pyx_v_val;
 
-  /* "mst/mst.pyx":643
+  /* "mst/mst.pyx":655
  *     node.source = -9999
  *     node.val = val
  *     node.rank = 0             # <<<<<<<<<<<<<<
@@ -9516,7 +9702,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->rank = 0;
 
-  /* "mst/mst.pyx":644
+  /* "mst/mst.pyx":656
  *     node.val = val
  *     node.rank = 0
  *     node.state = NOT_IN_HEAP             # <<<<<<<<<<<<<<
@@ -9525,7 +9711,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->state = __pyx_e_3mst_3mst_NOT_IN_HEAP;
 
-  /* "mst/mst.pyx":646
+  /* "mst/mst.pyx":658
  *     node.state = NOT_IN_HEAP
  * 
  *     node.parent = NULL             # <<<<<<<<<<<<<<
@@ -9534,7 +9720,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->parent = NULL;
 
-  /* "mst/mst.pyx":647
+  /* "mst/mst.pyx":659
  * 
  *     node.parent = NULL
  *     node.left_sibling = NULL             # <<<<<<<<<<<<<<
@@ -9543,7 +9729,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->left_sibling = NULL;
 
-  /* "mst/mst.pyx":648
+  /* "mst/mst.pyx":660
  *     node.parent = NULL
  *     node.left_sibling = NULL
  *     node.right_sibling = NULL             # <<<<<<<<<<<<<<
@@ -9552,7 +9738,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->right_sibling = NULL;
 
-  /* "mst/mst.pyx":649
+  /* "mst/mst.pyx":661
  *     node.left_sibling = NULL
  *     node.right_sibling = NULL
  *     node.children = NULL             # <<<<<<<<<<<<<<
@@ -9561,7 +9747,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
  */
   __pyx_v_node->children = NULL;
 
-  /* "mst/mst.pyx":635
+  /* "mst/mst.pyx":647
  * 
  * 
  * cdef void initialize_node(FibonacciNode* node,             # <<<<<<<<<<<<<<
@@ -9573,7 +9759,7 @@ static void __pyx_f_3mst_3mst_initialize_node(struct __pyx_t_3mst_3mst_Fibonacci
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mst/mst.pyx":652
+/* "mst/mst.pyx":664
  * 
  * 
  * cdef FibonacciNode* rightmost_sibling(FibonacciNode* node):             # <<<<<<<<<<<<<<
@@ -9589,7 +9775,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_rightmost_sibli
   struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_t_2;
   __Pyx_RefNannySetupContext("rightmost_sibling", 0);
 
-  /* "mst/mst.pyx":654
+  /* "mst/mst.pyx":666
  * cdef FibonacciNode* rightmost_sibling(FibonacciNode* node):
  *     # Assumptions: - node is a valid pointer
  *     cdef FibonacciNode* temp = node             # <<<<<<<<<<<<<<
@@ -9598,7 +9784,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_rightmost_sibli
  */
   __pyx_v_temp = __pyx_v_node;
 
-  /* "mst/mst.pyx":655
+  /* "mst/mst.pyx":667
  *     # Assumptions: - node is a valid pointer
  *     cdef FibonacciNode* temp = node
  *     while(temp.right_sibling):             # <<<<<<<<<<<<<<
@@ -9609,7 +9795,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_rightmost_sibli
     __pyx_t_1 = (__pyx_v_temp->right_sibling != 0);
     if (!__pyx_t_1) break;
 
-    /* "mst/mst.pyx":656
+    /* "mst/mst.pyx":668
  *     cdef FibonacciNode* temp = node
  *     while(temp.right_sibling):
  *         temp = temp.right_sibling             # <<<<<<<<<<<<<<
@@ -9620,7 +9806,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_rightmost_sibli
     __pyx_v_temp = __pyx_t_2;
   }
 
-  /* "mst/mst.pyx":657
+  /* "mst/mst.pyx":669
  *     while(temp.right_sibling):
  *         temp = temp.right_sibling
  *     return temp             # <<<<<<<<<<<<<<
@@ -9630,7 +9816,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_rightmost_sibli
   __pyx_r = __pyx_v_temp;
   goto __pyx_L0;
 
-  /* "mst/mst.pyx":652
+  /* "mst/mst.pyx":664
  * 
  * 
  * cdef FibonacciNode* rightmost_sibling(FibonacciNode* node):             # <<<<<<<<<<<<<<
@@ -9644,7 +9830,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_rightmost_sibli
   return __pyx_r;
 }
 
-/* "mst/mst.pyx":660
+/* "mst/mst.pyx":672
  * 
  * 
  * cdef FibonacciNode* leftmost_sibling(FibonacciNode* node):             # <<<<<<<<<<<<<<
@@ -9660,7 +9846,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_leftmost_siblin
   struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_t_2;
   __Pyx_RefNannySetupContext("leftmost_sibling", 0);
 
-  /* "mst/mst.pyx":662
+  /* "mst/mst.pyx":674
  * cdef FibonacciNode* leftmost_sibling(FibonacciNode* node):
  *     # Assumptions: - node is a valid pointer
  *     cdef FibonacciNode* temp = node             # <<<<<<<<<<<<<<
@@ -9669,7 +9855,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_leftmost_siblin
  */
   __pyx_v_temp = __pyx_v_node;
 
-  /* "mst/mst.pyx":663
+  /* "mst/mst.pyx":675
  *     # Assumptions: - node is a valid pointer
  *     cdef FibonacciNode* temp = node
  *     while(temp.left_sibling):             # <<<<<<<<<<<<<<
@@ -9680,7 +9866,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_leftmost_siblin
     __pyx_t_1 = (__pyx_v_temp->left_sibling != 0);
     if (!__pyx_t_1) break;
 
-    /* "mst/mst.pyx":664
+    /* "mst/mst.pyx":676
  *     cdef FibonacciNode* temp = node
  *     while(temp.left_sibling):
  *         temp = temp.left_sibling             # <<<<<<<<<<<<<<
@@ -9691,7 +9877,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_leftmost_siblin
     __pyx_v_temp = __pyx_t_2;
   }
 
-  /* "mst/mst.pyx":665
+  /* "mst/mst.pyx":677
  *     while(temp.left_sibling):
  *         temp = temp.left_sibling
  *     return temp             # <<<<<<<<<<<<<<
@@ -9701,7 +9887,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_leftmost_siblin
   __pyx_r = __pyx_v_temp;
   goto __pyx_L0;
 
-  /* "mst/mst.pyx":660
+  /* "mst/mst.pyx":672
  * 
  * 
  * cdef FibonacciNode* leftmost_sibling(FibonacciNode* node):             # <<<<<<<<<<<<<<
@@ -9715,7 +9901,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_leftmost_siblin
   return __pyx_r;
 }
 
-/* "mst/mst.pyx":668
+/* "mst/mst.pyx":680
  * 
  * 
  * cdef void add_child(FibonacciNode* node, FibonacciNode* new_child):             # <<<<<<<<<<<<<<
@@ -9728,7 +9914,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("add_child", 0);
 
-  /* "mst/mst.pyx":672
+  /* "mst/mst.pyx":684
  *     #              - new_child is a valid pointer
  *     #              - new_child is not the sibling or child of another node
  *     new_child.parent = node             # <<<<<<<<<<<<<<
@@ -9737,7 +9923,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
  */
   __pyx_v_new_child->parent = __pyx_v_node;
 
-  /* "mst/mst.pyx":674
+  /* "mst/mst.pyx":686
  *     new_child.parent = node
  * 
  *     if node.children:             # <<<<<<<<<<<<<<
@@ -9747,7 +9933,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
   __pyx_t_1 = (__pyx_v_node->children != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":675
+    /* "mst/mst.pyx":687
  * 
  *     if node.children:
  *         add_sibling(node.children, new_child)             # <<<<<<<<<<<<<<
@@ -9756,7 +9942,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
  */
     __pyx_f_3mst_3mst_add_sibling(__pyx_v_node->children, __pyx_v_new_child);
 
-    /* "mst/mst.pyx":674
+    /* "mst/mst.pyx":686
  *     new_child.parent = node
  * 
  *     if node.children:             # <<<<<<<<<<<<<<
@@ -9766,7 +9952,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
     goto __pyx_L3;
   }
 
-  /* "mst/mst.pyx":678
+  /* "mst/mst.pyx":690
  *     else:
  * 
  *         node.children = new_child             # <<<<<<<<<<<<<<
@@ -9776,7 +9962,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
   /*else*/ {
     __pyx_v_node->children = __pyx_v_new_child;
 
-    /* "mst/mst.pyx":679
+    /* "mst/mst.pyx":691
  * 
  *         node.children = new_child
  *         new_child.right_sibling = NULL             # <<<<<<<<<<<<<<
@@ -9785,7 +9971,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
  */
     __pyx_v_new_child->right_sibling = NULL;
 
-    /* "mst/mst.pyx":680
+    /* "mst/mst.pyx":692
  *         node.children = new_child
  *         new_child.right_sibling = NULL
  *         new_child.left_sibling = NULL             # <<<<<<<<<<<<<<
@@ -9794,7 +9980,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
  */
     __pyx_v_new_child->left_sibling = NULL;
 
-    /* "mst/mst.pyx":681
+    /* "mst/mst.pyx":693
  *         new_child.right_sibling = NULL
  *         new_child.left_sibling = NULL
  *         node.rank = 1             # <<<<<<<<<<<<<<
@@ -9805,7 +9991,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
   }
   __pyx_L3:;
 
-  /* "mst/mst.pyx":668
+  /* "mst/mst.pyx":680
  * 
  * 
  * cdef void add_child(FibonacciNode* node, FibonacciNode* new_child):             # <<<<<<<<<<<<<<
@@ -9817,7 +10003,7 @@ static void __pyx_f_3mst_3mst_add_child(struct __pyx_t_3mst_3mst_FibonacciNode *
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mst/mst.pyx":684
+/* "mst/mst.pyx":696
  * 
  * 
  * cdef void add_sibling(FibonacciNode* node, FibonacciNode* new_sibling):             # <<<<<<<<<<<<<<
@@ -9832,7 +10018,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("add_sibling", 0);
 
-  /* "mst/mst.pyx":688
+  /* "mst/mst.pyx":700
  *     #              - new_sibling is a valid pointer
  *     #              - new_sibling is not the child or sibling of another node
  *     cdef FibonacciNode* temp = rightmost_sibling(node)             # <<<<<<<<<<<<<<
@@ -9841,7 +10027,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
  */
   __pyx_v_temp = __pyx_f_3mst_3mst_rightmost_sibling(__pyx_v_node);
 
-  /* "mst/mst.pyx":689
+  /* "mst/mst.pyx":701
  *     #              - new_sibling is not the child or sibling of another node
  *     cdef FibonacciNode* temp = rightmost_sibling(node)
  *     temp.right_sibling = new_sibling             # <<<<<<<<<<<<<<
@@ -9850,7 +10036,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
  */
   __pyx_v_temp->right_sibling = __pyx_v_new_sibling;
 
-  /* "mst/mst.pyx":690
+  /* "mst/mst.pyx":702
  *     cdef FibonacciNode* temp = rightmost_sibling(node)
  *     temp.right_sibling = new_sibling
  *     new_sibling.left_sibling = temp             # <<<<<<<<<<<<<<
@@ -9859,7 +10045,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
  */
   __pyx_v_new_sibling->left_sibling = __pyx_v_temp;
 
-  /* "mst/mst.pyx":691
+  /* "mst/mst.pyx":703
  *     temp.right_sibling = new_sibling
  *     new_sibling.left_sibling = temp
  *     new_sibling.right_sibling = NULL             # <<<<<<<<<<<<<<
@@ -9868,7 +10054,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
  */
   __pyx_v_new_sibling->right_sibling = NULL;
 
-  /* "mst/mst.pyx":692
+  /* "mst/mst.pyx":704
  *     new_sibling.left_sibling = temp
  *     new_sibling.right_sibling = NULL
  *     new_sibling.parent = node.parent             # <<<<<<<<<<<<<<
@@ -9878,7 +10064,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
   __pyx_t_1 = __pyx_v_node->parent;
   __pyx_v_new_sibling->parent = __pyx_t_1;
 
-  /* "mst/mst.pyx":693
+  /* "mst/mst.pyx":705
  *     new_sibling.right_sibling = NULL
  *     new_sibling.parent = node.parent
  *     if new_sibling.parent:             # <<<<<<<<<<<<<<
@@ -9888,7 +10074,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
   __pyx_t_2 = (__pyx_v_new_sibling->parent != 0);
   if (__pyx_t_2) {
 
-    /* "mst/mst.pyx":694
+    /* "mst/mst.pyx":706
  *     new_sibling.parent = node.parent
  *     if new_sibling.parent:
  *         new_sibling.parent.rank += 1             # <<<<<<<<<<<<<<
@@ -9897,7 +10083,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
  */
     __pyx_v_new_sibling->parent->rank = (__pyx_v_new_sibling->parent->rank + 1);
 
-    /* "mst/mst.pyx":693
+    /* "mst/mst.pyx":705
  *     new_sibling.right_sibling = NULL
  *     new_sibling.parent = node.parent
  *     if new_sibling.parent:             # <<<<<<<<<<<<<<
@@ -9906,7 +10092,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
  */
   }
 
-  /* "mst/mst.pyx":684
+  /* "mst/mst.pyx":696
  * 
  * 
  * cdef void add_sibling(FibonacciNode* node, FibonacciNode* new_sibling):             # <<<<<<<<<<<<<<
@@ -9918,7 +10104,7 @@ static void __pyx_f_3mst_3mst_add_sibling(struct __pyx_t_3mst_3mst_FibonacciNode
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mst/mst.pyx":697
+/* "mst/mst.pyx":709
  * 
  * 
  * cdef void remove(FibonacciNode* node):             # <<<<<<<<<<<<<<
@@ -9932,7 +10118,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
   struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_t_2;
   __Pyx_RefNannySetupContext("remove", 0);
 
-  /* "mst/mst.pyx":699
+  /* "mst/mst.pyx":711
  * cdef void remove(FibonacciNode* node):
  *     # Assumptions: - node is a valid pointer
  *     if node.parent:             # <<<<<<<<<<<<<<
@@ -9942,7 +10128,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
   __pyx_t_1 = (__pyx_v_node->parent != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":700
+    /* "mst/mst.pyx":712
  *     # Assumptions: - node is a valid pointer
  *     if node.parent:
  *         node.parent.rank -= 1             # <<<<<<<<<<<<<<
@@ -9951,7 +10137,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
  */
     __pyx_v_node->parent->rank = (__pyx_v_node->parent->rank - 1);
 
-    /* "mst/mst.pyx":701
+    /* "mst/mst.pyx":713
  *     if node.parent:
  *         node.parent.rank -= 1
  *         if node.left_sibling:             # <<<<<<<<<<<<<<
@@ -9961,7 +10147,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
     __pyx_t_1 = (__pyx_v_node->left_sibling != 0);
     if (__pyx_t_1) {
 
-      /* "mst/mst.pyx":702
+      /* "mst/mst.pyx":714
  *         node.parent.rank -= 1
  *         if node.left_sibling:
  *             node.parent.children = node.left_sibling             # <<<<<<<<<<<<<<
@@ -9971,7 +10157,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
       __pyx_t_2 = __pyx_v_node->left_sibling;
       __pyx_v_node->parent->children = __pyx_t_2;
 
-      /* "mst/mst.pyx":701
+      /* "mst/mst.pyx":713
  *     if node.parent:
  *         node.parent.rank -= 1
  *         if node.left_sibling:             # <<<<<<<<<<<<<<
@@ -9981,7 +10167,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
       goto __pyx_L4;
     }
 
-    /* "mst/mst.pyx":703
+    /* "mst/mst.pyx":715
  *         if node.left_sibling:
  *             node.parent.children = node.left_sibling
  *         elif node.right_sibling:             # <<<<<<<<<<<<<<
@@ -9991,7 +10177,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
     __pyx_t_1 = (__pyx_v_node->right_sibling != 0);
     if (__pyx_t_1) {
 
-      /* "mst/mst.pyx":704
+      /* "mst/mst.pyx":716
  *             node.parent.children = node.left_sibling
  *         elif node.right_sibling:
  *             node.parent.children = node.right_sibling             # <<<<<<<<<<<<<<
@@ -10001,7 +10187,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
       __pyx_t_2 = __pyx_v_node->right_sibling;
       __pyx_v_node->parent->children = __pyx_t_2;
 
-      /* "mst/mst.pyx":703
+      /* "mst/mst.pyx":715
  *         if node.left_sibling:
  *             node.parent.children = node.left_sibling
  *         elif node.right_sibling:             # <<<<<<<<<<<<<<
@@ -10011,7 +10197,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
       goto __pyx_L4;
     }
 
-    /* "mst/mst.pyx":706
+    /* "mst/mst.pyx":718
  *             node.parent.children = node.right_sibling
  *         else:
  *             node.parent.children = NULL             # <<<<<<<<<<<<<<
@@ -10023,7 +10209,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
     }
     __pyx_L4:;
 
-    /* "mst/mst.pyx":699
+    /* "mst/mst.pyx":711
  * cdef void remove(FibonacciNode* node):
  *     # Assumptions: - node is a valid pointer
  *     if node.parent:             # <<<<<<<<<<<<<<
@@ -10032,7 +10218,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
  */
   }
 
-  /* "mst/mst.pyx":708
+  /* "mst/mst.pyx":720
  *             node.parent.children = NULL
  * 
  *     if node.left_sibling:             # <<<<<<<<<<<<<<
@@ -10042,7 +10228,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
   __pyx_t_1 = (__pyx_v_node->left_sibling != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":709
+    /* "mst/mst.pyx":721
  * 
  *     if node.left_sibling:
  *         node.left_sibling.right_sibling = node.right_sibling             # <<<<<<<<<<<<<<
@@ -10052,7 +10238,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
     __pyx_t_2 = __pyx_v_node->right_sibling;
     __pyx_v_node->left_sibling->right_sibling = __pyx_t_2;
 
-    /* "mst/mst.pyx":708
+    /* "mst/mst.pyx":720
  *             node.parent.children = NULL
  * 
  *     if node.left_sibling:             # <<<<<<<<<<<<<<
@@ -10061,7 +10247,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
  */
   }
 
-  /* "mst/mst.pyx":710
+  /* "mst/mst.pyx":722
  *     if node.left_sibling:
  *         node.left_sibling.right_sibling = node.right_sibling
  *     if node.right_sibling:             # <<<<<<<<<<<<<<
@@ -10071,7 +10257,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
   __pyx_t_1 = (__pyx_v_node->right_sibling != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":711
+    /* "mst/mst.pyx":723
  *         node.left_sibling.right_sibling = node.right_sibling
  *     if node.right_sibling:
  *         node.right_sibling.left_sibling = node.left_sibling             # <<<<<<<<<<<<<<
@@ -10081,7 +10267,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
     __pyx_t_2 = __pyx_v_node->left_sibling;
     __pyx_v_node->right_sibling->left_sibling = __pyx_t_2;
 
-    /* "mst/mst.pyx":710
+    /* "mst/mst.pyx":722
  *     if node.left_sibling:
  *         node.left_sibling.right_sibling = node.right_sibling
  *     if node.right_sibling:             # <<<<<<<<<<<<<<
@@ -10090,7 +10276,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
  */
   }
 
-  /* "mst/mst.pyx":713
+  /* "mst/mst.pyx":725
  *         node.right_sibling.left_sibling = node.left_sibling
  * 
  *     node.left_sibling = NULL             # <<<<<<<<<<<<<<
@@ -10099,7 +10285,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
  */
   __pyx_v_node->left_sibling = NULL;
 
-  /* "mst/mst.pyx":714
+  /* "mst/mst.pyx":726
  * 
  *     node.left_sibling = NULL
  *     node.right_sibling = NULL             # <<<<<<<<<<<<<<
@@ -10108,7 +10294,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
  */
   __pyx_v_node->right_sibling = NULL;
 
-  /* "mst/mst.pyx":715
+  /* "mst/mst.pyx":727
  *     node.left_sibling = NULL
  *     node.right_sibling = NULL
  *     node.parent = NULL             # <<<<<<<<<<<<<<
@@ -10117,7 +10303,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
  */
   __pyx_v_node->parent = NULL;
 
-  /* "mst/mst.pyx":697
+  /* "mst/mst.pyx":709
  * 
  * 
  * cdef void remove(FibonacciNode* node):             # <<<<<<<<<<<<<<
@@ -10129,7 +10315,7 @@ static void __pyx_f_3mst_3mst_remove(struct __pyx_t_3mst_3mst_FibonacciNode *__p
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mst/mst.pyx":731
+/* "mst/mst.pyx":743
  * 
  * 
  * cdef void insert_node(FibonacciHeap* heap,             # <<<<<<<<<<<<<<
@@ -10142,7 +10328,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("insert_node", 0);
 
-  /* "mst/mst.pyx":736
+  /* "mst/mst.pyx":748
  *     #              - node is a valid pointer
  *     #              - node is not the child or sibling of another node
  *     if heap.min_node:             # <<<<<<<<<<<<<<
@@ -10152,7 +10338,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
   __pyx_t_1 = (__pyx_v_heap->min_node != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":737
+    /* "mst/mst.pyx":749
  *     #              - node is not the child or sibling of another node
  *     if heap.min_node:
  *         add_sibling(heap.min_node, node)             # <<<<<<<<<<<<<<
@@ -10161,7 +10347,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
  */
     __pyx_f_3mst_3mst_add_sibling(__pyx_v_heap->min_node, __pyx_v_node);
 
-    /* "mst/mst.pyx":738
+    /* "mst/mst.pyx":750
  *     if heap.min_node:
  *         add_sibling(heap.min_node, node)
  *         if node.val < heap.min_node.val:             # <<<<<<<<<<<<<<
@@ -10171,7 +10357,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
     __pyx_t_1 = ((__pyx_v_node->val < __pyx_v_heap->min_node->val) != 0);
     if (__pyx_t_1) {
 
-      /* "mst/mst.pyx":739
+      /* "mst/mst.pyx":751
  *         add_sibling(heap.min_node, node)
  *         if node.val < heap.min_node.val:
  *             heap.min_node = node             # <<<<<<<<<<<<<<
@@ -10180,7 +10366,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
  */
       __pyx_v_heap->min_node = __pyx_v_node;
 
-      /* "mst/mst.pyx":738
+      /* "mst/mst.pyx":750
  *     if heap.min_node:
  *         add_sibling(heap.min_node, node)
  *         if node.val < heap.min_node.val:             # <<<<<<<<<<<<<<
@@ -10189,7 +10375,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
  */
     }
 
-    /* "mst/mst.pyx":736
+    /* "mst/mst.pyx":748
  *     #              - node is a valid pointer
  *     #              - node is not the child or sibling of another node
  *     if heap.min_node:             # <<<<<<<<<<<<<<
@@ -10199,7 +10385,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
     goto __pyx_L3;
   }
 
-  /* "mst/mst.pyx":741
+  /* "mst/mst.pyx":753
  *             heap.min_node = node
  *     else:
  *         heap.min_node = node             # <<<<<<<<<<<<<<
@@ -10211,7 +10397,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
   }
   __pyx_L3:;
 
-  /* "mst/mst.pyx":731
+  /* "mst/mst.pyx":743
  * 
  * 
  * cdef void insert_node(FibonacciHeap* heap,             # <<<<<<<<<<<<<<
@@ -10223,7 +10409,7 @@ static void __pyx_f_3mst_3mst_insert_node(struct __pyx_t_3mst_3mst_FibonacciHeap
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mst/mst.pyx":744
+/* "mst/mst.pyx":756
  * 
  * 
  * cdef void decrease_val(FibonacciHeap* heap,             # <<<<<<<<<<<<<<
@@ -10237,7 +10423,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("decrease_val", 0);
 
-  /* "mst/mst.pyx":752
+  /* "mst/mst.pyx":764
  *     #              - node is not the child or sibling of another node
  *     #              - node is in the heap
  *     node.val = newval             # <<<<<<<<<<<<<<
@@ -10246,7 +10432,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
  */
   __pyx_v_node->val = __pyx_v_newval;
 
-  /* "mst/mst.pyx":753
+  /* "mst/mst.pyx":765
  *     #              - node is in the heap
  *     node.val = newval
  *     if node.parent and (node.parent.val >= newval):             # <<<<<<<<<<<<<<
@@ -10264,7 +10450,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":754
+    /* "mst/mst.pyx":766
  *     node.val = newval
  *     if node.parent and (node.parent.val >= newval):
  *         remove(node)             # <<<<<<<<<<<<<<
@@ -10273,7 +10459,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
  */
     __pyx_f_3mst_3mst_remove(__pyx_v_node);
 
-    /* "mst/mst.pyx":755
+    /* "mst/mst.pyx":767
  *     if node.parent and (node.parent.val >= newval):
  *         remove(node)
  *         insert_node(heap, node)             # <<<<<<<<<<<<<<
@@ -10282,7 +10468,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
  */
     __pyx_f_3mst_3mst_insert_node(__pyx_v_heap, __pyx_v_node);
 
-    /* "mst/mst.pyx":753
+    /* "mst/mst.pyx":765
  *     #              - node is in the heap
  *     node.val = newval
  *     if node.parent and (node.parent.val >= newval):             # <<<<<<<<<<<<<<
@@ -10292,7 +10478,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
     goto __pyx_L3;
   }
 
-  /* "mst/mst.pyx":756
+  /* "mst/mst.pyx":768
  *         remove(node)
  *         insert_node(heap, node)
  *     elif heap.min_node.val > node.val:             # <<<<<<<<<<<<<<
@@ -10302,7 +10488,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
   __pyx_t_1 = ((__pyx_v_heap->min_node->val > __pyx_v_node->val) != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":757
+    /* "mst/mst.pyx":769
  *         insert_node(heap, node)
  *     elif heap.min_node.val > node.val:
  *         heap.min_node = node             # <<<<<<<<<<<<<<
@@ -10311,7 +10497,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
  */
     __pyx_v_heap->min_node = __pyx_v_node;
 
-    /* "mst/mst.pyx":756
+    /* "mst/mst.pyx":768
  *         remove(node)
  *         insert_node(heap, node)
  *     elif heap.min_node.val > node.val:             # <<<<<<<<<<<<<<
@@ -10321,7 +10507,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
   }
   __pyx_L3:;
 
-  /* "mst/mst.pyx":744
+  /* "mst/mst.pyx":756
  * 
  * 
  * cdef void decrease_val(FibonacciHeap* heap,             # <<<<<<<<<<<<<<
@@ -10333,7 +10519,7 @@ static void __pyx_f_3mst_3mst_decrease_val(struct __pyx_t_3mst_3mst_FibonacciHea
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mst/mst.pyx":760
+/* "mst/mst.pyx":772
  * 
  * 
  * cdef void link(FibonacciHeap* heap, FibonacciNode* node):             # <<<<<<<<<<<<<<
@@ -10348,7 +10534,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("link", 0);
 
-  /* "mst/mst.pyx":769
+  /* "mst/mst.pyx":781
  *     cdef FibonacciNode *child
  * 
  *     if heap.roots_by_rank[node.rank] == NULL:             # <<<<<<<<<<<<<<
@@ -10358,7 +10544,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
   __pyx_t_1 = (((__pyx_v_heap->roots_by_rank[__pyx_v_node->rank]) == NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":770
+    /* "mst/mst.pyx":782
  * 
  *     if heap.roots_by_rank[node.rank] == NULL:
  *         heap.roots_by_rank[node.rank] = node             # <<<<<<<<<<<<<<
@@ -10367,7 +10553,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
  */
     (__pyx_v_heap->roots_by_rank[__pyx_v_node->rank]) = __pyx_v_node;
 
-    /* "mst/mst.pyx":769
+    /* "mst/mst.pyx":781
  *     cdef FibonacciNode *child
  * 
  *     if heap.roots_by_rank[node.rank] == NULL:             # <<<<<<<<<<<<<<
@@ -10377,7 +10563,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
     goto __pyx_L3;
   }
 
-  /* "mst/mst.pyx":772
+  /* "mst/mst.pyx":784
  *         heap.roots_by_rank[node.rank] = node
  *     else:
  *         linknode = heap.roots_by_rank[node.rank]             # <<<<<<<<<<<<<<
@@ -10387,7 +10573,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
   /*else*/ {
     __pyx_v_linknode = (__pyx_v_heap->roots_by_rank[__pyx_v_node->rank]);
 
-    /* "mst/mst.pyx":773
+    /* "mst/mst.pyx":785
  *     else:
  *         linknode = heap.roots_by_rank[node.rank]
  *         heap.roots_by_rank[node.rank] = NULL             # <<<<<<<<<<<<<<
@@ -10396,7 +10582,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
  */
     (__pyx_v_heap->roots_by_rank[__pyx_v_node->rank]) = NULL;
 
-    /* "mst/mst.pyx":775
+    /* "mst/mst.pyx":787
  *         heap.roots_by_rank[node.rank] = NULL
  * 
  *         if node.val < linknode.val or node == heap.min_node:             # <<<<<<<<<<<<<<
@@ -10414,7 +10600,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "mst/mst.pyx":776
+      /* "mst/mst.pyx":788
  * 
  *         if node.val < linknode.val or node == heap.min_node:
  *             remove(linknode)             # <<<<<<<<<<<<<<
@@ -10423,7 +10609,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
  */
       __pyx_f_3mst_3mst_remove(__pyx_v_linknode);
 
-      /* "mst/mst.pyx":777
+      /* "mst/mst.pyx":789
  *         if node.val < linknode.val or node == heap.min_node:
  *             remove(linknode)
  *             add_child(node, linknode)             # <<<<<<<<<<<<<<
@@ -10432,7 +10618,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
  */
       __pyx_f_3mst_3mst_add_child(__pyx_v_node, __pyx_v_linknode);
 
-      /* "mst/mst.pyx":778
+      /* "mst/mst.pyx":790
  *             remove(linknode)
  *             add_child(node, linknode)
  *             link(heap, node)             # <<<<<<<<<<<<<<
@@ -10441,7 +10627,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
  */
       __pyx_f_3mst_3mst_link(__pyx_v_heap, __pyx_v_node);
 
-      /* "mst/mst.pyx":775
+      /* "mst/mst.pyx":787
  *         heap.roots_by_rank[node.rank] = NULL
  * 
  *         if node.val < linknode.val or node == heap.min_node:             # <<<<<<<<<<<<<<
@@ -10451,7 +10637,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
       goto __pyx_L4;
     }
 
-    /* "mst/mst.pyx":780
+    /* "mst/mst.pyx":792
  *             link(heap, node)
  *         else:
  *             remove(node)             # <<<<<<<<<<<<<<
@@ -10461,7 +10647,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
     /*else*/ {
       __pyx_f_3mst_3mst_remove(__pyx_v_node);
 
-      /* "mst/mst.pyx":781
+      /* "mst/mst.pyx":793
  *         else:
  *             remove(node)
  *             add_child(linknode, node)             # <<<<<<<<<<<<<<
@@ -10470,7 +10656,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
  */
       __pyx_f_3mst_3mst_add_child(__pyx_v_linknode, __pyx_v_node);
 
-      /* "mst/mst.pyx":782
+      /* "mst/mst.pyx":794
  *             remove(node)
  *             add_child(linknode, node)
  *             link(heap, linknode)             # <<<<<<<<<<<<<<
@@ -10483,7 +10669,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
   }
   __pyx_L3:;
 
-  /* "mst/mst.pyx":760
+  /* "mst/mst.pyx":772
  * 
  * 
  * cdef void link(FibonacciHeap* heap, FibonacciNode* node):             # <<<<<<<<<<<<<<
@@ -10495,7 +10681,7 @@ static void __pyx_f_3mst_3mst_link(struct __pyx_t_3mst_3mst_FibonacciHeap *__pyx
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mst/mst.pyx":785
+/* "mst/mst.pyx":797
  * 
  * 
  * cdef FibonacciNode* remove_min(FibonacciHeap* heap):             # <<<<<<<<<<<<<<
@@ -10515,7 +10701,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
   unsigned int __pyx_t_3;
   __Pyx_RefNannySetupContext("remove_min", 0);
 
-  /* "mst/mst.pyx":795
+  /* "mst/mst.pyx":807
  * 
  *     # make all min_node children into root nodes
  *     if heap.min_node.children:             # <<<<<<<<<<<<<<
@@ -10525,7 +10711,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
   __pyx_t_1 = (__pyx_v_heap->min_node->children != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":796
+    /* "mst/mst.pyx":808
  *     # make all min_node children into root nodes
  *     if heap.min_node.children:
  *         temp = leftmost_sibling(heap.min_node.children)             # <<<<<<<<<<<<<<
@@ -10534,7 +10720,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
     __pyx_v_temp = __pyx_f_3mst_3mst_leftmost_sibling(__pyx_v_heap->min_node->children);
 
-    /* "mst/mst.pyx":797
+    /* "mst/mst.pyx":809
  *     if heap.min_node.children:
  *         temp = leftmost_sibling(heap.min_node.children)
  *         temp_right = NULL             # <<<<<<<<<<<<<<
@@ -10543,7 +10729,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
     __pyx_v_temp_right = NULL;
 
-    /* "mst/mst.pyx":799
+    /* "mst/mst.pyx":811
  *         temp_right = NULL
  * 
  *         while temp:             # <<<<<<<<<<<<<<
@@ -10554,7 +10740,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
       __pyx_t_1 = (__pyx_v_temp != 0);
       if (!__pyx_t_1) break;
 
-      /* "mst/mst.pyx":800
+      /* "mst/mst.pyx":812
  * 
  *         while temp:
  *             temp_right = temp.right_sibling             # <<<<<<<<<<<<<<
@@ -10564,7 +10750,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
       __pyx_t_2 = __pyx_v_temp->right_sibling;
       __pyx_v_temp_right = __pyx_t_2;
 
-      /* "mst/mst.pyx":801
+      /* "mst/mst.pyx":813
  *         while temp:
  *             temp_right = temp.right_sibling
  *             remove(temp)             # <<<<<<<<<<<<<<
@@ -10573,7 +10759,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
       __pyx_f_3mst_3mst_remove(__pyx_v_temp);
 
-      /* "mst/mst.pyx":802
+      /* "mst/mst.pyx":814
  *             temp_right = temp.right_sibling
  *             remove(temp)
  *             add_sibling(heap.min_node, temp)             # <<<<<<<<<<<<<<
@@ -10582,7 +10768,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
       __pyx_f_3mst_3mst_add_sibling(__pyx_v_heap->min_node, __pyx_v_temp);
 
-      /* "mst/mst.pyx":803
+      /* "mst/mst.pyx":815
  *             remove(temp)
  *             add_sibling(heap.min_node, temp)
  *             temp = temp_right             # <<<<<<<<<<<<<<
@@ -10592,7 +10778,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
       __pyx_v_temp = __pyx_v_temp_right;
     }
 
-    /* "mst/mst.pyx":805
+    /* "mst/mst.pyx":817
  *             temp = temp_right
  * 
  *         heap.min_node.children = NULL             # <<<<<<<<<<<<<<
@@ -10601,7 +10787,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
     __pyx_v_heap->min_node->children = NULL;
 
-    /* "mst/mst.pyx":795
+    /* "mst/mst.pyx":807
  * 
  *     # make all min_node children into root nodes
  *     if heap.min_node.children:             # <<<<<<<<<<<<<<
@@ -10610,7 +10796,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
   }
 
-  /* "mst/mst.pyx":808
+  /* "mst/mst.pyx":820
  * 
  *     # choose a root node other than min_node
  *     temp = leftmost_sibling(heap.min_node)             # <<<<<<<<<<<<<<
@@ -10619,7 +10805,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
   __pyx_v_temp = __pyx_f_3mst_3mst_leftmost_sibling(__pyx_v_heap->min_node);
 
-  /* "mst/mst.pyx":809
+  /* "mst/mst.pyx":821
  *     # choose a root node other than min_node
  *     temp = leftmost_sibling(heap.min_node)
  *     if temp == heap.min_node:             # <<<<<<<<<<<<<<
@@ -10629,7 +10815,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
   __pyx_t_1 = ((__pyx_v_temp == __pyx_v_heap->min_node) != 0);
   if (__pyx_t_1) {
 
-    /* "mst/mst.pyx":810
+    /* "mst/mst.pyx":822
  *     temp = leftmost_sibling(heap.min_node)
  *     if temp == heap.min_node:
  *         if heap.min_node.right_sibling:             # <<<<<<<<<<<<<<
@@ -10639,7 +10825,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
     __pyx_t_1 = (__pyx_v_heap->min_node->right_sibling != 0);
     if (__pyx_t_1) {
 
-      /* "mst/mst.pyx":811
+      /* "mst/mst.pyx":823
  *     if temp == heap.min_node:
  *         if heap.min_node.right_sibling:
  *             temp = heap.min_node.right_sibling             # <<<<<<<<<<<<<<
@@ -10649,7 +10835,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
       __pyx_t_2 = __pyx_v_heap->min_node->right_sibling;
       __pyx_v_temp = __pyx_t_2;
 
-      /* "mst/mst.pyx":810
+      /* "mst/mst.pyx":822
  *     temp = leftmost_sibling(heap.min_node)
  *     if temp == heap.min_node:
  *         if heap.min_node.right_sibling:             # <<<<<<<<<<<<<<
@@ -10659,7 +10845,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
       goto __pyx_L7;
     }
 
-    /* "mst/mst.pyx":813
+    /* "mst/mst.pyx":825
  *             temp = heap.min_node.right_sibling
  *         else:
  *             out = heap.min_node             # <<<<<<<<<<<<<<
@@ -10670,7 +10856,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
       __pyx_t_2 = __pyx_v_heap->min_node;
       __pyx_v_out = __pyx_t_2;
 
-      /* "mst/mst.pyx":814
+      /* "mst/mst.pyx":826
  *         else:
  *             out = heap.min_node
  *             heap.min_node = NULL             # <<<<<<<<<<<<<<
@@ -10679,7 +10865,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
       __pyx_v_heap->min_node = NULL;
 
-      /* "mst/mst.pyx":815
+      /* "mst/mst.pyx":827
  *             out = heap.min_node
  *             heap.min_node = NULL
  *             return out             # <<<<<<<<<<<<<<
@@ -10691,7 +10877,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
     }
     __pyx_L7:;
 
-    /* "mst/mst.pyx":809
+    /* "mst/mst.pyx":821
  *     # choose a root node other than min_node
  *     temp = leftmost_sibling(heap.min_node)
  *     if temp == heap.min_node:             # <<<<<<<<<<<<<<
@@ -10700,7 +10886,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
   }
 
-  /* "mst/mst.pyx":818
+  /* "mst/mst.pyx":830
  * 
  *     # remove min_node, and point heap to the new min
  *     out = heap.min_node             # <<<<<<<<<<<<<<
@@ -10710,7 +10896,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
   __pyx_t_2 = __pyx_v_heap->min_node;
   __pyx_v_out = __pyx_t_2;
 
-  /* "mst/mst.pyx":819
+  /* "mst/mst.pyx":831
  *     # remove min_node, and point heap to the new min
  *     out = heap.min_node
  *     remove(heap.min_node)             # <<<<<<<<<<<<<<
@@ -10719,7 +10905,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
   __pyx_f_3mst_3mst_remove(__pyx_v_heap->min_node);
 
-  /* "mst/mst.pyx":820
+  /* "mst/mst.pyx":832
  *     out = heap.min_node
  *     remove(heap.min_node)
  *     heap.min_node = temp             # <<<<<<<<<<<<<<
@@ -10728,7 +10914,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
   __pyx_v_heap->min_node = __pyx_v_temp;
 
-  /* "mst/mst.pyx":823
+  /* "mst/mst.pyx":835
  * 
  *     # re-link the heap
  *     for i in range(100):             # <<<<<<<<<<<<<<
@@ -10738,7 +10924,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
   for (__pyx_t_3 = 0; __pyx_t_3 < 0x64; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "mst/mst.pyx":824
+    /* "mst/mst.pyx":836
  *     # re-link the heap
  *     for i in range(100):
  *         heap.roots_by_rank[i] = NULL             # <<<<<<<<<<<<<<
@@ -10748,7 +10934,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
     (__pyx_v_heap->roots_by_rank[__pyx_v_i]) = NULL;
   }
 
-  /* "mst/mst.pyx":826
+  /* "mst/mst.pyx":838
  *         heap.roots_by_rank[i] = NULL
  * 
  *     while temp:             # <<<<<<<<<<<<<<
@@ -10759,7 +10945,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
     __pyx_t_1 = (__pyx_v_temp != 0);
     if (!__pyx_t_1) break;
 
-    /* "mst/mst.pyx":827
+    /* "mst/mst.pyx":839
  * 
  *     while temp:
  *         if temp.val < heap.min_node.val:             # <<<<<<<<<<<<<<
@@ -10769,7 +10955,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
     __pyx_t_1 = ((__pyx_v_temp->val < __pyx_v_heap->min_node->val) != 0);
     if (__pyx_t_1) {
 
-      /* "mst/mst.pyx":828
+      /* "mst/mst.pyx":840
  *     while temp:
  *         if temp.val < heap.min_node.val:
  *             heap.min_node = temp             # <<<<<<<<<<<<<<
@@ -10778,7 +10964,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
       __pyx_v_heap->min_node = __pyx_v_temp;
 
-      /* "mst/mst.pyx":827
+      /* "mst/mst.pyx":839
  * 
  *     while temp:
  *         if temp.val < heap.min_node.val:             # <<<<<<<<<<<<<<
@@ -10787,7 +10973,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
     }
 
-    /* "mst/mst.pyx":829
+    /* "mst/mst.pyx":841
  *         if temp.val < heap.min_node.val:
  *             heap.min_node = temp
  *         temp_right = temp.right_sibling             # <<<<<<<<<<<<<<
@@ -10797,7 +10983,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
     __pyx_t_2 = __pyx_v_temp->right_sibling;
     __pyx_v_temp_right = __pyx_t_2;
 
-    /* "mst/mst.pyx":830
+    /* "mst/mst.pyx":842
  *             heap.min_node = temp
  *         temp_right = temp.right_sibling
  *         link(heap, temp)             # <<<<<<<<<<<<<<
@@ -10806,7 +10992,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
  */
     __pyx_f_3mst_3mst_link(__pyx_v_heap, __pyx_v_temp);
 
-    /* "mst/mst.pyx":831
+    /* "mst/mst.pyx":843
  *         temp_right = temp.right_sibling
  *         link(heap, temp)
  *         temp = temp_right             # <<<<<<<<<<<<<<
@@ -10816,7 +11002,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
     __pyx_v_temp = __pyx_v_temp_right;
   }
 
-  /* "mst/mst.pyx":833
+  /* "mst/mst.pyx":845
  *         temp = temp_right
  * 
  *     return out             # <<<<<<<<<<<<<<
@@ -10824,7 +11010,7 @@ static struct __pyx_t_3mst_3mst_FibonacciNode *__pyx_f_3mst_3mst_remove_min(stru
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "mst/mst.pyx":785
+  /* "mst/mst.pyx":797
  * 
  * 
  * cdef FibonacciNode* remove_min(FibonacciHeap* heap):             # <<<<<<<<<<<<<<
@@ -25595,6 +25781,7 @@ static PyMethodDef __pyx_methods[] = {
   {"prim_inc", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3mst_3mst_7prim_inc, METH_VARARGS|METH_KEYWORDS, 0},
   {"prim_graph", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3mst_3mst_9prim_graph, METH_VARARGS|METH_KEYWORDS, 0},
   {"split_mst", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3mst_3mst_11split_mst, METH_VARARGS|METH_KEYWORDS, 0},
+  {"euclidean_export", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3mst_3mst_13euclidean_export, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -25784,6 +25971,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_union, __pyx_k_union, sizeof(__pyx_k_union), 0, 0, 1, 1},
   {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
   {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
+  {&__pyx_n_s_v1, __pyx_k_v1, sizeof(__pyx_k_v1), 0, 0, 1, 1},
+  {&__pyx_n_s_v2, __pyx_k_v2, sizeof(__pyx_k_v2), 0, 0, 1, 1},
   {&__pyx_n_s_xrange, __pyx_k_xrange, sizeof(__pyx_k_xrange), 0, 0, 1, 1},
   {&__pyx_n_s_zeros, __pyx_k_zeros, sizeof(__pyx_k_zeros), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
