@@ -143,7 +143,7 @@ cdef class RelativeNeighborhoodGraph:
 
         cdef list stack_a = [node_a]
         cdef list stack_b = [node_b]
-        
+
         cdef FairSplitTreeNode current_a
         cdef FairSplitTreeNode current_b
 
@@ -173,8 +173,8 @@ cdef class RelativeNeighborhoodGraph:
     @cython.nonecheck(False)
     @cython.initializedcheck(False)
     cdef void sbcn(self, 
-        ITYPE_t[:] red, 
-        ITYPE_t[:] blue,
+        np.ndarray[ITYPE_t, ndim=1] red, 
+        np.ndarray[ITYPE_t, ndim=1] blue,
         DTYPE_t[:, :] data,
         DTYPE_t[:] core_distances,
         ITYPE_t[:, :] knn):
@@ -189,7 +189,6 @@ cdef class RelativeNeighborhoodGraph:
         if r_size == 1 and b_size == 1:
 
             underlying = euclidean_local(data[red[0]], data[blue[0]])
-            # underlying = distance.euclidean(data[red[0]], data[blue[0]])
             d_rb = max(underlying, core_distances[red[0]], core_distances[blue[0]])
 
             self.add_edge(
@@ -244,7 +243,7 @@ cdef class RelativeNeighborhoodGraph:
                         red[r], 
                         blue[b], 
                         closest_dist_rb[r],
-                        euclidean_local(data[red[r]], data[blue[b]]), 
+                        closest_dist_rb[r], 
                         data, 
                         core_distances, 
                         knn)
