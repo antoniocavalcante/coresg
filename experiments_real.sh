@@ -1,10 +1,12 @@
 #!/bin/bash
 
 imagenet() {
-    DATA="../dataset-real/imagenet-sample.csv"
+    DATA="../dataset-real/imagenet_sample.csv"
     SEPARATOR=" "
 
-    python main_experiments.py "${DATA}" 100 "${SEPARATOR}" "knn" >> "real-data.results"
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
+
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
 }
 
 
@@ -12,7 +14,9 @@ fma_chroma() {
     DATA="../dataset-real/fma_chroma_cens.csv"
     SEPARATOR=","
 
-    python main_experiments.py "${DATA}" 100 "${SEPARATOR}" "knn" >> "real-data.results"
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
+
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
 }
 
 
@@ -20,18 +24,39 @@ fma_mfcc() {
     DATA="../dataset-real/fma_mfcc.csv"
     SEPARATOR=","
 
-    python main_experiments.py "${DATA}" 100 "${SEPARATOR}" "knn" >> "real-data.results"
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data-rng.results"
+
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
 }
 
 
+20news_1000() {
+    DATA="../dataset-real/20news_1000d.csv"
+    SEPARATOR=","
+
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
+
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
+}
+
+20news_500() {
+    DATA="../dataset-real/20news_500d_pca.csv"
+    SEPARATOR=","
+
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
+
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
+}
 
 SECONDS=0
 
 for i in $(seq 1)
 do
-	imagenet
-	# fma_chroma
-    # fma_mfcc
+	fma_chroma
+    fma_mfcc
+    20news_500
+    20news_1000
+    imagenet
 done
 
 DURATION=$SECONDS

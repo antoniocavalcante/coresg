@@ -69,7 +69,7 @@ dimensions() {
 
 clusters() {
 
-    for clus in 10 20 30;
+    for clus in 10 30 50;
     do
         if $CORE || $ALL ; then
             python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${clus}c.dat" "${DEFAULT_KMAX}" " " "knn" >> "handl-core-clusters.results"

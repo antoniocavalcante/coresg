@@ -54,15 +54,19 @@ class HDBSCAN:
             from sklearn.neighbors import NearestNeighbors
             from mst.mst import euclidean_export
 
-            nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
+            if distance == 'precomputed':
+                nbrs = NearestNeighbors(n_neighbors=min_pts, metric='precomputed').fit(self.data)
+            else:
+                nbrs = NearestNeighbors(n_neighbors=min_pts).fit(self.data)
 
             # computes the core-distances and knn information.
             self.core_distances, self.knn = nbrs.kneighbors(self.data)
 
-            # fix core-distances to use the same precision as the local function.
-            for i in range(self.n):
-                for j in range(1, self.min_pts):
-                    self.core_distances[i, j] = euclidean_export(self.data[i], self.data[self.knn[i, j]])
+            if distance != 'precomputed':
+                # fix core-distances to use the same precision as the local function.
+                for i in range(self.n):
+                    for j in range(1, self.min_pts):
+                        self.core_distances[i, j] = euclidean_export(self.data[i], self.data[self.knn[i, j]])
 
             # saving the computed core-distances, knn and knng on files.
             np.save(name + "-" + str(self.min_pts) + "-cd" , self.core_distances)
