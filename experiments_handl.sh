@@ -109,6 +109,31 @@ initial() {
 }
 
 
+speedup() {
+
+    for n in 1 5 50;
+    do
+        for minpoints in 10 20 30 40 50 60 70 80 90 100;
+        do
+
+            python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "single" >> "handl-single-speedup-${n}.results"
+
+            if $CORE || $ALL ; then
+                python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "knn" >> "handl-core-speedup-${n}.results"
+            fi
+
+            if $CORE_INC || $ALL ; then
+                python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "knn_inc" >> "handl-core-inc-speedup-${n}.results"
+            fi
+
+            if $RNG || $ALL ; then
+                python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "rng" >> "handl-rng-speedup-${n}.results"
+            fi
+        done
+    done
+}
+
+
 if [[ ! -d "$1" ]]
 then
     echo "[ERROR] The directory $1 does not exist on your filesystem. Please enter a valid directory."
@@ -130,11 +155,12 @@ ALL=[[ $CORE && $CORE_INC && $RNG ]]
 SECONDS=0
 for i in $(seq 1)
 do
-	dimensions
-	minpoints
-	dataset
-    clusters
-    initial
+	# dimensions
+	# minpoints
+	# dataset
+    # clusters
+    # initial
+    speedup
 done
 
 DURATION=$SECONDS

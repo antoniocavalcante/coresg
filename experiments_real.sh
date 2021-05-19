@@ -50,6 +50,33 @@ fma_mfcc() {
 
 SECONDS=0
 
+speedup() {
+
+    DIR="../dataset-real"
+    SEPARATOR=","
+
+    for data in "fma_chroma_cens" "fma_mfcc" "20news_1000d" "20news_500d_pca";
+    do
+        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single_k" >> "real-data-single-k.results"    
+
+        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single" >> "real-data-single.results"
+    done
+}
+
+speedup_imagenet() {
+
+    DIR="../dataset-real"
+    SEPARATOR=" "
+
+    for data in "imagenet_sample";
+    do
+        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single_k" >> "real-data-single-k.results"    
+
+        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single" >> "real-data-single.results"
+    done
+}
+
+
 for i in $(seq 1)
 do
 	fma_chroma
@@ -57,6 +84,9 @@ do
     20news_500
     20news_1000
     imagenet
+    
+    speedup
+    speedup_imagenet
 done
 
 DURATION=$SECONDS
