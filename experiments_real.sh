@@ -24,7 +24,7 @@ fma_mfcc() {
     DATA="../dataset-real/fma_mfcc.csv"
     SEPARATOR=","
 
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data-rng.results"
+    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
 
     python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
 }
@@ -85,8 +85,8 @@ do
     20news_1000
     imagenet
     
-    speedup
-    speedup_imagenet
+    #speedup
+    #speedup_imagenet
 done
 
 DURATION=$SECONDS
