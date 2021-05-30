@@ -375,9 +375,6 @@ class HDBSCAN:
         # makes the mst an upper triangular matrix.
         mst = triu(mst.maximum(mst.T), format='csr')
 
-        print("[2, 14] MST: " + str(mst[2, 14]))
-        print("[2, 14] KNN: " + str(self.knng[2, 14]))
-
         # augments the knng with the ties.
         self.knng = self.knng.maximum(a_knn.maximum(a_knn.T))
         
@@ -402,9 +399,6 @@ class HDBSCAN:
         rng = rng_object.graph()
         rng = rng.maximum(rng.T)
         #-----------------------------------------------------------------------------------
-
-        # print("[2]  CD: ", str(self.core_distances[2, kmax - 1]))
-        # print("[14] CD: ", str(self.core_distances[14, kmax - 1]))
 
         print("")
         for i in range(self.n):
@@ -502,9 +496,3 @@ class HDBSCAN:
         self._get_nodes(reachability, split + 1, end)]
 
         return d
-
-    def ss_classification(self, mst, labels):
-        
-
-
-        return labels

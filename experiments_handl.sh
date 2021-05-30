@@ -155,11 +155,11 @@ ALL=[[ $CORE && $CORE_INC && $RNG ]]
 SECONDS=0
 for i in $(seq 1)
 do
-	# dimensions
-	# minpoints
-	# dataset
-    # clusters
-    # initial
+	dimensions
+	minpoints
+	dataset
+    clusters
+    initial
     speedup
 done
 

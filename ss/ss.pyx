@@ -45,6 +45,4 @@ cdef label_expansion(
             for i in xrange(mst_indptr[current_point], mst_indptr[current_point+1]):
                 current_neighbor = &nodes[mst_indices[i]]
 
-
-
     return labels

@@ -1,7 +1,9 @@
 #!/bin/bash
 
+DIR="../dataset-real"
+
 imagenet() {
-    DATA="../dataset-real/imagenet_sample.csv"
+    DATA="$DIR/imagenet_sample.csv"
     SEPARATOR=" "
 
     python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
@@ -11,7 +13,7 @@ imagenet() {
 
 
 fma_chroma() {
-    DATA="../dataset-real/fma_chroma_cens.csv"
+    DATA="$DIR/fma_chroma_cens.csv"
     SEPARATOR=","
 
     python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
@@ -21,7 +23,7 @@ fma_chroma() {
 
 
 fma_mfcc() {
-    DATA="../dataset-real/fma_mfcc.csv"
+    DATA="$DIR/fma_mfcc.csv"
     SEPARATOR=","
 
     python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
@@ -31,7 +33,7 @@ fma_mfcc() {
 
 
 20news_1000() {
-    DATA="../dataset-real/20news_1000d.csv"
+    DATA="$DIR/20news_1000d.csv"
     SEPARATOR=","
 
     python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
@@ -40,7 +42,7 @@ fma_mfcc() {
 }
 
 20news_500() {
-    DATA="../dataset-real/20news_500d_pca.csv"
+    DATA="$DIR/20news_500d_pca.csv"
     SEPARATOR=","
 
     python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
@@ -52,7 +54,6 @@ SECONDS=0
 
 speedup() {
 
-    DIR="../dataset-real"
     SEPARATOR=","
 
     for data in "fma_chroma_cens" "fma_mfcc" "20news_1000d" "20news_500d_pca";
@@ -85,8 +86,8 @@ do
     20news_1000
     imagenet
     
-    #speedup
-    #speedup_imagenet
+    speedup
+    speedup_imagenet
 done
 
 DURATION=$SECONDS
