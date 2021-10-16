@@ -2,92 +2,80 @@
 
 DIR="../dataset-real"
 
-imagenet() {
-    DATA="$DIR/imagenet_sample.csv"
-    SEPARATOR=" "
+MPTS=60
+SEPARATOR=","
 
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
+CORE=false
+CORE_INC=false
+CORE_STAR=false
+RNG=false
+ALL=false
 
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
+run_performance() {
+
+    for data in "fma_chroma_cens" "fma_mfcc" "20news_1000d" "20news_500d_pca" "imagenet_sample";
+    do
+        if $CORE || $ALL ; then
+            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core" >> "handl-core-dataset.results"
+        fi
+
+        if $CORE_INC || $ALL ; then
+            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core_inc" >> "handl-core-inc-dataset.results"
+        fi
+
+        if $CORE_STAR || $ALL ; then
+            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core_star" >> "handl-core-star-dataset.results"
+        fi
+
+        if $RNG || $ALL ; then
+            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "rng" >> "handl-rng-dataset.results"
+        fi
+    done
 }
 
+run_speedup() {
 
-fma_chroma() {
-    DATA="$DIR/fma_chroma_cens.csv"
-    SEPARATOR=","
+    for data in "fma_chroma_cens" "fma_mfcc" "20news_1000d" "20news_500d_pca" "imagenet_sample";
+    do
+        # python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single_k" >> "real-data-single-k.results"    
 
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
+        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single_k_star" >> "real-data-single-k-star.results"
 
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
+        # python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single" >> "real-data-single.results"
+    done
 }
 
+MET=${1^^}
 
-fma_mfcc() {
-    DATA="$DIR/fma_mfcc.csv"
-    SEPARATOR=","
+if [[ ! -d "$DIR" ]]
+then
+    echo "[ERROR] The directory $DIR does not exist on your filesystem. Please enter a valid directory."
+    exit 1
+fi
 
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
+if [[ $MET == "CORE" || $MET == "ALL" ]]; then
+    CORE=true
+fi
+if [[ $MET == "CORE_INC" || $MET == "ALL" ]]; then
+    CORE_INC=true
+fi
+if [[ $MET == "CORE_STAR" || $MET == "ALL" ]]; then
+    CORE_STAR=true
+fi
+if [[ $MET == "RNG" || $MET == "ALL" ]]; then
+    RNG=true
+fi
 
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
-}
+ALL=[[ $CORE && $CORE_INC && $RNG ]]
 
-
-20news_1000() {
-    DATA="$DIR/20news_1000d.csv"
-    SEPARATOR=","
-
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
-
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
-}
-
-20news_500() {
-    DATA="$DIR/20news_500d_pca.csv"
-    SEPARATOR=","
-
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "knn" >> "real-data.results"
-
-    python main_experiments.py "${DATA}" 60 "${SEPARATOR}" "rng" >> "real-data-rng.results"
-}
 
 SECONDS=0
 
-speedup() {
-
-    SEPARATOR=","
-
-    for data in "fma_chroma_cens" "fma_mfcc" "20news_1000d" "20news_500d_pca";
-    do
-        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single_k" >> "real-data-single-k.results"    
-
-        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single" >> "real-data-single.results"
-    done
-}
-
-speedup_imagenet() {
-
-    DIR="../dataset-real"
-    SEPARATOR=" "
-
-    for data in "imagenet_sample";
-    do
-        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single_k" >> "real-data-single-k.results"    
-
-        python main_experiments.py "${DIR}/${data}.csv" 60 "${SEPARATOR}" "single" >> "real-data-single.results"
-    done
-}
-
-
 for i in $(seq 1)
 do
-	fma_chroma
-    fma_mfcc
-    20news_500
-    20news_1000
-    imagenet
-    
+    run_performance
+
     speedup
-    speedup_imagenet
 done
 
 DURATION=$SECONDS

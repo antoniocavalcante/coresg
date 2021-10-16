@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     start = time.time()
 
-    run.g_hdbscan(
+    run.dbmsts(
         datafile=sys.argv[1], 
         kmax=int(sys.argv[2]), 
         delimiter=sys.argv[3], 

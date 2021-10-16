@@ -6,15 +6,18 @@ from scipy.sparse import csr_matrix
 
 from hdbscan.hdbscan import HDBSCAN
 
-def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn', efficient=True):
+def dbmsts(datafile, kmin = 1, kmax = 16, delimiter=' ', method='core', efficient=True):
     
     h = HDBSCAN(datafile, min_pts=kmax, delimiter=delimiter)
 
-    if method == 'knn':
+    if method == 'core':
         h._hdbscan_knn(kmin=kmin, kmax=kmax)
 
-    if method == 'knn_inc':
+    if method == 'core_inc':
         h._hdbscan_knn_incremental(kmin=kmin, kmax=kmax)
+
+    if method == 'core_star':
+        h._hdbscan_coresg_star(kmin=kmin, kmax=kmax)
 
     if method == 'rng':
         h._hdbscan_rng(kmin=kmin, kmax=kmax, quick=True, efficient=efficient)
@@ -25,7 +28,7 @@ def g_hdbscan(datafile, kmin = 1, kmax = 16, delimiter=' ', method='knn', effici
     if method == 'single_k':
         h.hdbscan_k(min_pts=kmax)
 
-    if method == 'test':
-        h.test(kmin=kmin, kmax=kmax, quick=True)
+    if method == 'single_k_star':
+        h.hdbscan_k_star(min_pts=kmax)
 
     return None       

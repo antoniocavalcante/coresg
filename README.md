@@ -2,11 +2,9 @@
 
 This repository contains the code corresponding to the techniques proposed and discussed in the manuscript **"CORE-SG: Efficient Computation of Multiple MSTs for Density-Based Methods"**, submitted to VLDB'22, as well as the instructions to reproduce the results reported in the paper.
 
-We compare our proposal with the previous state-of-the-art approach for the computation of multiple density-based Minimum Spanning Trees based on Relative Neighborhood Graphs (RNGs) [[3]](#3), proposed in the context of HDBSCAN* [[1]](#1). The RNG-based approach has been re-implemented in Python/Cython and is also available in this repository.
+We compare our proposal with the previous state-of-the-art approach for the computation of multiple density-based Minimum Spanning Trees (MSTs) based on Relative Neighborhood Graphs (RNGs) [[3]](#3), proposed in the context of HDBSCAN* [[1]](#1). The RNG-based approach has been re-implemented in Python/Cython and is also available in this repository.
 
-This implementation uses Cython in many to improve the performance of many operations that would be otherwise very inefficient if implemented with Python only. Please follow the instructions bellow for installation and reproduction of the results reported in the paper.
-
-This short tutorial includes the 4 steps needed to reproduce the results reported in the paper: 
+This implementation uses Cython to improve the performance of many operations that would be otherwise very inefficient if implemented with only Python. This short guide includes the 4 steps needed to reproduce the results reported in the paper: 
 1. [Installation](#installation)
 2. [Getting the Data](#data)
 3. [Running Experiments](#experiments)
@@ -14,20 +12,20 @@ This short tutorial includes the 4 steps needed to reproduce the results reporte
 
 We have also included a [troubleshooting](#troubleshooting) section to help with issues that can potentially occur during installation.
 
-## <a id="installation"></a> Installation
+## <a id="installation"></a> 1. Installation
 
-The first step for installing the project consists of downloading the code from the repository publicly available at Github.
+The first step for installing the project consists of downloading the code from the repository publicly available at Github. Note that if this repository has been already downloaded as ZIP file, the clonning of the Github repository is not necessary. 
 ```
 git clone git@github.com:antoniocavalcante/coresg.git
 ```
 
-Next, change to the repository folder and create a virtual environment that will contain the packages and dependencies needed to run the CORE-SG project.
+Next, change to the project folder and create a virtual environment that will contain the packages and dependencies needed to run the CORE-SG project. 
 
 ```
 python -m venv env
 ```
 
-After the virtual environment has been created, it must be activated so the installation of the dependencies is performed in the virtual environment.
+After the virtual environment has been created, it must be activated so the installation of the dependencies is done in the virtual environment.
 ```
 source env/bin/activate
 ```
@@ -45,7 +43,7 @@ python3 setup.py build_ext --inplace
 At this point, the installation should be ready for use. In case of errors, check out the troubleshooting section at the end of this README page.
 
 
-## <a id="data"></a> Getting the Data
+## <a id="data"></a> 2. Getting the Data
 
 1. Download the data from this Google Drive [URL](https://drive.google.com/file/d/1Xk99jjCBhrn_bPb2lvZtPCvHUgGHUZpZ/view?usp=sharing)
 
@@ -59,9 +57,9 @@ At this point, the installation should be ready for use. In case of errors, chec
     ├── dataset-real/
 ```
 
-The `dataset-handl` folder contains the CSV files corresponding to the synthetic datasets constructed with the generator proposed by Handl et al. [[2]](#2), and the  `dataset-real` folder contains the CSV files corresponding to the real datasets. The detailed description of the parameters used to generate the synthetic datasets used experimental evaluation is included in the paper, as well as description of the real datasets.
+The `dataset-handl` folder contains the CSV files corresponding to the synthetic datasets constructed with the generator proposed by Handl et al. [[2]](#2), and the  `dataset-real` folder contains the CSV files corresponding to the real datasets. The detailed description of the parameters used to generate the synthetic datasets in our experimental evaluation, as well as description of the real datasets, is included in the paper.
 
-## <a id="experiments"></a> Running Experiments
+## <a id="experiments"></a> 3. Running Experiments
 
 The bash script files `experiments_real.sh` and `experiments_handl.sh`, located at the root directory of `coresg` 
 
@@ -81,15 +79,15 @@ Similarly, to run experiments regarding only the incremental construction of the
 ```
 
 
-In order to run experiments with real data, we've already 
+In order to run experiments with real data, the directory and names of the data are encoded inside the script
 
 ```
 ./experiments_real.sh
 ```
 
-## <a id="figures"></a> Generating Figures
+## <a id="figures"></a> 4. Generating Figures
 
-The directory `plots` contains a collection of Python, Gnuplot and Bash scripts that process the results of the experiments and transform them into the figures included in the paper.
+The directory `plots` contains a collection of Python, Gnuplot and Bash scripts that process the results runtimes measured in our experiments and generate the figures included in the paper.
 
 ```
 coresg/
@@ -100,12 +98,23 @@ coresg/
     ├── sh/
 ```
 
-## Next Technical Steps
+The sub-directory `results` already contains the results corresponding to the experiments reported in the manuscript. 
+
+```
+plots/sh/charts.sh
+```
+
+This will generate the `.eps` image files in the `plots/gnuplot/figs` subdirectory.
+In order to generate Figures corresponding to new runs of the experiments (as per the instructions in this guide), the `.results` files generated at the root directory of this project must be copied to the `plots/results` subdirectory, and then the `mergefiles.sh` script in the `plots/sh`  must be executed before generating the charts with `charts.sh`.
+
+
+
+## - Next Technical Steps
 
 - Build and publish a Python package that can be easily installed with `pip`.
 - Integrate **CORE-SG** into existing density-based methods already broadly available, *e.g.* DBSCAN, HDBSCAN*, OPTICS.
 
-## <a id="troubleshooting"></a> Troubleshooting
+## - <a id="troubleshooting"></a> Troubleshooting
 
 ### `fatal error: numpy/arrayobject.h: No such file or directory`
 

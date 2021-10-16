@@ -212,6 +212,124 @@ class HDBSCAN:
         return None
 
 
+    def hdbscan_k_star(self, min_pts = 16):
+
+        # ------------------------------------
+        # Time to compute the MST for kmax
+        # ------------------------------------
+        start = time.time()
+        mst, a_knn = prim_plus(
+                    self.data, 
+                    np.ascontiguousarray(self.core_distances[:, min_pts-1]), 
+                    np.ascontiguousarray(self.knn[:, min_pts-1]),
+                    False)
+        mst = triu(mst.maximum(mst.T), format='csr')
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to materialize the k-NNG
+        # ------------------------------------
+        start = time.time()
+        self.knng = self._knng(self.min_pts)
+        self.knng = self.knng.maximum(a_knn.maximum(a_knn.T))
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to build CORE-SG*
+        # ------------------------------------
+        start = time.time()
+
+        coresgstar = mst
+
+        # loop over the values of mpts in the input range [kmin, kmax].
+        for i in range(min_pts - 1, 1, -1):
+
+            # compute mst for mpts = i
+            mst = prim_inc(
+                self.data, 
+                mst.indices, 
+                mst.indptr,
+                mst.data,
+                self.knng.indices, 
+                self.knng.indptr, 
+                self.knng.data, 
+                np.ascontiguousarray(self.core_distances[:, i-1]), 
+                i, 
+                False)
+
+            # makes the resulting MST a symmetric graph for next iteration.
+            mst = mst.maximum(mst.T)
+
+            # eliminates the zero entries in the matrix (removing edges from the graph).
+            self.knng.eliminate_zeros()
+
+            # compute hierarchy for mpts = i
+            # self._simplified_hierarchy(mst)
+
+            coresgstar = coresgstar.maximum(mst)
+
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute first MST
+        # ------------------------------------
+        start = time.time()
+        mst = prim_graph(
+            coresgstar.indices,
+            coresgstar.indptr,
+            coresgstar.data,
+            np.ascontiguousarray(self.core_distances[:, min_pts-1]),
+            False)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute hierarchy from MST
+        # ------------------------------------
+        start = time.time()        
+        # extracts simplified hierarchy from MST
+        hierarchy = self._simplified_hierarchy(mst)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to update the edges of the NNSG
+        # ------------------------------------
+        start = time.time()
+        # nnsg = self._update_edge_weights(nnsg, int(min_pts/2))
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute second MST
+        # ------------------------------------
+        start = time.time()
+        mst = prim_graph(
+                coresgstar.indices,
+                coresgstar.indptr,
+                coresgstar.data,
+                np.ascontiguousarray(self.core_distances[:, int(min_pts/2)-1]),
+                False)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # ------------------------------------
+        # Time to compute second hierarchy
+        # ------------------------------------
+        start = time.time()        
+        # extracts simplified hierarchy from MST
+        hierarchy = self._simplified_hierarchy(mst)
+        end = time.time()
+        print(end - start, end=' ')
+
+        # returns simplified hierarchy
+        return None
+
+
+
 
     def _hdbscan_rng(self, kmin = 1, kmax = 16, quick=True, efficient=True):
 
@@ -361,6 +479,89 @@ class HDBSCAN:
         end = time.time()
         print(end - start, end=' ')
         # -----------------------------------
+
+
+    def _hdbscan_coresg_star(self, kmin = 1, kmax = 16):
+        
+        """
+        
+        Compute CORE-SG*, the most compact version of
+        CORE-SG that corresponds to the union of all MSTs.
+
+        """
+        start = time.time()
+        
+        # computes the MST w.r.t kmax.
+        mst, a_knn = prim_plus(
+            self.data, 
+            np.ascontiguousarray(self.core_distances[:, kmax-1]), 
+            np.ascontiguousarray(self.knn[:, kmax-1]),
+            False)
+
+        # makes the mst a symmetrix matrix.
+        mst = mst.maximum(mst.T)
+
+        # augments the knng with the ties.
+        self.knng = self.knng.maximum(a_knn.maximum(a_knn.T))
+        self.knng.eliminate_zeros()
+        
+        # initializes coresgstar with the first MST.
+        coresgstar = mst
+
+        # loop over the values of mpts in the input range [kmin, kmax].
+        for i in range(kmax - 1, kmin - 1, -self.skip):
+
+            # compute mst for mpts = i
+            mst = prim_inc(
+                self.data, 
+                mst.indices, 
+                mst.indptr,
+                mst.data,
+                self.knng.indices, 
+                self.knng.indptr, 
+                self.knng.data, 
+                np.ascontiguousarray(self.core_distances[:, i-1]), 
+                i, 
+                False)
+
+            # makes the resulting MST a symmetric graph for next iteration.
+            mst = mst.maximum(mst.T)
+
+            # eliminates the zero entries in the matrix (removing edges from the graph).
+            self.knng.eliminate_zeros()
+
+            # compute hierarchy for mpts = i
+            # self._simplified_hierarchy(mst)
+
+            coresgstar = coresgstar.maximum(mst)
+
+        end = time.time()
+        print(end - start, end=' ')
+        # -----------------------------------
+
+        # -----------------------------------
+        start = time.time()
+
+        # loop over the values of mpts in the input range [kmin, kmax].
+        for i in range(kmin, kmax, self.skip): 
+
+            # compute mst for mpts = i
+            mst = prim_graph(
+                coresgstar.indices,
+                coresgstar.indptr,
+                coresgstar.data,
+                np.ascontiguousarray(self.core_distances[:, i-1]),
+                False)
+
+            # compute hierarchy for mpts = i
+            # self._simplified_hierarchy(mst)
+
+        end = time.time()
+        print(end - start, end=' ')
+        # -----------------------------------
+
+        print(int(coresgstar.count_nonzero()/2), end=' ')
+
 
 
     def test(self, kmin = 1, kmax = 16, quick = True):

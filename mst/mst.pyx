@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import pyximport
 pyximport.install()
 
@@ -244,35 +246,6 @@ cdef _prim_inc(
         # retrieves the closest point to the tree.
         current_point = v.index
 
-        # loop over kNNG and removes edges that won't be needed anymore.
-        for i in xrange(knng_indptr[current_point], knng_indptr[current_point+1]):
-            current_neighbor = &nodes[knng_indices[i]]
-
-            if current_neighbor.state != SCANNED: 
-                
-                d = max(
-                    knng_data[i],
-                    core_distances[current_point], 
-                    core_distances[current_neighbor.index])
-
-                if current_neighbor.state == NOT_IN_HEAP:
-                    current_neighbor.state = IN_HEAP
-                    current_neighbor.val   = d
-                    insert_node(&heap, current_neighbor)
-
-                    nearest_distances[current_neighbor.index] = d
-                    nearest_points[current_neighbor.index] = current_point
-
-                elif d < current_neighbor.val:
-                    decrease_val(&heap, current_neighbor, d)
-
-                    nearest_distances[current_neighbor.index] = d
-                    nearest_points[current_neighbor.index] = current_point
-
-            # removes edges that won't be needed in the future
-            if knng_data[i] > core_distances[current_point] and knng_data[i] > core_distances[current_neighbor.index]:
-                knng_data[i] = 0
-
         # loops over the MST.
         for i in xrange(mst_indptr[current_point], mst_indptr[current_point+1]):
             current_neighbor = &nodes[mst_indices[i]]
@@ -286,18 +259,47 @@ cdef _prim_inc(
 
                 if current_neighbor.state == NOT_IN_HEAP:
                     current_neighbor.state = IN_HEAP
-                    current_neighbor.val   = d
+                    current_neighbor.val   = d + mst_data[i]
                     insert_node(&heap, current_neighbor)
 
                     nearest_distances[current_neighbor.index] = d
                     nearest_points[current_neighbor.index] = current_point
 
-                elif d < current_neighbor.val:
-                    decrease_val(&heap, current_neighbor, d)
+                elif d + mst_data[i] < current_neighbor.val:
+                    decrease_val(&heap, current_neighbor, d + mst_data[i])
 
                     nearest_distances[current_neighbor.index] = d
                     nearest_points[current_neighbor.index] = current_point
-        
+
+        # loop over kNNG and removes edges that won't be needed anymore.
+        for i in xrange(knng_indptr[current_point], knng_indptr[current_point+1]):
+            current_neighbor = &nodes[knng_indices[i]]
+
+            if current_neighbor.state != SCANNED: 
+                
+                d = max(
+                    knng_data[i],
+                    core_distances[current_point], 
+                    core_distances[current_neighbor.index])
+
+                if current_neighbor.state == NOT_IN_HEAP:
+                    current_neighbor.state = IN_HEAP
+                    current_neighbor.val   = d + knng_data[i]
+                    insert_node(&heap, current_neighbor)
+
+                    nearest_distances[current_neighbor.index] = d
+                    nearest_points[current_neighbor.index] = current_point
+
+                elif d + knng_data[i] < current_neighbor.val:
+                    decrease_val(&heap, current_neighbor, d + knng_data[i])
+
+                    nearest_distances[current_neighbor.index] = d
+                    nearest_points[current_neighbor.index] = current_point
+
+            # removes edges that won't be needed in the future
+            if knng_data[i] > core_distances[current_point] and knng_data[i] > core_distances[current_neighbor.index]:
+                knng_data[i] = 0
+
         # updates the number of edges added.
         num_edges_attached += 1
 

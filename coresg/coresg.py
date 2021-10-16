@@ -197,3 +197,43 @@ def _coresg(mst, knng, core_distances, min_pts):
                 mst.data[i] = 0
 
     return mst.maximum(knng)
+
+
+def _coresgstar(
+    data, 
+    core_distances,
+    knn,
+    knng,
+    kmin = 1, kmax = 16, skip = 1):
+    
+    mst, a_knn = prim_plus(
+        data, 
+        np.ascontiguousarray(core_distances[:, kmax-1]), 
+        np.ascontiguousarray(knn[:, kmax-1]),
+        False)
+
+    # makes the MST a symmetric graph
+    mst = mst.maximum(mst.T)
+
+    # initializes the coresgstar with the first MST
+    coresgstar = mst
+
+    for i in range(kmax - 1, kmin - 1, -skip):
+        # compute mst for mpts = i
+        mst = prim_inc(
+            data, 
+            mst.indices, 
+            mst.indptr,
+            mst.data,
+            knng.indices, 
+            knng.indptr, 
+            knng.data, 
+            np.ascontiguousarray(core_distances[:, i-1]), 
+            i, 
+            False)
+        
+        mst = mst.maximum(mst.T)
+        
+        coresgstar = coresgstar.maximum(mst)
+
+    return coresgstar

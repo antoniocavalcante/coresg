@@ -1,7 +1,5 @@
 #!/bin/bash
 
-DIR=$1
-
 DEFAULT_KMAX=60
 DEFAULT_DIM=32
 DEFAULT_DATA=10
@@ -9,6 +7,7 @@ DEFAULT_CLUS=30
 
 CORE=false
 CORE_INC=false
+CORE_STAR=false
 RNG=false
 ALL=false
 
@@ -17,13 +16,17 @@ dataset() {
     for n in 1 5 10 50 100;
     do
         if $CORE || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "knn" >> "handl-core-dataset.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "core" >> "handl-core-dataset.results"
         fi
 
         if $CORE_INC || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "knn_inc" >> "handl-core-inc-dataset.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "core_inc" >> "handl-core-inc-dataset.results"
         fi
-        
+
+        if $CORE_STAR || $ALL ; then
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "core_star" >> "handl-core-star-dataset.results"
+        fi
+
         if $RNG || $ALL ; then
             python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${n}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "rng" >> "handl-rng-dataset.results"
         fi
@@ -35,11 +38,15 @@ minpoints() {
     for minpoints in 20 40 60 80 100;
     do
         if $CORE || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" ${minpoints} " " "knn" >> "handl-core-minpoints.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" ${minpoints} " " "core" >> "handl-core-minpoints.results"
         fi
 
         if $CORE_INC || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" ${minpoints} " " "knn_inc" >> "handl-core-inc-minpoints.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" ${minpoints} " " "core_inc" >> "handl-core-inc-minpoints.results"
+        fi
+
+        if $CORE_STAR || $ALL ; then
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" ${minpoints} " " "core_star" >> "handl-core-star-minpoints.results"
         fi
 
         if $RNG || $ALL ; then
@@ -53,11 +60,15 @@ dimensions() {
     for dim in 4 8 16 32 64 128;
     do
         if $CORE || $ALL ; then
-            python main_experiments.py "${DIR}/${dim}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "knn" >> "handl-core-dimensions.results"
+            python main_experiments.py "${DIR}/${dim}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "core" >> "handl-core-dimensions.results"
         fi
 
         if $CORE_INC || $ALL ; then
-            python main_experiments.py "${DIR}/${dim}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "knn_inc" >> "handl-core-inc-dimensions.results"
+            python main_experiments.py "${DIR}/${dim}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "core_inc" >> "handl-core-inc-dimensions.results"
+        fi
+
+        if $CORE_STAR || $ALL ; then
+            python main_experiments.py "${DIR}/${dim}d-${DEFAULT_DATA}n-${DEFAULT_CLUS}c.dat" "${DEFAULT_KMAX}" " " "core_star" >> "handl-core-star-dimensions.results"
         fi
 
         if $RNG || $ALL ; then
@@ -72,11 +83,15 @@ clusters() {
     for clus in 10 30 50;
     do
         if $CORE || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${clus}c.dat" "${DEFAULT_KMAX}" " " "knn" >> "handl-core-clusters.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${clus}c.dat" "${DEFAULT_KMAX}" " " "core" >> "handl-core-clusters.results"
         fi
 
         if $CORE_INC || $ALL ; then
-            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${clus}c.dat" "${DEFAULT_KMAX}" " " "knn_inc" >> "handl-core-inc-clusters.results"
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${clus}c.dat" "${DEFAULT_KMAX}" " " "core_inc" >> "handl-core-inc-clusters.results"
+        fi
+
+        if $CORE_STAR || $ALL ; then
+            python main_experiments.py "${DIR}/${DEFAULT_DIM}d-${DEFAULT_DATA}n-${clus}c.dat" "${DEFAULT_KMAX}" " " "core_star" >> "handl-core-star-clusters.results"
         fi
 
         if $RNG || $ALL ; then
@@ -96,9 +111,13 @@ initial() {
                 for c in 10 30 50;
                 do
                     if $CORE || $ALL ; then
-                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c.dat" "${kmax}" " " "knn" >> "handl-core-initial-${n}n-${kmax}k-${c}c.results"
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c.dat" "${kmax}" " " "core" >> "handl-core-initial-${n}n-${kmax}k-${c}c.results"
                     fi
-                    
+
+                    if $CORE_STAR || $ALL ; then
+                        python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c.dat" "${kmax}" " " "core_star" >> "handl-core-star-initial-${n}n-${kmax}k-${c}c.results"
+                    fi
+
                     if $RNG || $ALL ; then
                         python main_experiments.py "${DIR}/${dim}d-${n}n-${c}c.dat" "${kmax}" " " "rng" >> "handl-rng-star-initial-${n}n-${kmax}k-${c}c.results"
                     fi
@@ -119,11 +138,15 @@ speedup() {
             python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "single" >> "handl-single-speedup-${n}.results"
 
             if $CORE || $ALL ; then
-                python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "knn" >> "handl-core-speedup-${n}.results"
+                python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "core" >> "handl-core-speedup-${n}.results"
             fi
 
             if $CORE_INC || $ALL ; then
-                python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "knn_inc" >> "handl-core-inc-speedup-${n}.results"
+                python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "core_inc" >> "handl-core-inc-speedup-${n}.results"
+            fi
+
+            if $CORE_STAR || $ALL ; then
+                python main_experiments.py "${DIR}/32d-${n}n-30c.dat" ${minpoints} " " "core_star" >> "handl-core-star-speedup-${n}.results"
             fi
 
             if $RNG || $ALL ; then
@@ -133,20 +156,25 @@ speedup() {
     done
 }
 
+DIR=$1
+MET=${2^^}
 
-if [[ ! -d "$1" ]]
+if [[ ! -d "$DIR" ]]
 then
-    echo "[ERROR] The directory $1 does not exist on your filesystem. Please enter a valid directory."
+    echo "[ERROR] The directory $DIR does not exist on your filesystem. Please enter a valid directory."
     exit 1
 fi
 
-if [[ ${2^^} == "CORE" || $2 == "ALL" ]]; then
+if [[ $MET == "CORE" || $MET == "ALL" ]]; then
     CORE=true
 fi
-if [[ ${2^^} == "CORE_INC" || $2 == "ALL" ]]; then
+if [[ $MET == "CORE_INC" || $MET == "ALL" ]]; then
     CORE_INC=true
 fi
-if [[ ${2^^} == "RNG" || $2 == "ALL" ]]; then
+if [[ $MET == "CORE_STAR" || $MET == "ALL" ]]; then
+    CORE_STAR=true
+fi
+if [[ $MET == "RNG" || $MET == "ALL" ]]; then
     RNG=true
 fi
 
