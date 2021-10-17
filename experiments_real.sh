@@ -16,19 +16,19 @@ run_performance() {
     for data in "fma_chroma_cens" "fma_mfcc" "20news_1000d" "20news_500d_pca" "imagenet_sample";
     do
         if $CORE || $ALL ; then
-            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core" >> "handl-core-dataset.results"
+            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core" >> "real-data-core.results"
         fi
 
         if $CORE_INC || $ALL ; then
-            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core_inc" >> "handl-core-inc-dataset.results"
+            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core_inc" >> "real-data-core-inc.results"
         fi
 
         if $CORE_STAR || $ALL ; then
-            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core_star" >> "handl-core-star-dataset.results"
+            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "core_star" >> "real-data-core-star.results"
         fi
 
         if $RNG || $ALL ; then
-            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "rng" >> "handl-rng-dataset.results"
+            python main_experiments.py "${DIR}/${data}.csv" "${MPTS}" ${SEPARATOR} "rng" >> "real-data-rng.results"
         fi
     done
 }
@@ -75,7 +75,7 @@ for i in $(seq 1)
 do
     run_performance
 
-    speedup
+    run_speedup
 done
 
 DURATION=$SECONDS
