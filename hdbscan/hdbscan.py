@@ -97,7 +97,7 @@ class HDBSCAN:
         # Time to compute hierarchy from MST
         # ------------------------------------
         start = time.time()
-        hierarchy = self._simplified_hierarchy(mst)
+        hierarchy = self._construct_hierarchy(mst)
         end = time.time()
         print(end - start, end=' ')
 
@@ -116,7 +116,7 @@ class HDBSCAN:
         # Time to compute second hierarchy
         # ------------------------------------
         start = time.time()
-        hierarchy = self._simplified_hierarchy(mst)
+        hierarchy = self._construct_hierarchy(mst)
         end = time.time()
         print(end - start, end=' ')
 
@@ -173,8 +173,8 @@ class HDBSCAN:
         # Time to compute hierarchy from MST
         # ------------------------------------
         start = time.time()        
-        # extracts simplified hierarchy from MST
-        hierarchy = self._simplified_hierarchy(mst)
+        # extracts hierarchy from MST
+        hierarchy = self._construct_hierarchy(mst)
         end = time.time()
         print(end - start, end=' ')
 
@@ -203,12 +203,11 @@ class HDBSCAN:
         # Time to compute second hierarchy
         # ------------------------------------
         start = time.time()        
-        # extracts simplified hierarchy from MST
-        hierarchy = self._simplified_hierarchy(mst)
+        # extracts hierarchy from MST
+        hierarchy = self._construct_hierarchy(mst)
         end = time.time()
         print(end - start, end=' ')
 
-        # returns simplified hierarchy
         return None
 
 
@@ -259,16 +258,13 @@ class HDBSCAN:
                 i, 
                 False)
 
-            # makes the resulting MST a symmetric graph for next iteration.
-            mst = mst.maximum(mst.T)
-
             # eliminates the zero entries in the matrix (removing edges from the graph).
             self.knng.eliminate_zeros()
 
-            # compute hierarchy for mpts = i
-            # self._simplified_hierarchy(mst)
-
             coresgstar = coresgstar.maximum(mst)
+        
+
+        coresgstar = coresgstar.maximum(coresgstar.T)
 
         end = time.time()
         print(end - start, end=' ')
@@ -289,9 +285,9 @@ class HDBSCAN:
         # ------------------------------------
         # Time to compute hierarchy from MST
         # ------------------------------------
-        start = time.time()        
-        # extracts simplified hierarchy from MST
-        hierarchy = self._simplified_hierarchy(mst)
+        start = time.time()
+        # extracts hierarchy from MST
+        hierarchy = self._construct_hierarchy(mst)
         end = time.time()
         print(end - start, end=' ')
 
@@ -320,12 +316,11 @@ class HDBSCAN:
         # Time to compute second hierarchy
         # ------------------------------------
         start = time.time()        
-        # extracts simplified hierarchy from MST
-        hierarchy = self._simplified_hierarchy(mst)
+        # extracts hierarchy from MST
+        hierarchy = self._construct_hierarchy(mst)
         end = time.time()
         print(end - start, end=' ')
 
-        # returns simplified hierarchy
         return None
 
 
@@ -416,9 +411,6 @@ class HDBSCAN:
                 np.ascontiguousarray(self.core_distances[:, i-1]),
                 False)
 
-            # compute hierarchy for mpts = i
-            # self._simplified_hierarchy(mst)
-
         end = time.time()
         print(end - start, end=' ')
         # -----------------------------------
@@ -472,9 +464,6 @@ class HDBSCAN:
 
             # eliminates the zero entries in the matrix (removing edges from the graph).
             self.knng.eliminate_zeros()
-
-            # compute hierarchy for mpts = i
-            # self._simplified_hierarchy(mst)
 
         end = time.time()
         print(end - start, end=' ')
@@ -530,9 +519,6 @@ class HDBSCAN:
             # eliminates the zero entries in the matrix (removing edges from the graph).
             self.knng.eliminate_zeros()
 
-            # compute hierarchy for mpts = i
-            # self._simplified_hierarchy(mst)
-
             coresgstar = coresgstar.maximum(mst)
 
         end = time.time()
@@ -552,9 +538,6 @@ class HDBSCAN:
                 coresgstar.data,
                 np.ascontiguousarray(self.core_distances[:, i-1]),
                 False)
-
-            # compute hierarchy for mpts = i
-            # self._simplified_hierarchy(mst)
 
         end = time.time()
         print(end - start, end=' ')
@@ -651,19 +634,40 @@ class HDBSCAN:
         return mst.maximum(knng)
 
 
-    def _construct_hierarchy(self):
-
-        from scipy.sparse.csgraph import depth_first_order 
+    def _construct_hierarchy(self, mst):
         
-        # get order of edges
+        dendrogram = {}
 
-        # index of max value
+        # get order of edges.
+        nodes, reachability = self._get_reachability(mst)
 
-        # create level for that hierarchy
+        # current nodes of a point in the dendrogram.
+        current_nodes = np.arange(0, self.n)
 
-        # split array at that level and do the same in both halves
+        # index of points in order of reachability values.
+        ordered_indices = np.argsort(reachability)
 
-        return None
+        # initialize dendrogram
+        for i, r in zip(nodes, reachability):
+            dendrogram[i] = {'id': i, 'height':r, 'left': None, 'right': None}
+
+        new_node = self.n
+
+        for i in range(1, self.n):
+            p = nodes[ordered_indices[i]]
+            q = nodes[ordered_indices[i] - 1]
+
+            dendrogram[new_node] = {'id': new_node, 
+                                    'height':reachability[ordered_indices[i]], 
+                                    'left': current_nodes[q],
+                                    'right': current_nodes[p]}
+            
+            current_nodes[p] = new_node
+            current_nodes[q] = new_node
+
+            new_node += 1
+
+        return dendrogram
 
 
     def _simplified_hierarchy(self, mst):
@@ -672,9 +676,16 @@ class HDBSCAN:
 
         nodes, reachability = prim_order(mst.data, mst.indices, mst.indptr, self.n)
 
-        # hierarchy = self._get_nodes(reachability, 0, self.n)
-
         return None
+
+
+    def _get_reachability(self, mst):
+
+        mst = mst.maximum(mst.T)
+
+        nodes, reachability = prim_order(mst.data, mst.indices, mst.indptr, self.n)
+
+        return nodes, reachability
 
 
     def _get_nodes(self, reachability, start, end):

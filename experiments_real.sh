@@ -73,7 +73,7 @@ SECONDS=0
 
 for i in $(seq 1)
 do
-    run_performance
+    # run_performance
 
     run_speedup
 done
