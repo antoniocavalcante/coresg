@@ -1,6 +1,6 @@
 # CORE-SG: Efficient Computation of Multiple MSTs for Density-Based Methods
 
-This repository contains the code corresponding to the techniques proposed and discussed in the manuscript **"CORE-SG: Efficient Computation of Multiple MSTs for Density-Based Methods"**, submitted to VLDB'22, as well as the instructions to reproduce the results reported in the paper.
+This repository contains the code corresponding to the techniques proposed and discussed in the manuscript **"CORE-SG: Efficient Computation of Multiple MSTs for Density-Based Methods"**, published at ICDE'22, as well as the instructions to reproduce the results reported in the paper.
 
 We compare our proposal with the previous state-of-the-art approach for the computation of multiple density-based Minimum Spanning Trees (MSTs) based on Relative Neighborhood Graphs (RNGs) [[3]](#3), proposed in the context of HDBSCAN* [[1]](#1). The RNG-based approach has been re-implemented in Python/Cython and is also available in this repository.
 
